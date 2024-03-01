@@ -1,0 +1,15 @@
+body {
+    max-height: 3000px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    background-image: url(../images/geometric-1732847_1280.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed; 
+}
+
+.nav-link:hover {
+    opacity: 0.6;
+}
