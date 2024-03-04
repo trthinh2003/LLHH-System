@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['luottruycap'])) $_SESSION['luottruycap'] = 0;
+    else $_SESSION['luottruycap'] += 1;
+?>
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 
@@ -135,7 +141,9 @@
                                         <div class="col-9 text-start">
                                             <div class="p-2 m-1">
                                                 <h4>Số người đang truy cập</h4>
-                                                <h3 class="mb-0"><b>0</b></h3>
+                                                <h3 class="mb-0"><b>
+                                                    <?php if (isset($_SESSION['luottruycap'])) echo $_SESSION['luottruycap']; ?>
+                                                </b></h3>
                                             </div>
                                         </div>
                                     </div>
