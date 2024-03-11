@@ -200,6 +200,7 @@
                 <i class="fa-regular fa-moon" title="Chế độ tối"></i>
                 <i class="fa-solid fa-sun" title="Chế độ sáng"></i>
             </a>
+            <!-- Footer -->
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-muted">
