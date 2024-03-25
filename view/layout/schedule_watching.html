@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LLTT System</title>
+    <title>Xem lịch thực hành</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
     <!--FullCalendar-->
     <link rel="stylesheet" href="./plugins/fullcalendar/main.css">
@@ -23,7 +23,7 @@
         <!-- Nội dung thanh sidebar -->
         <div class="h-100">
           <div class="sidebar-logo">
-            <a href="#" id=""><img class="rounded-circle mx-1" src="assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
+            <a href="./index.html" id=""><img class="rounded-circle mx-1" src="assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
           </div>
           <ul class="sidebar-nav mx-0">
             <li class="sidebar-header">Menu Chính</li>
@@ -37,10 +37,7 @@
                   <a href="#" class="sidebar-link">Quản lý tài khoản</a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="./lab_manage.html" class="sidebar-link">Quản lý phòng học</a>
-                </li>
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Quản lý phần mềm</a>
+                  <a href="#" class="sidebar-link">Quản lý phòng học</a>
                 </li>
               </ul>
             </li>
@@ -99,7 +96,7 @@
                             </div>
                         </li> -->
               <li class="login-sign">
-                <a href="login-form.html" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
+                <a href="./login-form.html" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
               </li>
             </ul>
           </div>
@@ -107,95 +104,16 @@
 
         <!-- Phan noi dung -->
         <main class="content px-3 py-2">
-          <div class="container-fluid">
-            <div class="mb-3">
-              <h4>Quản Trị Thông Tin</h4>
-            </div>
-            <div class="row">
-              <div class="col-xl-6 d-flex">
-                  <div class="card flex-fill border-0 illustration">
-                    <div class="card-body p-0 d-flex flex-fill">
-                      <div class="d-flex justify-content-center align-items-center">
-                        <div class=""><img src="assets/images/sys-avatar.png" class="img-fluid illustration-img" alt=""/>
-                      </div>
-                      <div class="">
-                        <div class="p-2 m-1">
-                          <h4>Chào mừng đến với hệ thống</h4>
-                          <h5 class="mb-0"><b>Quản Lý Lịch Thực Hành</b></h5>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            <div class="card-body">
+                <div class="container p-5">
+                    <div id="calendar"></div>            
                 </div>
-              </div>
-              <!-- Điếm số lượt truy cập -->
-              <div class="col-xl-6 d-flex">
-                <div class="card flex-fill border-0 illustration">
-                  <div class="card-body p-0 d-flex flex-fill">
-                    <div class="d-flex justify-content-center align-items-center">
-                      <div class="align-self-start text-start">
-                        <img src="assets/images/view.png" class="img-fluid illustration-img" alt=""/>
-                      </div>
-                      <div class="text-start">
-                        <div class="p-2 m-1">
-                          <h4>Số người đang truy cập</h4>
-                          <h3 class="mb-0"><b>0</b></h3>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-            <!-- Table Element -->
-            <div class="card border-0">
-              <div class="card-header">
-                <h5 class="card-title">Bảng Demo</h5>
-                <h6 class="card-subtitle text-muted">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum ducimus, necessitatibus reprehenderit itaque!
-                </h6>
-              </div>
-              <div class="card-body">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Họ</th>
-                      <th scope="col">Tên</th>
-                      <th scope="col">Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Nguyễn Văn</td>
-                      <td>A</td>
-                      <td>nguyenvana@gmail.com</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Trần Thế</td>
-                      <td>B</td>
-                      <td>trantheb@gmail.com</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>What The</td>
-                      <td>Hell</td>
-                      <td>wth@gmail.com</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
         </main>
         <a href="#" class="theme-toggle">
           <i class="fa-regular fa-moon" title="Chế độ tối"></i>
           <i class="fa-solid fa-sun" title="Chế độ sáng"></i>
         </a>
-        <!-- footer -->
         <footer class="footer">
           <div class="container-fluid">
             <div class="row text-muted">
@@ -221,7 +139,48 @@
         </footer>
       </div>
     </div>
-    <script src="assets/js/sidebar.js"></script>
-    <script src="assets/js/darklightmode.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.querySelector('#calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'vi', // Sử dụng ngôn ngữ tiếng Việt
+                initialView: 'timeGridWeek', // Hiển thị lịch theo tuần
+                nowIndicator: true, // Hiển thị thời gian hiện tại
+                events: [
+                    {
+                        title: 'CT29903 - Phát triển hệ thống Web',
+                        start: '2024-03-22T13:30:00',
+                        end: '2024-03-22T17:00:00',
+                        userId: '1'
+                    },
+                    {
+                        title: 'CT29903 - Phát triển hệ thống Web',
+                        start: '2024-03-22T13:30:00',
+                        end: '2024-03-22T17:00:00',
+                        userId: '2'
+                    },
+                    {
+                        title: 'CT29903 - Phát triển hệ thống Web',
+                        start: '2024-03-22T13:30:00',
+                        end: '2024-03-22T17:00:00',
+                        userId: '3'
+                    },
+                    {
+                        title: 'CT17904 - Quản trị hệ thống',
+                        start: '2024-03-21T13:30:00',
+                        end: '2024-03-21T16:10:00',
+                        userId: '4'
+                    },
+                    // Thêm các sự kiện khác tại đây
+                ]
+            });
+
+            calendar.render();
+        });
+    </script>
+    <script src="./assets/js/sidebar.js"></script>
+    <script src="./assets/js/darklightmode.js"></script>
+    <script src="./plugins/fix-schedule.js"></script>
   </body>
 </html>

@@ -1,82 +1,77 @@
-<!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Xem lịch thực hành</title>
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="view/layout/assets/images/favicon.ico" type="image/x-icon" />
     <!--FullCalendar-->
-    <link rel="stylesheet" href="./plugins/fullcalendar/main.css">
-    <script src="./plugins/fullcalendar/main.js"></script>
+    <link rel="stylesheet" href="plugins/fullcalendar/main.css">
+    <script src="plugins/fullcalendar/main.js"></script>
+    <script src="view/layout/assets/js/schedule_show.js"></script>    
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="assets/css/normalize.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
+    <link rel="stylesheet" href="view/layout/assets/css/style.css" />
     <style>
-      .fc-timegrid-slots td[data-time^="07"],
-      .fc-timegrid-slots td[data-time^="08"],
-      .fc-timegrid-slots td[data-time^="09"],
-      .fc-timegrid-slots td[data-time^="10"],
-      .fc-timegrid-slots td[data-time^="11"],
-      .fc-timegrid-slots td[data-time^="13"],
-      .fc-timegrid-slots td[data-time^="14"],
-      .fc-timegrid-slots td[data-time^="15"],
-      .fc-timegrid-slots td[data-time^="16"],
-      .fc-timegrid-slots td[data-time^="17"],
-      .fc-timegrid-slots td[data-time^="18"] {
-        border-top: none; 
-      } 
-      .fc-timegrid-slots td[data-time^="11"] {
-        border-bottom: none;
-      }
-  
-      .fc-timegrid-event-harness {
-        margin-bottom: 5px; /* Khoảng cách giữa các sự kiện */
-      }
-      .fc-event {
-        overflow: visible; /* Hiển thị nội dung vượt ra ngoài ranh giới của sự kiện */
-        z-index: 1; /* Đảm bảo sự kiện hiển thị trên các sự kiện khác */
-      }
-  
-      /* Modal */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      
-      .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 50%;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-      }
-      
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-      
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-    </style>
+    .fc-timegrid-slots td[data-time^="07"],
+    .fc-timegrid-slots td[data-time^="08"],
+    .fc-timegrid-slots td[data-time^="09"],
+    .fc-timegrid-slots td[data-time^="10"],
+    .fc-timegrid-slots td[data-time^="11"],
+    .fc-timegrid-slots td[data-time^="13"],
+    .fc-timegrid-slots td[data-time^="14"],
+    .fc-timegrid-slots td[data-time^="15"],
+    .fc-timegrid-slots td[data-time^="16"],
+    .fc-timegrid-slots td[data-time^="17"],
+    .fc-timegrid-slots td[data-time^="18"] {
+      border-top: none; 
+    } 
+    .fc-timegrid-slots td[data-time^="11"] {
+      border-bottom: none;
+    }
+
+    .fc-timegrid-event-harness {
+      margin-bottom: 5px; /* Khoảng cách giữa các sự kiện */
+    }
+    .fc-event {
+      overflow: visible; /* Hiển thị nội dung vượt ra ngoài ranh giới của sự kiện */
+      z-index: 1; /* Đảm bảo sự kiện hiển thị trên các sự kiện khác */
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
   </head>
 
   <body>
@@ -85,7 +80,7 @@
         <!-- Nội dung thanh sidebar -->
         <div class="h-100">
           <div class="sidebar-logo">
-            <a href="./index.html" id=""><img class="rounded-circle mx-1" src="assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
+            <a href="index.php" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
           </div>
           <ul class="sidebar-nav mx-0">
             <li class="sidebar-header">Menu Chính</li>
@@ -96,10 +91,13 @@
               </a>
               <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Quản lý tài khoản</a>
+                  <a href="index.php?pg=account_manage" class="sidebar-link">Quản lý tài khoản</a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Quản lý phòng học</a>
+                  <a href="index.php?pg=lab_manage" class="sidebar-link">Quản lý phòng học</a>
+                </li>
+                <li class="sidebar-item">
+                  <a href="index.php?pg=software_manage" class="sidebar-link">Quản lý phần mềm</a>
                 </li>
               </ul>
             </li>
@@ -113,7 +111,7 @@
                   <a href="#" class="sidebar-link">Quản lý lịch thực hành</a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="./schedule_registration.html" class="sidebar-link">Đăng ký lịch thực hành</a>
+                  <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                 </li>
                 <li class="sidebar-item">
                   <a href="#" class="sidebar-link">Thống kê số tiết dạy</a>
@@ -122,7 +120,7 @@
             </li>
             <!-- Chuc nang xem lich TH, chuc nang nay ca QTHT, Giang vien va Sinh vien deu co the xem duoc -->
             <li class="sidebar-item">
-              <a href="./schedule_watching.html" class="sidebar-link">
+              <a href="index.php?pg=schedule_watching" class="sidebar-link">
                 <i class="fa-solid fa-calendar-days pe-2"></i>
                 Xem lịch thực hành
               </a>
@@ -158,7 +156,7 @@
                             </div>
                         </li> -->
               <li class="login-sign">
-                <a href="./login-form.html" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
+                <a href="view/login-form.php" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
               </li>
             </ul>
           </div>
@@ -180,38 +178,8 @@
                 </div>
             </div>
         </main>
+        <!-- Chế độ sáng tối của trình duyệt -->
         <a href="#" class="theme-toggle">
           <i class="fa-regular fa-moon" title="Chế độ tối"></i>
           <i class="fa-solid fa-sun" title="Chế độ sáng"></i>
         </a>
-        <footer class="footer">
-          <div class="container-fluid">
-            <div class="row text-muted">
-              <div class="col-6 text-start">
-                <p class="mb-0">
-                  <a href="#" class="text-muted">
-                    <strong>LLTT System</strong>
-                  </a>
-                </p>
-              </div>
-              <div class="col-6 text-end">
-                <ul class="list-inline">
-                  <li class="list-inline-item">
-                    <a href="#" class="text-muted">Liên hệ</a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#" class="text-muted">Về chúng tôi</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
-
-    <script src="./assets/js/sidebar.js"></script>
-    <script src="./assets/js/darklightmode.js"></script>
-    <script src="./assets/js/schedule_show.js"></script>
-  </body>
-</html>

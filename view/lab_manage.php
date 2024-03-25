@@ -1,4 +1,8 @@
+    <title>Quản lý phòng học</title>
     <link rel="shortcut icon" href="view/layout/assets/images/favicon.ico" type="image/x-icon" />
+    <!--FullCalendar-->
+    <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
+    <script src="../plugins/fullcalendar/main.js"></script>
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
@@ -94,3 +98,49 @@
             </ul>
           </div>
         </nav>
+        <!-- Phan noi dung -->
+        <main class="content px-3 py-2">
+          <div class="container-fluid">
+            <h2 class="manage">QUẢN LÝ PHÒNG HỌC</h2>
+
+            <table class="abc">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã Phòng Học</th>
+                    <th>Sức Chứa</th>
+                    <th>Lầu Học</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>P101</td>
+                    <td>40</td>
+                    <td>Lầu 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>P102</td>
+                    <td>40</td>
+                    <td>Lầu 1</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>P203</td>
+                    <td>40</td>
+                    <td>Lầu 2</td>
+                  </tr>
+                </tbody>
+            </table>
+        
+            <!-- Thêm phòng học -->
+            <div>
+                <button class="add btn btn-primary" type="button">Thêm Phòng Học</button>
+            </div>
+          </div>
+        </main>
+        <a href="#" class="theme-toggle">
+          <i class="fa-regular fa-moon" title="Chế độ tối"></i>
+          <i class="fa-solid fa-sun" title="Chế độ sáng"></i>
+        </a>
