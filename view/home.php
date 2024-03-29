@@ -1,4 +1,3 @@
-<title>LLTT System</title>
  <!-- Phan noi dung -->
  <main class="content px-3 py-2">
           <div class="container-fluid">
@@ -10,7 +9,7 @@
                   <div class="card flex-fill border-0 illustration">
                     <div class="card-body p-0 d-flex flex-fill">
                       <div class="d-flex justify-content-center align-items-center">
-                        <div class=""><img src="assets/images/sys-avatar.png" class="img-fluid illustration-img" alt=""/>
+                        <div class=""><img src="view/layout/assets/images/sys-avatar.png" class="img-fluid illustration-img" alt=""/>
                       </div>
                       <div class="">
                         <div class="p-2 m-1">
@@ -28,7 +27,7 @@
                   <div class="card-body p-0 d-flex flex-fill">
                     <div class="d-flex justify-content-center align-items-center">
                       <div class="align-self-start text-start">
-                        <img src="assets/images/view.png" class="img-fluid illustration-img" alt=""/>
+                        <img src="view/layout/assets/images/view.png" class="img-fluid illustration-img" alt=""/>
                       </div>
                       <div class="text-start">
                         <div class="p-2 m-1">

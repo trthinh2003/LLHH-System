@@ -1,10 +1,19 @@
 <?php
-    function getQTHT() {
-        $sql = "SELECT * FROM QUANTRIHETHONG";
-        return get_all($sql);
-    }
     function layAllKhoa() {
+        $conn = connect();
         $sql = "SELECT * FROM KHOA";
-        return get_all($sql);
+        return $conn->query($sql);
+    }
+    function layAllMaPhong() {
+        $conn = connect();
+        $sql = "SELECT MAPHONGHOC FROM PHONGHOC";
+        return $conn->query($sql);
+    }
+    function selectOptPhongHoc() {
+        $result = layAllMaPhong();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return $row;
     }
 ?>

@@ -1,5 +1,5 @@
- <!-- footer -->
- <footer class="footer">
+  <!-- footer -->
+  <footer class="footer">
           <div class="container-fluid">
             <div class="row text-muted">
               <div class="col-6 text-start">
@@ -24,3 +24,8 @@
         </footer>
       </div>
     </div>
+    
+    <script src="view/layout/assets/js/sidebar.js"></script>
+    <script src="view/layout/assets/js/darklightmode.js"></script>
+  </body>
+</html>

@@ -15,6 +15,22 @@
         return $conn;
     }
 
+    function connect() {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "ql_lich_thuc_hanh";
+    
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+    
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        return $conn;
+    }
+
     function get_all($sql) {
         $conn = connectdb();
         $stmt = $conn->prepare($sql);

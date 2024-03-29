@@ -171,13 +171,13 @@ a.sidebar-link {
 }
 
 /* Trang Quản lý phòng học */
-.manage{
+.manage {
     text-align: center;
     font-weight: bold;
     margin-top: 30px;
 }
 
-.abc{
+.abc {
     border-collapse: collapse;
     width: 100%;
     margin-top: 100px;
@@ -187,9 +187,9 @@ td, th {
     padding: 8px;
     text-align: center;
 }
-.add{
+.add {
     position: fixed;
-    top: 160px; 
+    top: 215px; 
     right: 30px;
 }
 

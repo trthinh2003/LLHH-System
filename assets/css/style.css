@@ -154,6 +154,10 @@ a.sidebar-link {
 }
 
 /* Footer và Nav */
+.main .navbar-expand .navbar-nav .dropdown-menu {
+    top: 35px;
+}
+
 @media (max-width:767.98px) {
 
     .js-sidebar {
@@ -187,7 +191,7 @@ td, th {
     padding: 8px;
     text-align: center;
 }
-.add{
+.add {
     position: fixed;
     top: 160px; 
     right: 30px;

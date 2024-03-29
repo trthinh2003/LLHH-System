@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2024 at 06:03 PM
+-- Generation Time: Mar 29, 2024 at 03:28 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -43,53 +43,45 @@ INSERT INTO `buoihoc` (`BUOIHOC_ID`, `TENBUOIHOC`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chitiet_yeucau`
---
-
-CREATE TABLE `chitiet_yeucau` (
-  `PHANMEM_ID` int(11) NOT NULL,
-  `MAHOCPHAN` char(15) NOT NULL,
-  `HK_NH` varchar(30) NOT NULL,
-  `TENNHOM` int(11) NOT NULL,
-  `MAGIANGVIEN` char(15) NOT NULL,
-  `MAQTHT` char(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `giangvien`
 --
 
 CREATE TABLE `giangvien` (
-  `MAGIANGVIEN` char(15) NOT NULL,
-  `MAKHOA` varchar(15) NOT NULL,
+  `GIANGVIEN_ID` int(11) NOT NULL,
   `HOTENGIANGVIEN` varchar(50) NOT NULL,
-  `HOCVI` varchar(30) NOT NULL,
   `EMAIL` varchar(50) NOT NULL,
   `SODIENTHOAI` varchar(15) NOT NULL,
-  `TENDANGNHAP` varchar(30) DEFAULT NULL,
-  `MATKHAU` varchar(30) DEFAULT NULL
+  `GIOITINH` char(10) NOT NULL,
+  `LYLICH_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `giangvien`
 --
 
-INSERT INTO `giangvien` (`MAGIANGVIEN`, `MAKHOA`, `HOTENGIANGVIEN`, `HOCVI`, `EMAIL`, `SODIENTHOAI`, `TENDANGNHAP`, `MATKHAU`) VALUES
-('GV01', 'CNTT', 'Vũ Đức Minh', 'Thạc sĩ', 'vducminh@gmail.com', '0912567891', 'ducminh', 'ducminh123');
+INSERT INTO `giangvien` (`GIANGVIEN_ID`, `HOTENGIANGVIEN`, `EMAIL`, `SODIENTHOAI`, `GIOITINH`, `LYLICH_ID`) VALUES
+(1, 'Vũ Đức Minh', 'vducminh@gmail.com', '0912567891', 'Nam', 1),
+(2, 'Lâm Trần Anh Khôi', 'ltakhoi@gmail.com', '0873373736', 'Nam', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hocki_namhoc`
+-- Table structure for table `hocki`
 --
 
-CREATE TABLE `hocki_namhoc` (
-  `HK_NH` varchar(30) NOT NULL,
-  `TENHK_NH` varchar(30) DEFAULT NULL,
+CREATE TABLE `hocki` (
+  `HOCKI` varchar(10) NOT NULL,
+  `NAMHOC` varchar(20) NOT NULL,
   `NGAYBATDAU` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `hocki`
+--
+
+INSERT INTO `hocki` (`HOCKI`, `NAMHOC`, `NGAYBATDAU`) VALUES
+('1', '2023 - 2024', NULL),
+('2', '2023 - 2024', '2024-02-26');
 
 -- --------------------------------------------------------
 
@@ -109,6 +101,9 @@ CREATE TABLE `hocphan` (
 --
 
 INSERT INTO `hocphan` (`MAHOCPHAN`, `TENHOCPHAN`, `SOTINCHI`, `SOGIOTH`) VALUES
+('CT101', 'Lập trình căn bản A', 4, NULL),
+('CT112', 'Mạng máy tính', 3, NULL),
+('CT179', 'Quản trị hệ thống', 3, NULL),
 ('CT180', 'Cơ sở dữ liệu', 3, NULL),
 ('CT299', 'Phát triển hệ thống Web', 3, NULL);
 
@@ -128,11 +123,12 @@ CREATE TABLE `khoa` (
 --
 
 INSERT INTO `khoa` (`MAKHOA`, `TENKHOA`) VALUES
-('CNTT', 'Công nghệ thông tin'),
-('HTTT', 'Hệ thống thông tin'),
-('KHMT', 'Khoa học máy tính'),
-('KTPM', 'Kỹ thuật phần mềm'),
-('MMT', 'Mạng máy tính và TT dữ liệu');
+('ATTT', 'An Toàn Thông Tin'),
+('CNTT', 'Công Nghệ Thông Tin'),
+('HTTT', 'Hệ Thống Thông Tin'),
+('KHMT', 'Khoa Học Máy Tính'),
+('KTPM', 'Ký Thuật Phần Mềm'),
+('MMT', 'Mạng Máy Tính Và Truyền Thông Dữ Liệu');
 
 -- --------------------------------------------------------
 
@@ -144,8 +140,10 @@ CREATE TABLE `lichthuchanh` (
   `MAPHONGHOC` char(15) NOT NULL,
   `BUOIHOC_ID` int(11) NOT NULL,
   `NGAYHOC` date NOT NULL,
+  `LICHTHUCHANH_ID` int(11) NOT NULL,
   `MAHOCPHAN` char(15) NOT NULL,
-  `HK_NH` varchar(30) NOT NULL,
+  `HOCKI` varchar(10) NOT NULL,
+  `NAMHOC` varchar(20) NOT NULL,
   `TENNHOM` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
@@ -157,10 +155,39 @@ CREATE TABLE `lichthuchanh` (
 
 CREATE TABLE `lophocphan` (
   `MAHOCPHAN` char(15) NOT NULL,
-  `HK_NH` varchar(30) NOT NULL,
+  `HOCKI` varchar(10) NOT NULL,
+  `NAMHOC` varchar(20) NOT NULL,
   `TENNHOM` int(11) NOT NULL,
-  `MAGIANGVIEN` char(15) NOT NULL
+  `GIANGVIEN_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `lophocphan`
+--
+
+INSERT INTO `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `GIANGVIEN_ID`) VALUES
+('CT299', '2', '2023 - 2024', 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lylichkhoahoc`
+--
+
+CREATE TABLE `lylichkhoahoc` (
+  `LYLICH_ID` int(11) NOT NULL,
+  `TRINHDOCHUYENMON` varchar(40) DEFAULT NULL,
+  `HOCHAM` varchar(50) DEFAULT NULL,
+  `NGACHVIENCHUC` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `lylichkhoahoc`
+--
+
+INSERT INTO `lylichkhoahoc` (`LYLICH_ID`, `TRINHDOCHUYENMON`, `HOCHAM`, `NGACHVIENCHUC`) VALUES
+(1, 'Tiến sĩ', NULL, 'Giảng viên'),
+(2, 'Tiến sĩ', 'Phó giáo sư', 'Giảng viên cao cấp');
 
 -- --------------------------------------------------------
 
@@ -174,6 +201,14 @@ CREATE TABLE `phanmem` (
   `PHIENBAN` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
+--
+-- Dumping data for table `phanmem`
+--
+
+INSERT INTO `phanmem` (`PHANMEM_ID`, `TENPHANMEM`, `PHIENBAN`) VALUES
+(1, 'StarUML', '6.1.0'),
+(2, 'VS Code', '1.64');
+
 -- --------------------------------------------------------
 
 --
@@ -182,31 +217,84 @@ CREATE TABLE `phanmem` (
 
 CREATE TABLE `phonghoc` (
   `MAPHONGHOC` char(15) NOT NULL,
-  `SUCCHUA` int(11) NOT NULL,
-  `LAUHOC` int(11) DEFAULT NULL
+  `SUCCHUA` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `phonghoc`
+--
+
+INSERT INTO `phonghoc` (`MAPHONGHOC`, `SUCCHUA`) VALUES
+('P101', NULL),
+('P102', NULL),
+('P103', NULL),
+('P104', NULL),
+('P105', NULL),
+('P106', NULL),
+('P107', NULL),
+('P108', NULL),
+('P109', NULL),
+('P110', NULL),
+('P111', NULL),
+('P201', NULL),
+('P202', NULL),
+('P203', NULL),
+('P204', NULL),
+('P205', NULL),
+('P206', NULL),
+('P207', NULL),
+('P208', NULL),
+('P209', NULL),
+('P210', NULL),
+('P211', NULL),
+('P212', NULL),
+('P213', NULL),
+('P214', NULL),
+('P215', NULL),
+('P217', NULL),
+('P218', NULL),
+('P219', NULL),
+('P220', NULL),
+('P221', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quantrihethong`
+-- Table structure for table `taikhoan`
 --
 
-CREATE TABLE `quantrihethong` (
-  `MAQTHT` char(15) NOT NULL,
-  `TENQTHT` varchar(30) NOT NULL,
-  `EMAIL` varchar(50) NOT NULL,
-  `SODIENTHOAI` varchar(15) NOT NULL,
+CREATE TABLE `taikhoan` (
+  `TAIKHOAN_ID` int(15) NOT NULL,
   `TENDANGNHAP` varchar(30) DEFAULT NULL,
-  `MATKHAU` varchar(30) DEFAULT NULL
+  `MATKHAU` varchar(30) DEFAULT NULL,
+  `ROLE` int(11) DEFAULT NULL,
+  `GIANGVIEN_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
--- Dumping data for table `quantrihethong`
+-- Dumping data for table `taikhoan`
 --
 
-INSERT INTO `quantrihethong` (`MAQTHT`, `TENQTHT`, `EMAIL`, `SODIENTHOAI`, `TENDANGNHAP`, `MATKHAU`) VALUES
-('QT1', 'admin', 'admin@gmail.com', '0129765554', 'admin', 'admin123');
+INSERT INTO `taikhoan` (`TAIKHOAN_ID`, `TENDANGNHAP`, `MATKHAU`, `ROLE`, `GIANGVIEN_ID`) VALUES
+(1, 'admin', 'admin123', 1, 1),
+(2, 'ducminh', 'ducminh123', 2, 1),
+(3, 'anhkhoi', 'anhkhoi123', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `yeucau`
+--
+
+CREATE TABLE `yeucau` (
+  `YEUCAU_ID` int(11) NOT NULL,
+  `MAHOCPHAN` char(15) NOT NULL,
+  `HOCKI` varchar(10) NOT NULL,
+  `NAMHOC` varchar(20) NOT NULL,
+  `TENNHOM` int(11) NOT NULL,
+  `PHANMEM_ID` int(11) NOT NULL,
+  `GIANGVIEN_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Indexes for dumped tables
@@ -219,27 +307,17 @@ ALTER TABLE `buoihoc`
   ADD PRIMARY KEY (`BUOIHOC_ID`);
 
 --
--- Indexes for table `chitiet_yeucau`
---
-ALTER TABLE `chitiet_yeucau`
-  ADD PRIMARY KEY (`MAHOCPHAN`,`HK_NH`,`PHANMEM_ID`,`TENNHOM`,`MAGIANGVIEN`),
-  ADD KEY `FK_CTYC_GV` (`MAGIANGVIEN`),
-  ADD KEY `FK_CTYC_LOPHP` (`MAHOCPHAN`,`HK_NH`,`TENNHOM`),
-  ADD KEY `FK_CTYC_PM` (`PHANMEM_ID`),
-  ADD KEY `FK_CTYC_QTHT` (`MAQTHT`);
-
---
 -- Indexes for table `giangvien`
 --
 ALTER TABLE `giangvien`
-  ADD PRIMARY KEY (`MAGIANGVIEN`),
-  ADD KEY `FK_GV_KHOA` (`MAKHOA`);
+  ADD PRIMARY KEY (`GIANGVIEN_ID`),
+  ADD KEY `LYLICH_ID` (`LYLICH_ID`);
 
 --
--- Indexes for table `hocki_namhoc`
+-- Indexes for table `hocki`
 --
-ALTER TABLE `hocki_namhoc`
-  ADD PRIMARY KEY (`HK_NH`);
+ALTER TABLE `hocki`
+  ADD PRIMARY KEY (`HOCKI`,`NAMHOC`);
 
 --
 -- Indexes for table `hocphan`
@@ -257,17 +335,23 @@ ALTER TABLE `khoa`
 -- Indexes for table `lichthuchanh`
 --
 ALTER TABLE `lichthuchanh`
-  ADD PRIMARY KEY (`MAPHONGHOC`,`BUOIHOC_ID`,`NGAYHOC`),
+  ADD PRIMARY KEY (`MAPHONGHOC`,`BUOIHOC_ID`,`NGAYHOC`,`LICHTHUCHANH_ID`),
   ADD KEY `FK_LICHTH_BUOIHOC` (`BUOIHOC_ID`),
-  ADD KEY `FK_LICHTH_LOPHP` (`MAHOCPHAN`,`HK_NH`,`TENNHOM`);
+  ADD KEY `FK_LICHTH_LOPHP` (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`);
 
 --
 -- Indexes for table `lophocphan`
 --
 ALTER TABLE `lophocphan`
-  ADD PRIMARY KEY (`MAHOCPHAN`,`HK_NH`,`TENNHOM`),
-  ADD KEY `FK_GIANGDAY` (`MAGIANGVIEN`),
-  ADD KEY `FK_LOPHP_HKNH` (`HK_NH`);
+  ADD PRIMARY KEY (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`),
+  ADD KEY `FK_LOPHP_HKNH` (`HOCKI`,`NAMHOC`),
+  ADD KEY `GIANGVIEN_ID` (`GIANGVIEN_ID`);
+
+--
+-- Indexes for table `lylichkhoahoc`
+--
+ALTER TABLE `lylichkhoahoc`
+  ADD PRIMARY KEY (`LYLICH_ID`);
 
 --
 -- Indexes for table `phanmem`
@@ -282,45 +366,94 @@ ALTER TABLE `phonghoc`
   ADD PRIMARY KEY (`MAPHONGHOC`);
 
 --
--- Indexes for table `quantrihethong`
+-- Indexes for table `taikhoan`
 --
-ALTER TABLE `quantrihethong`
-  ADD PRIMARY KEY (`MAQTHT`);
+ALTER TABLE `taikhoan`
+  ADD PRIMARY KEY (`TAIKHOAN_ID`),
+  ADD KEY `GIANGVIEN_ID` (`GIANGVIEN_ID`);
+
+--
+-- Indexes for table `yeucau`
+--
+ALTER TABLE `yeucau`
+  ADD PRIMARY KEY (`YEUCAU_ID`),
+  ADD KEY `FK_YC_LOPHP` (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`),
+  ADD KEY `PHANMEM_ID` (`PHANMEM_ID`),
+  ADD KEY `GIANGVIEN_ID` (`GIANGVIEN_ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `giangvien`
+--
+ALTER TABLE `giangvien`
+  MODIFY `GIANGVIEN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `lylichkhoahoc`
+--
+ALTER TABLE `lylichkhoahoc`
+  MODIFY `LYLICH_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `phanmem`
+--
+ALTER TABLE `phanmem`
+  MODIFY `PHANMEM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `taikhoan`
+--
+ALTER TABLE `taikhoan`
+  MODIFY `TAIKHOAN_ID` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `yeucau`
+--
+ALTER TABLE `yeucau`
+  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `chitiet_yeucau`
---
-ALTER TABLE `chitiet_yeucau`
-  ADD CONSTRAINT `FK_CTYC_GV` FOREIGN KEY (`MAGIANGVIEN`) REFERENCES `giangvien` (`MAGIANGVIEN`),
-  ADD CONSTRAINT `FK_CTYC_LOPHP` FOREIGN KEY (`MAHOCPHAN`,`HK_NH`,`TENNHOM`) REFERENCES `lophocphan` (`MAHOCPHAN`, `HK_NH`, `TENNHOM`),
-  ADD CONSTRAINT `FK_CTYC_PM` FOREIGN KEY (`PHANMEM_ID`) REFERENCES `phanmem` (`PHANMEM_ID`),
-  ADD CONSTRAINT `FK_CTYC_QTHT` FOREIGN KEY (`MAQTHT`) REFERENCES `quantrihethong` (`MAQTHT`);
-
---
 -- Constraints for table `giangvien`
 --
 ALTER TABLE `giangvien`
-  ADD CONSTRAINT `FK_GV_KHOA` FOREIGN KEY (`MAKHOA`) REFERENCES `khoa` (`MAKHOA`);
+  ADD CONSTRAINT `giangvien_ibfk_1` FOREIGN KEY (`LYLICH_ID`) REFERENCES `lylichkhoahoc` (`LYLICH_ID`);
 
 --
 -- Constraints for table `lichthuchanh`
 --
 ALTER TABLE `lichthuchanh`
   ADD CONSTRAINT `FK_LICHTH_BUOIHOC` FOREIGN KEY (`BUOIHOC_ID`) REFERENCES `buoihoc` (`BUOIHOC_ID`),
-  ADD CONSTRAINT `FK_LICHTH_LOPHP` FOREIGN KEY (`MAHOCPHAN`,`HK_NH`,`TENNHOM`) REFERENCES `lophocphan` (`MAHOCPHAN`, `HK_NH`, `TENNHOM`),
+  ADD CONSTRAINT `FK_LICHTH_LOPHP` FOREIGN KEY (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`) REFERENCES `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`),
   ADD CONSTRAINT `FK_LICHTH_PHONGHOC` FOREIGN KEY (`MAPHONGHOC`) REFERENCES `phonghoc` (`MAPHONGHOC`);
 
 --
 -- Constraints for table `lophocphan`
 --
 ALTER TABLE `lophocphan`
-  ADD CONSTRAINT `FK_GIANGDAY` FOREIGN KEY (`MAGIANGVIEN`) REFERENCES `giangvien` (`MAGIANGVIEN`),
-  ADD CONSTRAINT `FK_LOPHP_HKNH` FOREIGN KEY (`HK_NH`) REFERENCES `hocki_namhoc` (`HK_NH`),
-  ADD CONSTRAINT `FK_LOPHP_HP` FOREIGN KEY (`MAHOCPHAN`) REFERENCES `hocphan` (`MAHOCPHAN`);
+  ADD CONSTRAINT `FK_LOPHP_HKNH` FOREIGN KEY (`HOCKI`,`NAMHOC`) REFERENCES `hocki` (`HOCKI`, `NAMHOC`),
+  ADD CONSTRAINT `FK_LOPHP_HP` FOREIGN KEY (`MAHOCPHAN`) REFERENCES `hocphan` (`MAHOCPHAN`),
+  ADD CONSTRAINT `lophocphan_ibfk_1` FOREIGN KEY (`GIANGVIEN_ID`) REFERENCES `giangvien` (`GIANGVIEN_ID`);
+
+--
+-- Constraints for table `taikhoan`
+--
+ALTER TABLE `taikhoan`
+  ADD CONSTRAINT `taikhoan_ibfk_1` FOREIGN KEY (`GIANGVIEN_ID`) REFERENCES `giangvien` (`GIANGVIEN_ID`);
+
+--
+-- Constraints for table `yeucau`
+--
+ALTER TABLE `yeucau`
+  ADD CONSTRAINT `FK_YC_LOPHP` FOREIGN KEY (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`) REFERENCES `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`),
+  ADD CONSTRAINT `yeucau_ibfk_1` FOREIGN KEY (`PHANMEM_ID`) REFERENCES `phanmem` (`PHANMEM_ID`),
+  ADD CONSTRAINT `yeucau_ibfk_2` FOREIGN KEY (`GIANGVIEN_ID`) REFERENCES `giangvien` (`GIANGVIEN_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

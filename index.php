@@ -1,39 +1,58 @@
-<!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <?php
     include_once "model/connectdb.php";
     include_once "model/catalog.php";
 
     if (isset($_GET['pg']) && ($_GET['pg'] != "")) {
       switch ($_GET['pg']) {
-        case 'schedule_registration':
-          include_once "view/schedule_registration.php";
-          break;
-        case 'lab_manage':
-          include_once "view/lab_manage.php";
-          break;
         case 'schedule_watching':
           include_once "view/schedule_watching.php";
           break;
+        case 'login-form':
+          include_once "view/login-form.php";
+          break;
+        case 'admin':
+          include_once "admin/admin.php";
+          break;
+        case 'account_manage':
+          include_once "admin/account_manage.php";
+          include_once "view/footer.php";
+        break;
+        case 'lab_manage':
+          include_once "admin/lab_manage.php";
+          include_once "view/footer.php";
+          break;
+        case 'software_manage':
+          include_once "admin/software_manage.php";
+          include_once "view/footer.php";
+          break;
+        case 'requirements_manage':
+          include_once "admin/requirements_manage.php";
+          include_once "view/footer.php";
+          break;
+        case 'schedule_watching_admin':
+          include_once "admin/schedule_watching_admin.php";
+          include_once "view/footer.php";
+          break;
+        case 'teacher':
+          include_once "teacher/teacher.php";
+          break;
+        case 'schedule_registration':
+          include_once "teacher/schedule_registration.php";
+          include_once "view/footer.php";
+          break;
+        case 'schedule_watching_teacher':
+          include_once "teacher/schedule_watching_teacher.php";
+          include_once "view/footer.php";
+        break;
         default:
           include_once "view/header.php";
           include_once "view/home.php";
+          include_once "view/footer.php";
           break;
       }
     } else {
-      //require home
       include_once "view/header.php";
       include_once "view/home.php";
+      include_once "view/footer.php";
     }
-
-    //require footer
-    include_once "view/footer.php";
-  ?>
-  <script src="view/layout/assets/js/sidebar.js"></script>
-  <script src="view/layout/assets/js/darklightmode.js"></script>
-  </body>
-</html>
+?>
