@@ -6,5 +6,8 @@
     if (isset($_SESSION['TeacherName']) && $_SESSION['TeacherName'] != "") {
         unset($_SESSION['TeacherName']);
     }
+    if (isset($_SESSION['TeacherID']) && $_SESSION['TeacherID'] != "") {
+        unset($_SESSION['TeacherID']);
+    }
     header('Location: ../index.php');
 ?>

@@ -31,7 +31,6 @@
           break;
         case 'schedule_watching_admin':
           include_once "admin/schedule_watching_admin.php";
-          include_once "view/footer.php";
           break;
         case 'teacher':
           include_once "teacher/teacher.php";
@@ -42,7 +41,6 @@
           break;
         case 'schedule_watching_teacher':
           include_once "teacher/schedule_watching_teacher.php";
-          include_once "view/footer.php";
         break;
         default:
           include_once "view/header.php";

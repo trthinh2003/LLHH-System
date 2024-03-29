@@ -1,11 +1,13 @@
 <?php
     ob_start();
     session_start();
-    if (isset($_SESSION['TeacherName']) && $_SESSION['TeacherName']) {
+    if (isset($_SESSION['TeacherName']) && $_SESSION['TeacherName'] != "") {
         $teacher = $_SESSION['TeacherName'];
     }
+    if (isset($_SESSION['TeacherID']) && $_SESSION['TeacherID'] != "") {
+        $teacherID = $_SESSION['TeacherID'];
+    }
 ?>
-
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>

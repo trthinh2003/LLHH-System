@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2024 at 03:28 AM
+-- Generation Time: Mar 29, 2024 at 10:12 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -158,15 +158,17 @@ CREATE TABLE `lophocphan` (
   `HOCKI` varchar(10) NOT NULL,
   `NAMHOC` varchar(20) NOT NULL,
   `TENNHOM` int(11) NOT NULL,
-  `GIANGVIEN_ID` int(11) NOT NULL
+  `GIANGVIEN_ID` int(11) NOT NULL,
+  `SISO` int(50) NOT NULL,
+  `THU` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `lophocphan`
 --
 
-INSERT INTO `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `GIANGVIEN_ID`) VALUES
-('CT299', '2', '2023 - 2024', 2, 1);
+INSERT INTO `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `GIANGVIEN_ID`, `SISO`, `THU`) VALUES
+('CT299', '2', '2023 - 2024', 2, 2, 40, 2);
 
 -- --------------------------------------------------------
 
@@ -293,8 +295,15 @@ CREATE TABLE `yeucau` (
   `NAMHOC` varchar(20) NOT NULL,
   `TENNHOM` int(11) NOT NULL,
   `PHANMEM_ID` int(11) NOT NULL,
-  `GIANGVIEN_ID` int(11) NOT NULL
+  `TUANHOC` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `yeucau`
+--
+
+INSERT INTO `yeucau` (`YEUCAU_ID`, `MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `PHANMEM_ID`, `TUANHOC`) VALUES
+(1, 'CT299', '2', '2023 - 2024', 2, 1, 15);
 
 --
 -- Indexes for dumped tables
@@ -378,8 +387,7 @@ ALTER TABLE `taikhoan`
 ALTER TABLE `yeucau`
   ADD PRIMARY KEY (`YEUCAU_ID`),
   ADD KEY `FK_YC_LOPHP` (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`),
-  ADD KEY `PHANMEM_ID` (`PHANMEM_ID`),
-  ADD KEY `GIANGVIEN_ID` (`GIANGVIEN_ID`);
+  ADD KEY `PHANMEM_ID` (`PHANMEM_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -413,7 +421,7 @@ ALTER TABLE `taikhoan`
 -- AUTO_INCREMENT for table `yeucau`
 --
 ALTER TABLE `yeucau`
-  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -452,8 +460,7 @@ ALTER TABLE `taikhoan`
 --
 ALTER TABLE `yeucau`
   ADD CONSTRAINT `FK_YC_LOPHP` FOREIGN KEY (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`) REFERENCES `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`),
-  ADD CONSTRAINT `yeucau_ibfk_1` FOREIGN KEY (`PHANMEM_ID`) REFERENCES `phanmem` (`PHANMEM_ID`),
-  ADD CONSTRAINT `yeucau_ibfk_2` FOREIGN KEY (`GIANGVIEN_ID`) REFERENCES `giangvien` (`GIANGVIEN_ID`);
+  ADD CONSTRAINT `yeucau_ibfk_1` FOREIGN KEY (`PHANMEM_ID`) REFERENCES `phanmem` (`PHANMEM_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -7,7 +7,7 @@
         $user = $_POST['username'];
         $pass = $_POST['passwd'];
     }
-    $sql = "SELECT GIANGVIEN.HOTENGIANGVIEN, TAIKHOAN.ROLE 
+    $sql = "SELECT GIANGVIEN.GIANGVIEN_ID, GIANGVIEN.HOTENGIANGVIEN, TAIKHOAN.ROLE
             FROM TAIKHOAN, GIANGVIEN  
             WHERE TAIKHOAN.GIANGVIEN_ID = GIANGVIEN.GIANGVIEN_ID
             AND TAIKHOAN.TENDANGNHAP LIKE '".$user."' AND TAIKHOAN.MATKHAU LIKE '".$pass."'";
@@ -19,6 +19,7 @@
             header('Location: ../index.php?pg=admin');
         }
         else if ($row['ROLE'] == 2) {
+            $_SESSION['TeacherID'] = $row['GIANGVIEN_ID'];
             $_SESSION['TeacherName'] = $row['HOTENGIANGVIEN'];
             header('Location: ../index.php?pg=teacher');
         }
