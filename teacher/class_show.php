@@ -1,31 +1,32 @@
 <?php
     ob_start();
     session_start();
-    if (isset($_SESSION['AdminName']) && $_SESSION['AdminName'] != "") {
-        $admin = $_SESSION['AdminName'];
+    if (isset($_SESSION['TeacherName']) && $_SESSION['TeacherName'] != "") {
+        $teacher = $_SESSION['TeacherName'];
     }
     else {
         header('Location: index.php');
     }
+    if (isset($_SESSION['TeacherID']) && $_SESSION['TeacherID'] != "") {
+        $teacherID = $_SESSION['TeacherID'];
+    }
     $tr = "";
     $i = 1;
-    $result_all = layTTCacYeuCau();
+    $result_all = layTTLopHocPhan($teacherID, $teacher);
     foreach ($result_all as $row) {
         $tr .= '<tr>
                     <td>'.$i.'</td>
-                    <td>'.$row['HOTENGIANGVIEN'].'</td>
                     <td>'.$row['MAHOCPHAN'].'</td>
+                    <td>'.$row['TENHOCPHAN'].'</td>
                     <td>0'.$row['TENNHOM'].'</td>
-                    <td>'.$row['TUANHOC'].'</td>
-                    <td>'.$row['TENPHANMEM'].'</td>
+                    <td>'.$row['THU'].'</td>
+                    <td>'.$row['SISO'].'</td>
+                    <td>'.$row['BUOIHOC'].'</td>
+                    <td>'.$row['HOTENGIANGVIEN'].'</td>
                     <td>'.$row['HOCKI'].'</td>
                     <td>'.$row['NAMHOC'].'</td>
-                    <td>'.$row['NGAYYEUCAU'].'</td>
                     <td class="detailClassShow text-center">
-                        <input class="btn btn-secondary detail-modal-js" type="submit" name="detailClass" value="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
-                    </td>
-                    <td class="detailClassShow text-center">
-                        <input class="btn btn-primary approve-modal-js" type="submit" name="approveClass" value="Duyệt"/>
+                        <input class="btn btn-primary detail-modal-js" type="submit" name="detailClass" value="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
                     </td>
                 </tr>';
         $i++;        
@@ -38,10 +39,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý yêu cầu</title>
+    <title>Xem các lớp học phần</title>
     <link rel="shortcut icon" href="view/layout/assets/images/favicon.ico" type="image/x-icon" />
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
@@ -124,7 +126,7 @@
         }
 
         table th, table td {
-            padding: 8px; /* Kích thước padding lớn hơn */
+            padding: 15px; /* Kích thước padding lớn hơn */
             text-align: left;
             border: 1px solid #e1e1e1;
             font-size: 1.2em; /* Kích thước font lớn hơn */
@@ -149,26 +151,6 @@
         .detailClassShow {
             cursor: pointer;
         }
-
-        /* Toast message Duyet */
-        .move-from-top {
-            position: fixed;
-            top: 0;
-            right: calc(50% - 150px);
-            z-index: 99999;
-            animation: moveFromTop 0.5s forwards;
-        }
-
-        @keyframes moveFromTop {
-            from {
-                transform: translateY(0%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0%);
-                opacity: 1;
-            }
-        }
     </style>
   </head>
 
@@ -178,34 +160,30 @@
         <aside id="sidebar" class="js-sidebar">
             <div class="h-100">
                 <div class="sidebar-logo">
-                    <a href="index.php?pg=admin" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
+                    <a href="index.php?pg=teacher" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
                 </div>
                 <ul class="sidebar-nav mx-0">
                     <li class="sidebar-header">Menu Chính</li>
-                    <!-- Cac chuc nang cua Quan tri he thong -->
+                    <!-- Chuc nang chung, Giang vien se la nguoi co chuc nang nay -->
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse" aria-expanded="false">
-                            <i class="fa-solid fa-screwdriver-wrench pe-2"></i>Quản trị hệ thống
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#options" data-bs-toggle="collapse" aria-expanded="false">
+                            <i class="fa-solid fa-list pe-2"></i>Chức năng chính
                         </a>
-                        <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <ul id="options" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="index.php?pg=account_manage" class="sidebar-link">Quản lý tài khoản</a>
+                                <a href="index.php?pg=class_show" class="sidebar-link">Xem các lớp học phần</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=lab_manage" class="sidebar-link">Quản lý phòng học</a>
+                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=software_manage" class="sidebar-link">Quản lý phần mềm</a>
-                            </li>
-                            <li class="sidebar-item d-flex align-items-center justify-content-between">
-                                <a href="index.php?pg=requirements_manage" class="sidebar-link">Quản lý yêu cầu</a>
-                                <div class="shadow-lg text-center fw-bold me-5 mt-1" style="width: 1.15rem; font-size: 0.5rem;"><div class="p-1 bg-danger text-white rounded-circle"><?=$i - 1;?></div></div>
+                                <a href="#" class="sidebar-link">Thống kê số tiết dạy</a>
                             </li>
                         </ul>
                     </li>
                     <!-- Chuc nang xem lich TH, chuc nang nay ca QTHT, Giang vien va Sinh vien deu co the xem duoc -->
                     <li class="sidebar-item">
-                        <a href="index.php?pg=schedule_watching_admin" class="sidebar-link">
+                        <a href="index.php?pg=schedule_watching_teacher" class="sidebar-link">
                             <i class="fa-solid fa-calendar-days pe-2"></i>
                             Xem lịch thực hành
                         </a>
@@ -220,58 +198,47 @@
                 </button>
                 <div class="navbar-collapse navbar">
                     <ul class="navbar-nav">
-                    <!-- <li class="nav-item dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                        <img src="assets/images/avatar.jpg" class="avatar img-fluid rounded" alt="">
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                        <a href="#" class="dropdown-item">Cài đặt</a>
-                                        <a href="./login-form.html" class="dropdown-item">Đăng xuất</a>
-                                    </div>
-                                </li> -->
-                                <li class="nav-item dropdown">
-                                    <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                        <p class="login-sign text-black mt-2">
-                                            <img class="rounded-circle mx-1" src="view/layout/assets/images/admin_avatar.jpg" alt="Logo" width="40px"/>
-                                            Xin chào, <?=$admin;?> 
-                                            <i class="fa-solid fa-chevron-down pe-2"></i></p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                        <a href="#" class="dropdown-item">Cài đặt</a>
-                                        <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
-                                    </div>
-                                </li>
-                        <!-- <li class="login-sign">
-                            <a href="view/login-form.php" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
-                        </li> -->
+                        <li class="nav-item dropdown">
+                            <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                                <p class="login-sign text-black mt-2">
+                                    <img class="rounded-circle mx-1" src="view/layout/assets/images/teacher_avatar.jpg" alt="Logo" width="40px"/>
+                                    Xin chào, GV. <?=$teacher;?> 
+                                    <i class="fa-solid fa-chevron-down pe-2"></i>
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
+                                <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
+                                <a href="#" class="dropdown-item">Cài đặt</a>
+                                <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
             <!-- Phan noi dung -->
             <main class="content px-3 py-2">
                 <div class="container-fluid col">
-                    <h2 class="manage text-center fw-bold">THÔNG TIN CÁC YÊU CẦU</h2>
+                    <h2 class="manage text-center fw-bold">THÔNG TIN CÁC LỚP HỌC PHẦN</h2>
                     <div class="card border-0 mt-5">
                         <div class="card-body">
                             <table>
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Giảng viên yêu cầu</th>
                                     <th>Mã học phần</th>
+                                    <th>Tên học phần</th>
                                     <th>Ký hiệu nhóm</th>
-                                    <th>Tuần thực hành</th>
-                                    <th>Phần mềm yêu cầu</th>
+                                    <th>Thứ</th>
+                                    <th>Sỉ số</th>
+                                    <th>Buổi học</th>
+                                    <th>Phụ trách giảng dạy</th>
                                     <th>Học kì</th>
                                     <th>Năm học</th>
-                                    <th>Ngày yêu cầu</th>
-                                    <th colspan="2" class="text-center">Chọn</th>
+                                    <th class="text-center">Chọn</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <?=$tr;?>
+                                <?=$tr;?>
                                 </tbody>
                             </table>
                         </div>
@@ -283,26 +250,26 @@
                 <i class="fa-solid fa-sun" title="Chế độ sáng"></i>
             </a>
             <!-- footer -->
-            <footer class="footer">
+             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-muted">
-                        <div class="col-6 text-start">
-                            <p class="mb-0">
-                            <a href="#" class="text-muted">
-                                <strong>LLTT System</strong>
-                            </a>
-                            </p>
-                        </div>
-                        <div class="col-6 text-end">
-                            <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <a href="#" class="text-muted">Liên hệ</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="text-muted">Về chúng tôi</a>
-                            </li>
-                            </ul>
-                        </div>
+                    <div class="col-6 text-start">
+                        <p class="mb-0">
+                        <a href="#" class="text-muted">
+                            <strong>LLTT System</strong>
+                        </a>
+                        </p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" class="text-muted">Liên hệ</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="text-muted">Về chúng tôi</a>
+                        </li>
+                        </ul>
+                    </div>
                     </div>
                 </div>
             </footer>
@@ -312,7 +279,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title fw-bold" id="exampleModalLabel">THÔNG TIN YÊU CẦU</h5>
+                        <h5 class="modal-title fw-bold" id="exampleModalLabel">THÔNG TIN CHI TIẾT</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -323,7 +290,7 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -349,44 +316,13 @@
                 }
             });
         });
-
-        // Hàm hiển thị thông báo thành công bằng một thẻ div tùy chỉnh với hiệu ứng di chuyển
-        function showSuccessMessage(message) {
-            var successDiv = document.createElement('div');
-            successDiv.className = 'shadow-lg p-3 move-from-top bg-white text-center'; // Thêm class move-from-right để kích hoạt hiệu ứng di chuyển
-            successDiv.style.width = '15rem';
-            successDiv.innerHTML = '<i class="fa-solid fa-check p-2 bg-success text-white rounded-circle pe-2 mx-2"></i>' + message;
-            document.body.appendChild(successDiv);
-            // Xóa div sau một khoảng thời gian
-            setTimeout(function() {
-                document.body.removeChild(successDiv);
-            }, 2000); // Thời gian hiển thị, ví dụ 2000ms (2 giây)
-        }
-
-        // Thay đổi sự kiện click của nút "Duyệt" để gọi hàm hiển thị thông báo thành công tùy chỉnh
-        var approveButtons = document.querySelectorAll('.approve-modal-js');
-        approveButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                // Hiển thị thông báo thành công
-                showSuccessMessage('Duyệt thành công!');
-            });
-        });
-
-        // Hàm hiển thị toast message
-        function showToast(message) {
-            var toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = '<div class="toast-body">' + message + '</div>';
-            document.body.appendChild(toast);
-            var toastInstance = new bootstrap.Toast(toast);
-            toastInstance.show();
-            // Xóa toast sau khi hiển thị
-            setTimeout(function() {
-                document.body.removeChild(toast);
-            }, 2000); // Thời gian hiển thị toast, ví dụ 2000ms (2 giây)
-        }
     </script>
     <script src="view/layout/assets/js/sidebar.js"></script>
     <script src="view/layout/assets/js/darklightmode.js"></script>
   </body>
 </html>
+
+
+
+        
+

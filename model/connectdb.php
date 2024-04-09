@@ -5,7 +5,7 @@
         $password = "";
 
         try {
-            $conn = new PDO("mysql:host=$servername;dbname=ql_lich_thuc_hanh", $username, $password);
+            $conn = new PDO("mysql:host=$servername;dbname=ql_lich_th", $username, $password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //echo "Kết nối thành công!";
@@ -19,7 +19,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "ql_lich_thuc_hanh";
+        $dbname = "ql_lich_th";
     
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);

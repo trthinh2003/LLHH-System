@@ -170,29 +170,6 @@ a.sidebar-link {
     }
 }
 
-/* Trang Quản lý phòng học */
-.manage {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 30px;
-}
-
-.abc {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 100px;
-}
-td, th {
-    border: 1px solid lightgrey;
-    padding: 8px;
-    text-align: center;
-}
-.add {
-    position: fixed;
-    top: 215px; 
-    right: 30px;
-}
-
 /* Chế độ sáng tối của trình duyệt */
 .theme-toggle {
     position: fixed;

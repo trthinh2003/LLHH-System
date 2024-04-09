@@ -2,7 +2,10 @@
     ob_start();
     session_start();
     if (isset($_SESSION['AdminName']) && $_SESSION['AdminName'] != "") {
-        $admin = $_SESSION['AdminName'];
+      $admin = $_SESSION['AdminName'];
+    }
+    else {
+        header('Location: index.php');
     }
 ?>
 

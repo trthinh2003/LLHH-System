@@ -1,30 +1,33 @@
 <?php
     ob_start();
     session_start();
-    if (isset($_SESSION['TeacherName']) && $_SESSION['TeacherName']) {
+    if (isset($_SESSION['TeacherName']) && $_SESSION['TeacherName'] != "") {
         $teacher = $_SESSION['TeacherName'];
+    }
+    else {
+        header('Location: index.php');
+    }
+    if (isset($_SESSION['TeacherID']) && $_SESSION['TeacherID'] != "") {
+        $teacherID = $_SESSION['TeacherID'];
     }
 ?>
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <title>Đăng ký lịch thực hành</title>
-    <link rel="shortcut icon" href="view/layout/assets/images/favicon.ico" type="image/x-icon" />
-    <!--FullCalendar-->
-    <link rel="stylesheet" href="plugins/fullcalendar/main.css">
-    <script src="plugins/fullcalendar/main.js"></script>
-    <!--Bootstrap-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+  <title>Đăng ký lịch thực hành</title>
+  <link rel="shortcut icon" href="view/layout/assets/images/favicon.ico" type="image/x-icon" />
+  <!--Bootstrap-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
-    <link rel="stylesheet" href="view/layout/assets/css/style.css" />
-  </head>
+  <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
+  <link rel="stylesheet" href="view/layout/assets/css/style.css" />
+</head>
 
   <body>
     <div class="wrapper">
@@ -85,7 +88,7 @@
                               <i class="fa-solid fa-chevron-down pe-2"></i></p>
                           </a>
                             <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                              <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
+                              <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
                               <a href="#" class="dropdown-item">Cài đặt</a>
                               <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
                             </div>

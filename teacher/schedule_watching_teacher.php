@@ -138,6 +138,9 @@
                   </a>
                   <ul id="options" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
+                      <a href="index.php?pg=class_show" class="sidebar-link">Xem các lớp học phần</a>
+                    </li>
+                    <li class="sidebar-item">
                       <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                     </li>
                     <li class="sidebar-item">
@@ -180,7 +183,7 @@
                         <i class="fa-solid fa-chevron-down pe-2"></i></p>
                       </a>
                       <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
+                        <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
                         <a href="#" class="dropdown-item">Cài đặt</a>
                         <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
                       </div>

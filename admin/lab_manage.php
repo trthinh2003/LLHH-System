@@ -4,6 +4,33 @@
     if (isset($_SESSION['AdminName']) && $_SESSION['AdminName'] != "") {
         $admin = $_SESSION['AdminName'];
     }
+    else {
+        header('Location: index.php');
+    }
+    $tr = "";
+    $i = 1;
+    $result_all = layTTPhongHocKemCauHinhMay();
+    foreach ($result_all as $row) {
+        $tr .= '<tr>
+                    <td>'.$i.'</td>
+                    <td>'.$row['MAPHONGHOC'].'</td>
+                    <td>'.$row['SUCCHUA'].'</td>
+                    <td>CPU: '.$row['CPU'].' - RAM: '.$row['RAM'].' - SSD: '.$row['SSD'].'</td>
+                    <td class="edit text-center p-0">
+                        <form method="post" action="sua.php">
+                        <input class="btn btn-success" type="submit" name="editBtn" value="Sửa"/>
+                        <input type="hidden" name="maphonghoc" value="'.$row['MAPHONGHOC'].'"/>
+                        </form>
+                    </td>      
+                    <td class="del text-center p-0">
+                        <form method="post" action="route/delete_lab.php">
+                        <input class="btn btn-primary" type="submit" name="delBtn" value="Xóa"/>
+                        <input type="hidden" name="maphonghoc" value="'.$row['MAPHONGHOC'].'"/>
+                        </form>
+                    </td>                    
+                </tr>';
+        $i++;        
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +47,111 @@
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
     <link rel="stylesheet" href="view/layout/assets/css/style.css" />
+    <style>
+        main.content {
+            display: flex;
+            justify-content: flex-start; /* phía trên */
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table_header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: rgb(240, 240, 240);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .table_header p {
+            color: #0298cf;
+            font-weight: bold;
+            font-size: 1.5em; 
+        }
+
+        button:hover {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .add_new {
+            padding: 10px 20px;
+            color: white;
+            background-color: #0298cf;
+            font-size: 1.2em; 
+            transition: background-color 0.3s ease;
+        }
+
+        .add_new:hover {
+            background-color: #007bff;
+        }
+
+        input {
+            padding: 10px 10px;
+            margin: 0 10px;
+            outline: none;
+            border: 1px solid #0298cf;
+            border-radius: 6px;
+            color: #0298cf;
+            font-size: 1.2em; /* Kích thước font lớn hơn */
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #007bff;
+        }
+
+        td img {
+            width: 36px;
+            height: 36px;
+            margin-right: .5rem;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 15px; /* Kích thước padding lớn hơn */
+            text-align: left;
+            border: 1px solid #e1e1e1;
+            font-size: 1.2em; /* Kích thước font lớn hơn */
+        }
+
+        table th {
+            background-color: #f5f5f5;
+        }
+
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .table_body {
+            width: 100%;
+            max-height: calc(89vh - 160px);
+            /* margin-top: 20px; */
+            border-radius: .6rem;
+            overflow: auto;
+        }
+
+        .edit, .del {
+            cursor: pointer;
+        }
+    </style>
   </head>
 
   <body>
@@ -101,44 +233,34 @@
             <!-- Phan noi dung -->
             <main class="content px-3 py-2">
                 <div class="container-fluid">
-                    <h2 class="manage">QUẢN LÝ PHÒNG HỌC</h2>
+                    <h2 class="manage text-center fw-bold mt-5">QUẢN LÝ PHÒNG HỌC</h2>
                     <div class="card border-0 mt-5">
+                        <!-- Thêm phòng học -->
+                        <div class="my-2 d-flex justify-content-between">
+                            <div></div>
+                            <form action="addLab.php" method="post">
+                                <button  class="add btn btn-primary mx-3 text-end" >
+                                    <i class="fa-solid fa-plus p-0"></i>
+                                    <input class="btn btn-primary p-0" name="addLabBtn" type="submit" value="Thêm Phòng Học"/>
+                                </button> 
+                            </form>
+                        </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table>
                                 <thead>
-                                    <tr>
-                                        <th scope="col">STT</th>
-                                        <th scope="col">Mã phòng học</th>
-                                        <th scope="col">Sức chứa</th>
-                                        <th scope="col" colspan="2">Hành động</th>
-                                    </tr>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Phòng học</th>
+                                    <th>Sức chứa</th>
+                                    <th class="text-center">Cấu hình máy</th>
+                                    <th colspan="2" class="text-center">Hành động</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>P101</td>
-                                        <td>40</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>P102</td>
-                                        <td>40</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>P103</td>
-                                        <td>40</td>
-                                        <td>3</td>
-                                    </tr>
+                                <?=$tr;?>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <!-- Thêm phòng học -->
-                    <div>
-                        <button class="add btn btn-primary mt-3" type="button">Thêm Phòng Học</button>
                     </div>
                 </div>      
             </main>
