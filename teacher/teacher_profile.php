@@ -134,6 +134,9 @@
                                 <a href="index.php?pg=class_show" class="sidebar-link">Xem các lớp học phần</a>
                             </li>
                             <li class="sidebar-item">
+                                <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin phòng máy</a>
+                            </li>
+                            <li class="sidebar-item">
                                 <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                             </li>
                             <li class="sidebar-item">

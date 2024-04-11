@@ -1,11 +1,14 @@
 <?php
     ob_start();
     session_start();
-    if (isset($_SESSION['AdminName']) && $_SESSION['AdminName'] != "") {
-        $admin = $_SESSION['AdminName'];
+    if (isset($_SESSION['TeacherName']) && $_SESSION['TeacherName'] != "") {
+        $teacher = $_SESSION['TeacherName'];
     }
     else {
         header('Location: index.php');
+    }
+    if (isset($_SESSION['TeacherID']) && $_SESSION['TeacherID'] != "") {
+        $teacherID = $_SESSION['TeacherID'];
     }
     $tr = "";
     $i = 1;
@@ -17,18 +20,9 @@
                     <td>'.$row['SUCCHUA'].'</td>
                     <td>CPU: '.$row['CPU'].' - RAM: '.$row['RAM'].' - SSD: '.$row['SSD'].'</td>
                     <td>'.$row['CACPHANMEM'].'</td>
-                    <td class="edit text-center p-0">
-                        <form method="post" action="sua.php">
-                        <input class="btn btn-success" type="submit" name="editBtn" value="Sửa"/>
-                        <input type="hidden" name="maphonghoc" value="'.$row['MAPHONGHOC'].'"/>
-                        </form>
-                    </td>      
-                    <td class="del text-center p-0">
-                        <form method="post" action="route/delete_lab.php">
-                        <input class="btn btn-primary" type="submit" name="delBtn" value="Xóa"/>
-                        <input type="hidden" name="maphonghoc" value="'.$row['MAPHONGHOC'].'"/>
-                        </form>
-                    </td>                    
+                    <td class="detailClassShow text-center">
+                        <input class="btn btn-secondary detail-modal-js" type="submit" name="detailClass" value="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                    </td>                   
                 </tr>';
         $i++;        
     }
@@ -40,15 +34,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý phòng học</title>
+    <title>Xem thông tin phòng máy</title>
     <link rel="shortcut icon" href="view/layout/assets/images/favicon.ico" type="image/x-icon" />
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
     <link rel="stylesheet" href="view/layout/assets/css/style.css" />
     <style>
+        .main {
+            overflow: scroll;
+        }
+
         main.content {
             display: flex;
             justify-content: flex-start; /* phía trên */
@@ -79,11 +78,6 @@
             color: #0298cf;
             font-weight: bold;
             font-size: 1.5em; 
-        }
-
-        button:hover {
-            background-color: #007bff;
-            color: #ffffff;
         }
 
         .add_new {
@@ -149,7 +143,7 @@
             overflow: auto;
         }
 
-        .edit, .del {
+        .detailClassShow {
             cursor: pointer;
         }
     </style>
@@ -161,33 +155,33 @@
         <aside id="sidebar" class="js-sidebar">
             <div class="h-100">
                 <div class="sidebar-logo">
-                    <a href="index.php?pg=admin" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
+                    <a href="index.php?pg=teacher" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
                 </div>
                 <ul class="sidebar-nav mx-0">
                     <li class="sidebar-header">Menu Chính</li>
-                    <!-- Cac chuc nang cua Quan tri he thong -->
+                    <!-- Chuc nang chung, Giang vien se la nguoi co chuc nang nay -->
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link collapsed" data-bs-target="#pages" data-bs-toggle="collapse" aria-expanded="false">
-                            <i class="fa-solid fa-screwdriver-wrench pe-2"></i>Quản trị hệ thống
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#options" data-bs-toggle="collapse" aria-expanded="false">
+                            <i class="fa-solid fa-list pe-2"></i>Chức năng chính
                         </a>
-                        <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <ul id="options" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="index.php?pg=account_manage" class="sidebar-link">Quản lý tài khoản</a>
+                                <a href="index.php?pg=class_show" class="sidebar-link">Xem các lớp học phần</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=lab_manage" class="sidebar-link">Quản lý phòng học</a>
+                                <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin phòng máy</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=software_manage" class="sidebar-link">Quản lý phần mềm</a>
+                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=requirements_manage" class="sidebar-link">Quản lý yêu cầu</a>
+                                <a href="#" class="sidebar-link">Thống kê số tiết dạy</a>
                             </li>
                         </ul>
                     </li>
                     <!-- Chuc nang xem lich TH, chuc nang nay ca QTHT, Giang vien va Sinh vien deu co the xem duoc -->
                     <li class="sidebar-item">
-                        <a href="index.php?pg=schedule_watching_admin" class="sidebar-link">
+                        <a href="index.php?pg=schedule_watching_teacher" class="sidebar-link">
                             <i class="fa-solid fa-calendar-days pe-2"></i>
                             Xem lịch thực hành
                         </a>
@@ -202,50 +196,28 @@
                 </button>
                 <div class="navbar-collapse navbar">
                     <ul class="navbar-nav">
-                    <!-- <li class="nav-item dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                        <img src="assets/images/avatar.jpg" class="avatar img-fluid rounded" alt="">
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                        <a href="#" class="dropdown-item">Cài đặt</a>
-                                        <a href="./login-form.html" class="dropdown-item">Đăng xuất</a>
-                                    </div>
-                                </li> -->
-                                <li class="nav-item dropdown">
-                                    <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                        <p class="login-sign text-black mt-2">
-                                            <img class="rounded-circle mx-1" src="view/layout/assets/images/admin_avatar.jpg" alt="Logo" width="40px"/>
-                                            Xin chào, <?=$admin;?> 
-                                            <i class="fa-solid fa-chevron-down pe-2"></i></p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                        <a href="#" class="dropdown-item">Cài đặt</a>
-                                        <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
-                                    </div>
-                                </li>
-                        <!-- <li class="login-sign">
-                            <a href="view/login-form.php" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
-                        </li> -->
+                        <li class="nav-item dropdown">
+                            <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                                <p class="login-sign text-black mt-2">
+                                    <img class="rounded-circle mx-1" src="view/layout/assets/images/teacher_avatar.jpg" alt="Logo" width="40px"/>
+                                    Xin chào, GV. <?=$teacher;?> 
+                                    <i class="fa-solid fa-chevron-down pe-2"></i>
+                                </p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
+                                <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
+                                <a href="#" class="dropdown-item">Cài đặt</a>
+                                <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
             <!-- Phan noi dung -->
             <main class="content px-3 py-2">
-                <div class="container-fluid">
-                    <h2 class="manage text-center fw-bold mt-5">QUẢN LÝ PHÒNG HỌC</h2>
+                <div class="container-fluid col">
+                    <h2 class="manage text-center fw-bold mt-3">THÔNG TIN CÁC PHÒNG MÁY</h2>
                     <div class="card border-0 mt-5">
-                        <!-- Thêm phòng học -->
-                        <div class="my-2 d-flex justify-content-between">
-                            <div></div>
-                            <form action="addLab.php" method="post">
-                                <button  class="add btn btn-primary mx-3 text-end" >
-                                    <i class="fa-solid fa-plus p-0"></i>
-                                    <input class="btn btn-primary p-0" name="addLabBtn" type="submit" value="Thêm Phòng Học"/>
-                                </button> 
-                            </form>
-                        </div>
                         <div class="card-body">
                             <table>
                                 <thead>
@@ -255,7 +227,7 @@
                                     <th>Sức chứa</th>
                                     <th class="text-center">Cấu hình máy</th>
                                     <th class="text-center">Các phần mềm hỗ trợ</th>
-                                    <th colspan="2" class="text-center">Hành động</th>
+                                    <th class="text-center">Chọn</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -270,6 +242,78 @@
                 <i class="fa-regular fa-moon" title="Chế độ tối"></i>
                 <i class="fa-solid fa-sun" title="Chế độ sáng"></i>
             </a>
+            <!-- footer -->
+             <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                    <div class="col-6 text-start">
+                        <p class="mb-0">
+                        <a href="#" class="text-muted">
+                            <strong>LLTT System</strong>
+                        </a>
+                        </p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" class="text-muted">Liên hệ</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="text-muted">Về chúng tôi</a>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!--Modal Xem chi tiết-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="exampleModalLabel">THÔNG TIN CHI TIẾT</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <tbody class="detail-info">
+                                <!-- Các thông tin chi tiết sẽ được thêm vào đây bằng JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap Modal -->
+    <script>
+        // Bắt sự kiện click vào nút "Xem chi tiết"
+        var detailButtons = document.querySelectorAll('.detail-modal-js');
+        detailButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                // Lấy các thông tin từ thẻ td và th thẻ của hàng được click
+                var row = button.closest('tr');
+                var ths = document.querySelectorAll('th:not(:last-child)');
+                var tds = row.querySelectorAll('td:not(:last-child)');
+                var detailInfo = document.querySelector('.detail-info');
+                detailInfo.innerHTML = ''; // Xóa nội dung cũ trước khi thêm mới
+                // Thêm thông tin từ các th và td vào modal
+                for (var i = 0; i < ths.length; i++) {
+                    var detailItem = document.createElement('tr');
+                    detailItem.innerHTML = '<td class="fw-bold">' + ths[i].textContent + '</td><td>' + tds[i].textContent + '</td>';
+                    detailInfo.appendChild(detailItem);
+                }
+            });
+        });
+    </script>
+    <script src="view/layout/assets/js/sidebar.js"></script>
+    <script src="view/layout/assets/js/darklightmode.js"></script>
+  </body>
+</html>
 
 
 

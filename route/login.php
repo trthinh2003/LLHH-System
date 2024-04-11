@@ -15,7 +15,7 @@
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if ($row['ROLE'] == 1) {
-            $_SESSION['AdminName'] = $row['HOTENGIANGVIEN'];
+            $_SESSION['AdminName'] = "Admin";
             header('Location: ../index.php?pg=admin');
         }
         else if ($row['ROLE'] == 2) {

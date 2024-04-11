@@ -47,6 +47,9 @@
                                 <a href="index.php?pg=class_show" class="sidebar-link">Xem các lớp học phần</a>
                             </li>
                             <li class="sidebar-item">
+                                <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin phòng máy</a>
+                            </li>
+                            <li class="sidebar-item">
                                 <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                             </li>
                             <li class="sidebar-item">
@@ -133,54 +136,14 @@
                                         <div class="text-start">
                                             <div class="p-2 m-1">
                                                 <h4>Số người đang truy cập</h4>
-                                                <h3 class="mb-0"><b>0</b></h3>
+                                                <h3 class="mb-0">
+                                                    <b><?php if (isset($_SESSION['luottruycap'])) echo $_SESSION['luottruycap'];?></b>
+                                                </h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Table Element -->
-                    <div class="card border-0">
-                        <div class="card-header">
-                            <h5 class="card-title">Bảng Demo</h5>
-                            <h6 class="card-subtitle text-muted">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Voluptatum ducimus, necessitatibus reprehenderit itaque!
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Họ</th>
-                                        <th scope="col">Tên</th>
-                                        <th scope="col">Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Nguyễn Văn</td>
-                                        <td>A</td>
-                                        <td>nguyenvana@gmail.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Trần Thế</td>
-                                        <td>B</td>
-                                        <td>trantheb@gmail.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>What The</td>
-                                        <td>Hell</td>
-                                        <td>wth@gmail.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

@@ -7,11 +7,19 @@
     else {
         header('Location: index.php');
     }
+    if (isset($_SESSION['successApprove']) && $_SESSION['successApprove'] != "") {
+        $successApprove = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 15rem; display:none;">
+                            <i class="fa-solid fa-check p-2 bg-success text-white rounded-circle pe-2 mx-2"></i>Duyệt thành công
+                           </div>';
+        unset($_SESSION['successApprove']);
+    }
     $tr = "";
     $i = 1;
     $result_all = layTTCacYeuCau();
+    if ($result_all == 0) $result_all = [];
     foreach ($result_all as $row) {
         $tr .= '<tr>
+                    <input type="hidden" name="yeucau_id'.$i.'" value="'.$row['YEUCAU_ID'].'"/>
                     <td>'.$i.'</td>
                     <td>'.$row['HOTENGIANGVIEN'].'</td>
                     <td>'.$row['MAHOCPHAN'].'</td>
@@ -22,13 +30,39 @@
                     <td>'.$row['NAMHOC'].'</td>
                     <td>'.$row['NGAYYEUCAU'].'</td>
                     <td class="detailClassShow text-center">
-                        <input class="btn btn-secondary detail-modal-js" type="submit" name="detailClass" value="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                        <input class="btn btn-secondary detail-modal-js" type="button" name="detailClass" value="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
                     </td>
                     <td class="detailClassShow text-center">
-                        <input class="btn btn-primary approve-modal-js" type="submit" name="approveClass" value="Duyệt"/>
+                        <input class="btn btn-primary approve-modal-js" type="button" name="approveClass" value="Duyệt"/>
                     </td>
                 </tr>';
         $i++;        
+    }
+    $soluongPH = demSoLuongPH();
+    $opt_lab = '<select id="lab-chosen" name="labApprove" class="modal-input" onchange="toggleInfo()">
+                    <option value="Chọn phòng">Chọn phòng</option>';
+    $full_lab_and_software = layTTPhongHocKemCauHinhMayVaPhanMem();
+    $k = 1;
+    foreach ($full_lab_and_software as $row1) {
+        $opt_lab .= '<option name="labApprove" value="'.$k.'">'.$row1['MAPHONGHOC'].'</option>';
+        $k++;
+    }
+    $opt_lab .= '</select>';
+    $divTTPhongHoc = "";
+    $u = 1;
+    foreach ($full_lab_and_software as $row2) {
+        $divTTPhongHoc .= '<div id="info'.$u.'" style="display:none">
+                            <div class="fw-bold">Thông tin phòng thực hành</div>
+                            <div>- Mã phòng thực hành: '.$row2['MAPHONGHOC'].'</div>
+                            <input type="hidden" name="maphonghoc'.$u.'" value="'.$row2['MAPHONGHOC'].'">
+                            <div>- Sức chứa: '.$row2['SUCCHUA'].'</div>
+                            <div>- Cấu hình máy: CPU: '.$row2['CPU'].', RAM: '.$row2['RAM'].', SSD: '.$row2['SSD'].'</div>
+                            <input type="hidden" name="'.$row2['CPU'].'">
+                            <input type="hidden" name="'.$row2['RAM'].'">
+                            <input type="hidden" name="'.$row2['SSD'].'">
+                            <div>- Các phần mềm hỗ trợ: '.$row2['CACPHANMEM'].'</div>
+                           </div>';
+        $u++;
     }
 ?>
 
@@ -169,6 +203,85 @@
                 opacity: 1;
             }
         }
+
+        /* Modal Duyệt */
+        .modalDuyet {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+            display: none;
+            z-index: 100;
+        }
+
+        .modalDuyet.open {
+            display: flex;
+        }
+
+        .modal-container {
+            background-color: #fff;
+            width: 450px;
+            border-radius: 10px;
+            max-width: calc(100% - 32px);
+            min-height: 200px;
+            position: relative;
+            animation: modalFadeIn ease 0.5s;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 14px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-header i {
+            margin-right: 16px;
+        }
+
+        .modal-body {
+            padding: 16px;
+        }
+
+        .modal-label {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .modal-input {
+            border: 1px solid #ccc;
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-140px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
   </head>
 
@@ -252,29 +365,58 @@
             <!-- Phan noi dung -->
             <main class="content px-3 py-2">
                 <div class="container-fluid col">
-                    <h2 class="manage text-center fw-bold">THÔNG TIN CÁC YÊU CẦU</h2>
-                    <div class="card border-0 mt-5">
-                        <div class="card-body">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Giảng viên yêu cầu</th>
-                                    <th>Mã học phần</th>
-                                    <th>Ký hiệu nhóm</th>
-                                    <th>Tuần thực hành</th>
-                                    <th>Phần mềm yêu cầu</th>
-                                    <th>Học kì</th>
-                                    <th>Năm học</th>
-                                    <th>Ngày yêu cầu</th>
-                                    <th colspan="2" class="text-center">Chọn</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <?=$tr;?>
-                                </tbody>
-                            </table>
+                    <h2 class="manage text-center fw-bold mt-3">THÔNG TIN CÁC YÊU CẦU</h2>
+                    <div class="card border-0 mt-3">
+                        <div class="my-2 d-flex justify-content-between">
+                            <div></div>
+                            <form action="route/aproveAllRequire.php" method="post">
+                                <input class="btn btn-success p-2 mx-3 text-end" name="approveAllRequire" type="submit" value="Duyệt tất cả"/>
+                            </form>
                         </div>
+                        <form action="route/approveRequire.php" method="post">
+                            <div class="card-body">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Giảng viên yêu cầu</th>
+                                        <th>Mã học phần</th>
+                                        <th>Ký hiệu nhóm</th>
+                                        <th>Tuần thực hành</th>
+                                        <th>Phần mềm yêu cầu</th>
+                                        <th>Học kì</th>
+                                        <th>Năm học</th>
+                                        <th>Ngày yêu cầu</th>
+                                        <th colspan="2" class="text-center">Chọn</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?=$tr;?>
+                                    </tbody>
+                                </table>
+                                <!--Modal Duyệt-->
+                                <div class="modalDuyet js-modal">
+                                    <div class="modal-container js-modal-container p-3">
+                                        <div class="modal-close js-modal-close">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </div>
+                                        <div class="modal-header d-flex align-item-center justify-content-center fw-bold" style="font-size: 1.5rem">
+                                            Duyệt phòng thực hành
+                                        </div>
+                                        <div class="modal-body modalDuyet-body">
+                                            <label class="modal-label" for="lab-chosen">
+                                                <i class="fa-regular fa-clipboard pe-2"></i>Chọn phòng duyệt
+                                            </label>
+                                            <?=$opt_lab;?>
+                                            <?=$divTTPhongHoc?>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" class="btn btn-success me-3 my-2" name="approveLabBtn" value="Duyệt"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>      
             </main>
@@ -307,6 +449,7 @@
                 </div>
             </footer>
         </div>
+        <?php if(isset($successApprove)) echo $successApprove;?>
         <!--Modal Xem chi tiết-->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -350,28 +493,6 @@
             });
         });
 
-        // Hàm hiển thị thông báo thành công bằng một thẻ div tùy chỉnh với hiệu ứng di chuyển
-        function showSuccessMessage(message) {
-            var successDiv = document.createElement('div');
-            successDiv.className = 'shadow-lg p-3 move-from-top bg-white text-center'; // Thêm class move-from-right để kích hoạt hiệu ứng di chuyển
-            successDiv.style.width = '15rem';
-            successDiv.innerHTML = '<i class="fa-solid fa-check p-2 bg-success text-white rounded-circle pe-2 mx-2"></i>' + message;
-            document.body.appendChild(successDiv);
-            // Xóa div sau một khoảng thời gian
-            setTimeout(function() {
-                document.body.removeChild(successDiv);
-            }, 2000); // Thời gian hiển thị, ví dụ 2000ms (2 giây)
-        }
-
-        // Thay đổi sự kiện click của nút "Duyệt" để gọi hàm hiển thị thông báo thành công tùy chỉnh
-        var approveButtons = document.querySelectorAll('.approve-modal-js');
-        approveButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                // Hiển thị thông báo thành công
-                showSuccessMessage('Duyệt thành công!');
-            });
-        });
-
         // Hàm hiển thị toast message
         function showToast(message) {
             var toast = document.createElement('div');
@@ -385,6 +506,78 @@
                 document.body.removeChild(toast);
             }, 2000); // Thời gian hiển thị toast, ví dụ 2000ms (2 giây)
         }
+    </script>
+    <script>
+        const buyBtns = document.querySelectorAll('.approve-modal-js')
+        const modal = document.querySelector('.js-modal')
+        const modalContainer = document.querySelector('.js-modal-container')
+        const modalClose = document.querySelector('.js-modal-close')
+
+        function showBuyProduct() {
+            modal.classList.add('open')
+        }
+
+        function hideBuyProduct() {
+            modal.classList.remove('open')
+        }
+
+        for (const buyBtn of buyBtns) {
+            buyBtn.addEventListener('click', showBuyProduct);
+        }
+
+        modalClose.addEventListener('click', hideBuyProduct);
+        // modal.addEventListener('click', hideBuyProduct);
+        // modalContainer.addEventListener('click', (event) => {
+        // event.stopPropagation()
+        // })
+    </script>
+    <script>
+        function toggleInfo() {
+            var selectElement = document.getElementById("lab-chosen");
+            var selectedOption = selectElement.options[selectElement.selectedIndex].value;
+
+            // Lặp qua tất cả các div thông tin
+            for (var i = 1; i <= <?=$soluongPH?>; i++) {
+                var info = document.getElementById("info" + i);
+
+                // Ẩn hoặc hiển thị div thông tin tương ứng
+                if (i.toString() === selectedOption) {
+                    info.style.display = "block";
+                } else {
+                    info.style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
+        var approveButtons = document.querySelectorAll('.approve-modal-js');
+        for (approveButton of approveButtons) {
+            approveButton.addEventListener('click', function() {
+                var yeucau_id = this.parentNode.parentNode.querySelector('input[type="hidden').value;
+                var inputHidden = document.createElement('input');
+                inputHidden.setAttribute("type", "hidden");
+                inputHidden.setAttribute("name", "yeucau_id");
+                inputHidden.setAttribute("value", yeucau_id);
+                var modalApprove = this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.modalDuyet .modal-container .modalDuyet-body');
+                // console.log(modalApprove);
+                modalApprove.appendChild(inputHidden);
+            });
+        }
+        // var sttInput = document.getElementById('sttInput');
+        // approveButtons.addEventListener('click', function() {
+        //     var sttValue = this.parentNode.parentNode.querySelector('td:first-child').textContent;
+        //     console.log(sttValue);
+        //     sttInput.value = sttValue;
+        //         sttInput.name = "stt"; // Thêm name cho input
+        // });            
+    </script>
+    <script>
+        var toastMes = document.querySelector('.js-div-dissappear');
+        toastMes.style.display = "block";
+        setTimeout(function(){
+            toastMes.style.display = "none";
+        }, 3000);
+        console.log(toastMes);
     </script>
     <script src="view/layout/assets/js/sidebar.js"></script>
     <script src="view/layout/assets/js/darklightmode.js"></script>

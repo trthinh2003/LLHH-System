@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2024 at 02:05 PM
+-- Generation Time: Apr 09, 2024 at 09:59 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -172,7 +172,12 @@ CREATE TABLE `lophocphan` (
 --
 
 INSERT INTO `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `THU`, `SISO`, `BUOIHOC`, `GIANGVIEN_ID`) VALUES
-('CT299', '1', '2023-2024', 2, 2, 40, 'Sáng', 1);
+('CT179', '2', '2023 - 2024', 1, 3, 40, 'Sáng', 3),
+('CT180', '2', '2023 - 2024', 1, 2, 40, 'Sáng', 3),
+('CT180', '2', '2023 - 2024', 2, 5, 40, 'Sáng', 3),
+('CT180', '2', '2023 - 2024', 3, 2, 40, 'Chiều', 1),
+('CT299', '2', '2023 - 2024', 1, 6, 40, 'Chiều', 3),
+('CT299', '2', '2023 - 2024', 2, 2, 40, 'Sáng', 1);
 
 -- --------------------------------------------------------
 
@@ -224,7 +229,11 @@ CREATE TABLE `phanmem` (
 
 INSERT INTO `phanmem` (`PHANMEM_ID`, `TENPHANMEM`, `PHIENBAN`) VALUES
 (1, 'StarUML', '6.1.0'),
-(2, 'VS Code', '1.64');
+(2, 'VS Code', '1.64'),
+(3, 'PowerDesigner', '16.1'),
+(4, 'DevC++', '4.0'),
+(5, 'SQL Server', '2022'),
+(6, 'OracleDB', '21c');
 
 -- --------------------------------------------------------
 
@@ -307,15 +316,24 @@ INSERT INTO `taikhoan` (`TAIKHOAN_ID`, `TENDANGNHAP`, `MATKHAU`, `ROLE`, `GIANGV
 
 CREATE TABLE `yeucau` (
   `YEUCAU_ID` int(11) NOT NULL,
-  `MAHOCPHAN` char(15) NOT NULL,
-  `HOCKI` varchar(10) NOT NULL,
-  `NAMHOC` varchar(20) NOT NULL,
-  `TENNHOM` int(11) NOT NULL,
-  `PHANMEM_ID` int(11) NOT NULL,
-  `GIANGVIEN_ID` int(11) NOT NULL,
+  `MAHOCPHAN` char(15) DEFAULT NULL,
+  `HOCKI` varchar(10) DEFAULT NULL,
+  `NAMHOC` varchar(20) DEFAULT NULL,
+  `TENNHOM` int(11) DEFAULT NULL,
+  `PHANMEM_ID` int(11) DEFAULT NULL,
+  `GIANGVIEN_ID` int(11) DEFAULT NULL,
   `TUANHOC` int(11) DEFAULT NULL,
   `NGAYYEUCAU` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `yeucau`
+--
+
+INSERT INTO `yeucau` (`YEUCAU_ID`, `MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `PHANMEM_ID`, `GIANGVIEN_ID`, `TUANHOC`, `NGAYYEUCAU`) VALUES
+(1, 'CT180', '2', '2023 - 2024', 1, 1, 3, 2, '2024-04-08 20:40:26'),
+(2, 'CT180', '2', '2023 - 2024', 1, 1, 3, 1, '2024-04-08 20:44:02'),
+(3, 'CT180', '2', '2023 - 2024', 1, 1, 3, 3, '2024-04-08 20:45:39');
 
 --
 -- Indexes for dumped tables
@@ -431,7 +449,7 @@ ALTER TABLE `lylichkhoahoc`
 -- AUTO_INCREMENT for table `phanmem`
 --
 ALTER TABLE `phanmem`
-  MODIFY `PHANMEM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PHANMEM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `taikhoan`
@@ -443,7 +461,7 @@ ALTER TABLE `taikhoan`
 -- AUTO_INCREMENT for table `yeucau`
 --
 ALTER TABLE `yeucau`
-  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

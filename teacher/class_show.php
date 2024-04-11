@@ -174,6 +174,9 @@
                                 <a href="index.php?pg=class_show" class="sidebar-link">Xem các lớp học phần</a>
                             </li>
                             <li class="sidebar-item">
+                                <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin phòng máy</a>
+                            </li>
+                            <li class="sidebar-item">
                                 <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                             </li>
                             <li class="sidebar-item">
@@ -290,7 +293,7 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </div>
             </div>

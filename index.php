@@ -41,13 +41,12 @@
           break;
         case 'class_show':
           include_once "teacher/class_show.php";
-          break;  
+          break;
+        case 'lab_view':
+          include_once "teacher/lab_view.php";
+          break;   
         case 'schedule_registration':
           include_once "teacher/schedule_registration.php";
-          include_once "view/footer.php";
-          break;
-        case 'schedule_registration2':
-          include_once "teacher/schedule_registration2.php";
           break;
         case 'schedule_watching_teacher':
           include_once "teacher/schedule_watching_teacher.php";

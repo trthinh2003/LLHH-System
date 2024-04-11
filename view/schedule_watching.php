@@ -4,6 +4,26 @@
   foreach ($result_all as $row) {
     $optLab .= '<option name="labName" value="'.$row['MAPHONGHOC'].'">'.$row['MAPHONGHOC'].'</option>';
   }
+  $event = "";
+  $thongTinAllLichTH = layDuLieuBangLichTH_hienthi_lenFullCalendar();
+  $soluongLichTH = demSoLuongLichTH();
+  foreach($thongTinAllLichTH as $row1) {
+    if ($row1['BUOIHOC'] == "Sáng") {
+      $timeStart = "07:00:00";
+      $timeEnd = "11:50:00";
+    }
+    else {
+      $timeStart = "13:30:00";
+      $timeEnd = "17:00:00";
+    }
+    $event .= '{
+              "title": "'.$row1['MAPHONGHOC'].' - '.$row1['MAHOCPHAN'].'0'.$row1['TENNHOM'].' - '.$row1['TENHOCPHAN'].' - GV. '.$row1['HOTENGIANGVIEN'].'",
+              "start": "'.$row1['NGAYHOC'].'T'.$timeStart.'",
+              "end": "'.$row1['NGAYHOC'].'T'.$timeEnd.'",
+              "period": "'.$row1['BUOIHOC'].'"
+              },';
+  }
+  $event = rtrim($event, ',');
 ?>
 
 <!DOCTYPE html>
@@ -271,24 +291,7 @@
           },
           locale: 'vi', // Sử dụng ngôn ngữ tiếng Việt
           events: [
-            {
-              title: 'P101 - CT29903 - Phát triển hệ thống Web - GV. Nguyễn Thanh Hiền',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"
-            },
-            {
-              title: 'P102 - CT17904 - Quản trị hệ thống - GV. Lê Huỳnh Quốc Bảo',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"          
-            },
-            {
-              title: 'P103 - CT11203 - Mạng máy tính - GV. Ngô Bá Hùng',
-              start: '2024-03-28T13:30:00',
-              end: '2024-03-28T17:00:00',
-              period: "Sáng"          
-            },
+            <?=$event;?>
             // Thêm các sự kiện khác nếu cần
           ],
           eventBackgroundColor: '#3788d8', // Màu nền của các sự kiện
@@ -335,24 +338,7 @@
         // Hàm lọc sự kiện theo tiêu đề
         function filteredEvents(searchString) {
           var events = [
-            {
-              title: 'P101 - CT29903 - Phát triển hệ thống Web - GV. Nguyễn Thanh Hiền',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"
-            },
-            {
-              title: 'P102 - CT17904 - Quản trị hệ thống - GV. Lê Huỳnh Quốc Bảo',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"
-            },
-            {
-              title: 'P103 - CT11203 - Mạng máy tính - GV. Ngô Bá Hùng',
-              start: '2024-03-28T13:30:00',
-              end: '2024-03-28T17:00:00',
-              period: "Chiều"
-            }
+            <?=$event;?>
             // Thêm các sự kiện khác nếu cần
           ];
 
