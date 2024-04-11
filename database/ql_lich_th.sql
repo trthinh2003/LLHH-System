@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2024 at 09:59 AM
+-- Generation Time: Apr 11, 2024 at 03:58 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -66,7 +66,8 @@ CREATE TABLE `giangvien` (
 INSERT INTO `giangvien` (`GIANGVIEN_ID`, `HOTENGIANGVIEN`, `EMAIL`, `SODIENTHOAI`, `GIOITINH`, `MAKHOA`, `LYLICH_ID`) VALUES
 (1, 'Vũ Đức Minh', 'vducminh@ctu.edu.vn', '0912567891', 'Nam', 'CNTT', 1),
 (2, 'Trần Ngọc Khả Hân', 'khahan@ctu.edu.vn', '0973573577', 'Nữ', 'ATTT', 2),
-(3, 'Lâm Trần Anh Khôi', 'anhkhoi96@ctu.edu.vn', '0917537565', 'Nam', 'HTTT', 1);
+(3, 'Lâm Trần Anh Khôi', 'anhkhoi96@ctu.edu.vn', '0917537565', 'Nam', 'HTTT', 1),
+(4, 'Nguyễn Ngọc Ngạn', 'ngocngan@ctu.edu.vn', '02933567789', 'Nam', 'KTPM', 3);
 
 -- --------------------------------------------------------
 
@@ -108,9 +109,12 @@ CREATE TABLE `hocphan` (
 INSERT INTO `hocphan` (`MAHOCPHAN`, `TENHOCPHAN`, `SOTINCHI`, `SOGIOTH`) VALUES
 ('CT101', 'Lập trình căn bản A', 4, NULL),
 ('CT112', 'Mạng máy tính', 3, NULL),
+('CT175', 'Lý thuyết đồ thị', 3, NULL),
 ('CT179', 'Quản trị hệ thống', 3, NULL),
 ('CT180', 'Cơ sở dữ liệu', 3, NULL),
-('CT299', 'Phát triển hệ thống Web', 3, NULL);
+('CT296', 'Phân tích thiết kế HTTT', 3, NULL),
+('CT299', 'Phát triển hệ thống Web', 3, NULL),
+('CT430', 'Phân tích hệ thống HĐT', 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -150,6 +154,33 @@ CREATE TABLE `lichthuchanh` (
   `NGAYHOC` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
+--
+-- Dumping data for table `lichthuchanh`
+--
+
+INSERT INTO `lichthuchanh` (`MAPHONGHOC`, `MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `NGAYHOC`) VALUES
+('P101', 'CT180', '2', '2023 - 2024', 1, '2024-02-26'),
+('P101', 'CT180', '2', '2023 - 2024', 1, '2024-03-04'),
+('P101', 'CT180', '2', '2023 - 2024', 1, '2024-03-11'),
+('P101', 'CT180', '2', '2023 - 2024', 1, '2024-03-18'),
+('P101', 'CT180', '2', '2023 - 2024', 1, '2024-03-25'),
+('P103', 'CT299', '2', '2023 - 2024', 1, '2024-03-01'),
+('P103', 'CT299', '2', '2023 - 2024', 1, '2024-03-08'),
+('P103', 'CT299', '2', '2023 - 2024', 1, '2024-03-15'),
+('P104', 'CT180', '2', '2023 - 2024', 3, '2024-02-26'),
+('P104', 'CT180', '2', '2023 - 2024', 3, '2024-03-04'),
+('P104', 'CT180', '2', '2023 - 2024', 3, '2024-03-11'),
+('P104', 'CT180', '2', '2023 - 2024', 3, '2024-03-18'),
+('P104', 'CT180', '2', '2023 - 2024', 3, '2024-03-25'),
+('P201', 'CT101', '2', '2023 - 2024', 1, '2024-02-26'),
+('P201', 'CT101', '2', '2023 - 2024', 1, '2024-03-04'),
+('P201', 'CT101', '2', '2023 - 2024', 1, '2024-03-11'),
+('P201', 'CT101', '2', '2023 - 2024', 1, '2024-03-18'),
+('P204', 'CT175', '2', '2023 - 2024', 1, '2024-03-05'),
+('P204', 'CT175', '2', '2023 - 2024', 1, '2024-03-12'),
+('P204', 'CT175', '2', '2023 - 2024', 1, '2024-03-19'),
+('P205', 'CT175', '2', '2023 - 2024', 1, '2024-02-27');
+
 -- --------------------------------------------------------
 
 --
@@ -172,12 +203,18 @@ CREATE TABLE `lophocphan` (
 --
 
 INSERT INTO `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `THU`, `SISO`, `BUOIHOC`, `GIANGVIEN_ID`) VALUES
+('CT101', '2', '2023 - 2024', 1, 2, 40, 'Sáng', 2),
+('CT112', '2', '2023 - 2024', 4, 3, 40, 'Sáng', 1),
+('CT175', '2', '2023 - 2024', 1, 3, 40, 'Chiều', 2),
 ('CT179', '2', '2023 - 2024', 1, 3, 40, 'Sáng', 3),
 ('CT180', '2', '2023 - 2024', 1, 2, 40, 'Sáng', 3),
 ('CT180', '2', '2023 - 2024', 2, 5, 40, 'Sáng', 3),
 ('CT180', '2', '2023 - 2024', 3, 2, 40, 'Chiều', 1),
+('CT296', '2', '2023 - 2024', 1, 2, 40, 'Sáng', 4),
+('CT296', '2', '2023 - 2024', 2, 3, 40, 'Sáng', 4),
 ('CT299', '2', '2023 - 2024', 1, 6, 40, 'Chiều', 3),
-('CT299', '2', '2023 - 2024', 2, 2, 40, 'Sáng', 1);
+('CT299', '2', '2023 - 2024', 2, 2, 40, 'Sáng', 1),
+('CT430', '2', '2023 - 2024', 1, 4, 40, 'Chiều', 4);
 
 -- --------------------------------------------------------
 
@@ -198,18 +235,8 @@ CREATE TABLE `lylichkhoahoc` (
 
 INSERT INTO `lylichkhoahoc` (`LYLICH_ID`, `TRINHDOCHUYENMON`, `HOCHAM`, `NGACHVIENCHUC`) VALUES
 (1, 'Tiến sĩ', 'Phó giáo sư', 'Giảng viên cao cấp'),
-(2, 'Tiến sĩ', NULL, 'Giảng viên');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `phammem_phonghoc`
---
-
-CREATE TABLE `phammem_phonghoc` (
-  `MAPHONGHOC` char(15) NOT NULL,
-  `PHANMEM_ID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+(2, 'Tiến sĩ', NULL, 'Giảng viên'),
+(3, 'Tiến sĩ', NULL, 'Giảng viên chính');
 
 -- --------------------------------------------------------
 
@@ -233,7 +260,249 @@ INSERT INTO `phanmem` (`PHANMEM_ID`, `TENPHANMEM`, `PHIENBAN`) VALUES
 (3, 'PowerDesigner', '16.1'),
 (4, 'DevC++', '4.0'),
 (5, 'SQL Server', '2022'),
-(6, 'OracleDB', '21c');
+(6, 'OracleDB', '21c'),
+(7, 'VirtualBox', '7.0.14'),
+(8, 'Eclipse IDE', '2024-03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `phanmem_phonghoc`
+--
+
+CREATE TABLE `phanmem_phonghoc` (
+  `MAPHONGHOC` char(15) NOT NULL,
+  `PHANMEM_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `phanmem_phonghoc`
+--
+
+INSERT INTO `phanmem_phonghoc` (`MAPHONGHOC`, `PHANMEM_ID`) VALUES
+('P101', 1),
+('P101', 2),
+('P101', 3),
+('P101', 4),
+('P101', 7),
+('P101', 8),
+('P102', 1),
+('P102', 2),
+('P102', 3),
+('P102', 4),
+('P102', 7),
+('P102', 8),
+('P103', 1),
+('P103', 3),
+('P103', 5),
+('P103', 6),
+('P103', 7),
+('P103', 8),
+('P104', 1),
+('P104', 2),
+('P104', 4),
+('P104', 5),
+('P104', 7),
+('P104', 8),
+('P105', 3),
+('P105', 4),
+('P105', 5),
+('P105', 6),
+('P105', 7),
+('P105', 8),
+('P106', 1),
+('P106', 2),
+('P106', 3),
+('P106', 4),
+('P106', 8),
+('P107', 1),
+('P107', 5),
+('P107', 6),
+('P107', 8),
+('P108', 1),
+('P108', 2),
+('P108', 3),
+('P108', 6),
+('P108', 7),
+('P108', 8),
+('P109', 1),
+('P109', 2),
+('P109', 4),
+('P109', 5),
+('P109', 7),
+('P109', 8),
+('P110', 1),
+('P110', 2),
+('P110', 4),
+('P110', 5),
+('P110', 7),
+('P110', 8),
+('P111', 1),
+('P111', 4),
+('P111', 5),
+('P111', 6),
+('P111', 7),
+('P111', 8),
+('P201', 1),
+('P201', 2),
+('P201', 3),
+('P201', 4),
+('P201', 5),
+('P201', 6),
+('P201', 7),
+('P201', 8),
+('P202', 1),
+('P202', 2),
+('P202', 3),
+('P202', 4),
+('P202', 5),
+('P202', 6),
+('P202', 7),
+('P202', 8),
+('P203', 1),
+('P203', 2),
+('P203', 3),
+('P203', 4),
+('P203', 5),
+('P203', 6),
+('P203', 7),
+('P203', 8),
+('P204', 1),
+('P204', 2),
+('P204', 3),
+('P204', 4),
+('P204', 5),
+('P204', 6),
+('P204', 7),
+('P204', 8),
+('P205', 1),
+('P205', 2),
+('P205', 3),
+('P205', 4),
+('P205', 5),
+('P205', 6),
+('P205', 7),
+('P205', 8),
+('P206', 1),
+('P206', 2),
+('P206', 3),
+('P206', 4),
+('P206', 5),
+('P206', 6),
+('P206', 7),
+('P206', 8),
+('P207', 1),
+('P207', 2),
+('P207', 3),
+('P207', 4),
+('P207', 5),
+('P207', 6),
+('P207', 7),
+('P207', 8),
+('P208', 1),
+('P208', 2),
+('P208', 3),
+('P208', 4),
+('P208', 5),
+('P208', 6),
+('P208', 7),
+('P208', 8),
+('P209', 1),
+('P209', 2),
+('P209', 3),
+('P209', 4),
+('P209', 5),
+('P209', 6),
+('P209', 7),
+('P209', 8),
+('P210', 1),
+('P210', 2),
+('P210', 3),
+('P210', 4),
+('P210', 5),
+('P210', 6),
+('P210', 7),
+('P210', 8),
+('P211', 1),
+('P211', 2),
+('P211', 3),
+('P211', 4),
+('P211', 5),
+('P211', 6),
+('P211', 7),
+('P211', 8),
+('P212', 1),
+('P212', 2),
+('P212', 3),
+('P212', 4),
+('P212', 5),
+('P212', 6),
+('P212', 7),
+('P212', 8),
+('P213', 1),
+('P213', 2),
+('P213', 3),
+('P213', 4),
+('P213', 5),
+('P213', 6),
+('P213', 7),
+('P213', 8),
+('P214', 1),
+('P214', 2),
+('P214', 3),
+('P214', 4),
+('P214', 5),
+('P214', 6),
+('P214', 7),
+('P214', 8),
+('P215', 1),
+('P215', 2),
+('P215', 3),
+('P215', 4),
+('P215', 5),
+('P215', 6),
+('P215', 7),
+('P215', 8),
+('P217', 1),
+('P217', 2),
+('P217', 3),
+('P217', 4),
+('P217', 5),
+('P217', 6),
+('P217', 7),
+('P217', 8),
+('P218', 1),
+('P218', 2),
+('P218', 3),
+('P218', 4),
+('P218', 5),
+('P218', 6),
+('P218', 7),
+('P218', 8),
+('P219', 1),
+('P219', 2),
+('P219', 3),
+('P219', 4),
+('P219', 5),
+('P219', 6),
+('P219', 7),
+('P219', 8),
+('P220', 1),
+('P220', 2),
+('P220', 3),
+('P220', 4),
+('P220', 5),
+('P220', 6),
+('P220', 7),
+('P220', 8),
+('P221', 1),
+('P221', 2),
+('P221', 3),
+('P221', 4),
+('P221', 5),
+('P221', 6),
+('P221', 7),
+('P221', 8);
 
 -- --------------------------------------------------------
 
@@ -306,7 +575,8 @@ INSERT INTO `taikhoan` (`TAIKHOAN_ID`, `TENDANGNHAP`, `MATKHAU`, `ROLE`, `GIANGV
 (1, 'admin', 'admin123', 1, 1),
 (2, 'ducminh', 'ducminh123', 2, 1),
 (3, 'anhkhoi', 'anhkhoi123', 2, 3),
-(4, 'khahan', 'khahan123', 2, 2);
+(4, 'khahan', 'khahan123', 2, 2),
+(5, 'ngocngan', 'ngocngan123', 2, 4);
 
 -- --------------------------------------------------------
 
@@ -331,9 +601,46 @@ CREATE TABLE `yeucau` (
 --
 
 INSERT INTO `yeucau` (`YEUCAU_ID`, `MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `PHANMEM_ID`, `GIANGVIEN_ID`, `TUANHOC`, `NGAYYEUCAU`) VALUES
-(1, 'CT180', '2', '2023 - 2024', 1, 1, 3, 2, '2024-04-08 20:40:26'),
-(2, 'CT180', '2', '2023 - 2024', 1, 1, 3, 1, '2024-04-08 20:44:02'),
-(3, 'CT180', '2', '2023 - 2024', 1, 1, 3, 3, '2024-04-08 20:45:39');
+(79, 'CT179', '2', '2023 - 2024', 1, 7, 3, 1, '2024-04-11 19:54:24'),
+(80, 'CT179', '2', '2023 - 2024', 1, 7, 3, 2, '2024-04-11 19:54:24'),
+(81, 'CT179', '2', '2023 - 2024', 1, 7, 3, 5, '2024-04-11 19:54:24'),
+(82, 'CT179', '2', '2023 - 2024', 1, 7, 3, 3, '2024-04-11 19:54:24'),
+(83, 'CT179', '2', '2023 - 2024', 1, 7, 3, 4, '2024-04-11 19:54:24'),
+(85, 'CT180', '2', '2023 - 2024', 1, 6, 3, 3, '2024-04-11 19:54:48'),
+(86, 'CT180', '2', '2023 - 2024', 1, 6, 3, 1, '2024-04-11 19:54:48'),
+(91, 'CT180', '2', '2023 - 2024', 1, 6, 3, 5, '2024-04-11 19:54:48'),
+(92, 'CT180', '2', '2023 - 2024', 1, 6, 3, 4, '2024-04-11 19:54:48'),
+(93, 'CT180', '2', '2023 - 2024', 1, 6, 3, 2, '2024-04-11 19:54:48'),
+(94, 'CT112', '2', '2023 - 2024', 4, 7, 1, 1, '2024-04-11 19:55:27'),
+(95, 'CT112', '2', '2023 - 2024', 4, 7, 1, 3, '2024-04-11 19:55:27'),
+(96, 'CT112', '2', '2023 - 2024', 4, 7, 1, 5, '2024-04-11 19:55:27'),
+(97, 'CT112', '2', '2023 - 2024', 4, 7, 1, 2, '2024-04-11 19:55:27'),
+(98, 'CT112', '2', '2023 - 2024', 4, 7, 1, 4, '2024-04-11 19:55:27'),
+(99, 'CT101', '2', '2023 - 2024', 1, 4, 2, 1, '2024-04-11 19:56:10'),
+(100, 'CT101', '2', '2023 - 2024', 1, 4, 2, 2, '2024-04-11 19:56:10'),
+(101, 'CT101', '2', '2023 - 2024', 1, 4, 2, 4, '2024-04-11 19:56:10'),
+(102, 'CT101', '2', '2023 - 2024', 1, 4, 2, 3, '2024-04-11 19:56:10'),
+(103, 'CT101', '2', '2023 - 2024', 1, 4, 2, 5, '2024-04-11 19:56:10'),
+(106, 'CT175', '2', '2023 - 2024', 1, 4, 2, 2, '2024-04-11 19:56:22'),
+(109, 'CT175', '2', '2023 - 2024', 1, 4, 2, 1, '2024-04-11 19:56:22'),
+(110, 'CT175', '2', '2023 - 2024', 1, 4, 2, 5, '2024-04-11 19:56:22'),
+(112, 'CT175', '2', '2023 - 2024', 1, 4, 2, 3, '2024-04-11 19:56:22'),
+(113, 'CT175', '2', '2023 - 2024', 1, 4, 2, 4, '2024-04-11 19:56:22'),
+(114, 'CT296', '2', '2023 - 2024', 1, 3, 4, 5, '2024-04-11 20:33:32'),
+(115, 'CT296', '2', '2023 - 2024', 1, 3, 4, 4, '2024-04-11 20:33:32'),
+(116, 'CT296', '2', '2023 - 2024', 1, 3, 4, 1, '2024-04-11 20:33:32'),
+(117, 'CT296', '2', '2023 - 2024', 1, 3, 4, 3, '2024-04-11 20:33:32'),
+(118, 'CT296', '2', '2023 - 2024', 1, 3, 4, 2, '2024-04-11 20:33:32'),
+(120, 'CT296', '2', '2023 - 2024', 2, 3, 4, 1, '2024-04-11 20:33:45'),
+(121, 'CT296', '2', '2023 - 2024', 2, 3, 4, 3, '2024-04-11 20:33:45'),
+(124, 'CT296', '2', '2023 - 2024', 2, 3, 4, 2, '2024-04-11 20:33:45'),
+(127, 'CT296', '2', '2023 - 2024', 2, 3, 4, 5, '2024-04-11 20:33:45'),
+(128, 'CT296', '2', '2023 - 2024', 2, 3, 4, 4, '2024-04-11 20:33:45'),
+(139, 'CT430', '2', '2023 - 2024', 1, 1, 4, 2, '2024-04-11 20:33:59'),
+(140, 'CT430', '2', '2023 - 2024', 1, 1, 4, 1, '2024-04-11 20:33:59'),
+(141, 'CT430', '2', '2023 - 2024', 1, 1, 4, 4, '2024-04-11 20:33:59'),
+(142, 'CT430', '2', '2023 - 2024', 1, 1, 4, 3, '2024-04-11 20:33:59'),
+(143, 'CT430', '2', '2023 - 2024', 1, 1, 4, 5, '2024-04-11 20:33:59');
 
 --
 -- Indexes for dumped tables
@@ -393,18 +700,18 @@ ALTER TABLE `lylichkhoahoc`
   ADD PRIMARY KEY (`LYLICH_ID`);
 
 --
--- Indexes for table `phammem_phonghoc`
---
-ALTER TABLE `phammem_phonghoc`
-  ADD PRIMARY KEY (`MAPHONGHOC`,`PHANMEM_ID`),
-  ADD KEY `MAPHONGHOC` (`MAPHONGHOC`,`PHANMEM_ID`),
-  ADD KEY `PHANMEM_ID` (`PHANMEM_ID`);
-
---
 -- Indexes for table `phanmem`
 --
 ALTER TABLE `phanmem`
   ADD PRIMARY KEY (`PHANMEM_ID`);
+
+--
+-- Indexes for table `phanmem_phonghoc`
+--
+ALTER TABLE `phanmem_phonghoc`
+  ADD PRIMARY KEY (`MAPHONGHOC`,`PHANMEM_ID`),
+  ADD KEY `MAPHONGHOC` (`MAPHONGHOC`,`PHANMEM_ID`),
+  ADD KEY `PHANMEM_ID` (`PHANMEM_ID`);
 
 --
 -- Indexes for table `phonghoc`
@@ -425,9 +732,10 @@ ALTER TABLE `taikhoan`
 --
 ALTER TABLE `yeucau`
   ADD PRIMARY KEY (`YEUCAU_ID`),
-  ADD KEY `FK_YC_LHP` (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`),
+  ADD UNIQUE KEY `MAHOCPHAN_2` (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`,`TUANHOC`),
   ADD KEY `PHANMEM_ID` (`PHANMEM_ID`),
-  ADD KEY `GIANGVIEN_ID` (`GIANGVIEN_ID`);
+  ADD KEY `GIANGVIEN_ID` (`GIANGVIEN_ID`),
+  ADD KEY `MAHOCPHAN` (`MAHOCPHAN`,`HOCKI`,`NAMHOC`,`TENNHOM`,`TUANHOC`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -437,31 +745,31 @@ ALTER TABLE `yeucau`
 -- AUTO_INCREMENT for table `giangvien`
 --
 ALTER TABLE `giangvien`
-  MODIFY `GIANGVIEN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `GIANGVIEN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `lylichkhoahoc`
 --
 ALTER TABLE `lylichkhoahoc`
-  MODIFY `LYLICH_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `LYLICH_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `phanmem`
 --
 ALTER TABLE `phanmem`
-  MODIFY `PHANMEM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `PHANMEM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `TAIKHOAN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `TAIKHOAN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `yeucau`
 --
 ALTER TABLE `yeucau`
-  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
 
 --
 -- Constraints for dumped tables
@@ -490,11 +798,11 @@ ALTER TABLE `lophocphan`
   ADD CONSTRAINT `lophocphan_ibfk_1` FOREIGN KEY (`GIANGVIEN_ID`) REFERENCES `giangvien` (`GIANGVIEN_ID`);
 
 --
--- Constraints for table `phammem_phonghoc`
+-- Constraints for table `phanmem_phonghoc`
 --
-ALTER TABLE `phammem_phonghoc`
-  ADD CONSTRAINT `phammem_phonghoc_ibfk_1` FOREIGN KEY (`PHANMEM_ID`) REFERENCES `phanmem` (`PHANMEM_ID`),
-  ADD CONSTRAINT `phammem_phonghoc_ibfk_2` FOREIGN KEY (`MAPHONGHOC`) REFERENCES `phonghoc` (`MAPHONGHOC`);
+ALTER TABLE `phanmem_phonghoc`
+  ADD CONSTRAINT `phanmem_phonghoc_ibfk_1` FOREIGN KEY (`PHANMEM_ID`) REFERENCES `phanmem` (`PHANMEM_ID`),
+  ADD CONSTRAINT `phanmem_phonghoc_ibfk_2` FOREIGN KEY (`MAPHONGHOC`) REFERENCES `phonghoc` (`MAPHONGHOC`);
 
 --
 -- Constraints for table `phonghoc`
