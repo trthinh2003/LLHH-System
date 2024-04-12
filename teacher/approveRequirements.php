@@ -10,22 +10,7 @@
     if (isset($_SESSION['TeacherID']) && $_SESSION['TeacherID'] != "") {
         $teacherID = $_SESSION['TeacherID'];
     }
-    $tr = "";
-    $i = 1;
-    $result_all = layTTPhongHocKemCauHinhMayVaPhanMem();
-    foreach ($result_all as $row) {
-        $tr .= '<tr>
-                    <td>'.$i.'</td>
-                    <td>'.$row['MAPHONGHOC'].'</td>
-                    <td>'.$row['SUCCHUA'].'</td>
-                    <td>CPU: '.$row['CPU'].' - RAM: '.$row['RAM'].' - SSD: '.$row['SSD'].'</td>
-                    <td>'.$row['CACPHANMEM'].'</td>
-                    <td class="detailClassShow text-center">
-                        <input class="btn btn-secondary detail-modal-js" type="submit" name="detailClass" value="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
-                    </td>                   
-                </tr>';
-        $i++;        
-    }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +19,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Xem thông tin phòng máy</title>
+    <title>Kiểm tra các yêu cầu</title>
     <link rel="shortcut icon" href="view/layout/assets/images/favicon.ico" type="image/x-icon" />
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
@@ -155,7 +140,7 @@
         <aside id="sidebar" class="js-sidebar">
             <div class="h-100">
                 <div class="sidebar-logo">
-                    <a href="index.php?pg=teacher" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
+                    <a href="index.php?pg=approveRequirements" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
                 </div>
                 <ul class="sidebar-nav mx-0">
                     <li class="sidebar-header">Menu Chính</li>
@@ -216,22 +201,27 @@
             <!-- Phan noi dung -->
             <main class="content px-3 py-2">
                 <div class="container-fluid col">
-                    <h2 class="manage text-center fw-bold mt-3">THÔNG TIN CÁC PHÒNG MÁY</h2>
+                    <h2 class="manage text-center fw-bold">KIỂM TRA CÁC YÊU CẦU</h2>
                     <div class="card border-0 mt-5">
                         <div class="card-body">
                             <table>
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Phòng học</th>
-                                    <th>Sức chứa</th>
-                                    <th class="text-center">Cấu hình máy</th>
-                                    <th class="text-center">Các phần mềm hỗ trợ</th>
+                                    <th>Mã học phần</th>
+                                    <th>Tên học phần</th>
+                                    <th>Ký hiệu nhóm</th>
+                                    <th>Thứ</th>
+                                    <th>Sỉ số</th>
+                                    <th>Buổi học</th>
+                                    <th>Phụ trách giảng dạy</th>
+                                    <th>Học kì</th>
+                                    <th>Năm học</th>
                                     <th class="text-center">Chọn</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?=$tr;?>
+
                                 </tbody>
                             </table>
                         </div>

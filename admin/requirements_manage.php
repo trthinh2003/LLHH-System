@@ -369,7 +369,7 @@
                     <div class="card border-0 mt-3">
                         <div class="my-2 d-flex justify-content-between">
                             <div></div>
-                            <form action="route/aproveAllRequire.php" method="post">
+                            <form action="route/approveAllRequire.php" method="post">
                                 <input class="btn btn-success p-2 mx-3 text-end" name="approveAllRequire" type="submit" value="Duyệt tất cả"/>
                             </form>
                         </div>

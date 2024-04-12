@@ -44,7 +44,10 @@
           break;
         case 'lab_view':
           include_once "teacher/lab_view.php";
-          break;   
+          break;
+        case 'approveRequirements':
+          include_once "teacher/approveRequirements.php";
+          break;     
         case 'schedule_registration':
           include_once "teacher/schedule_registration.php";
           break;

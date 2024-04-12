@@ -50,10 +50,10 @@
                                 <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin phòng máy</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
+                                <a href="index.php?pg=approveRequirements" class="sidebar-link">Kiểm tra các yêu cầu</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Thống kê số tiết dạy</a>
+                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                             </li>
                         </ul>
                     </li>

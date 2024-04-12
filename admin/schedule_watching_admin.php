@@ -14,7 +14,7 @@
   }
   $event = "";
   $thongTinAllLichTH = layDuLieuBangLichTH_hienthi_lenFullCalendar();
-  $soluongLichTH = demSoLuongLichTH();
+  if ($thongTinAllLichTH == 0) $thongTinAllLichTH = [];
   foreach($thongTinAllLichTH as $row1) {
     if ($row1['BUOIHOC'] == "Sáng") {
       $timeStart = "07:00:00";

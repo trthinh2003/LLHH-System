@@ -118,10 +118,10 @@
                                 <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin phòng máy</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
+                                <a href="index.php?pg=approveRequirements" class="sidebar-link">Kiểm tra các yêu cầu</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Thống kê số tiết dạy</a>
+                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
                             </li>
                         </ul>
                     </li>
@@ -164,7 +164,7 @@
             <main class="content px-3 py-2">
 
                 <div class="container-fluid" id="divchinh">
-                    <h3 class="row justify-content-center align-items-center my-3 fw-bold">Đăng Ký Lịch Thực Hành</h3>
+                    <h3 class="row justify-content-center align-items-center my-3 fw-bold">Đăng Ký Yêu Cầu Thực Hành</h3>
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-10  ">
                             <label for="name" class="form-label">Tên giảng viên:</label>
@@ -238,27 +238,6 @@
                             <button type="button" class="btn btn-primary approve-modal-js text-white" onclick="taidulieu()">Xác nhận đăng ký</button>
                         </div>
                     </div>
-                        <!-- <div class="card-body">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Mã học phần</th>
-                                    <th>Tên học phần</th>
-                                    <th>Ký hiệu nhóm</th>
-                                    <th>Thứ</th>
-                                    <th>Sỉ số</th>
-                                    <th>Buổi học</th>
-                                    <th>Phụ trách giảng dạy</th>
-                                    <th>Học kì</th>
-                                    <th>Năm học</th>
-                                    <th class="text-center">Chọn</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div> -->
                 </div>
                 <script>
                     var jsVar;

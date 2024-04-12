@@ -12,6 +12,26 @@
   foreach ($result_all as $row) {
     $optLab .= '<option name="labName" value="'.$row['MAPHONGHOC'].'">'.$row['MAPHONGHOC'].'</option>';
   }
+  $event = "";
+  $thongTinAllLichTH = layDuLieuBangLichTH_hienthi_lenFullCalendar();
+  if ($thongTinAllLichTH == 0) $thongTinAllLichTH = [];
+  foreach($thongTinAllLichTH as $row1) {
+    if ($row1['BUOIHOC'] == "Sáng") {
+      $timeStart = "07:00:00";
+      $timeEnd = "11:50:00";
+    }
+    else {
+      $timeStart = "13:30:00";
+      $timeEnd = "17:00:00";
+    }
+    $event .= '{
+              "title": "'.$row1['MAPHONGHOC'].' - '.$row1['MAHOCPHAN'].'0'.$row1['TENNHOM'].' - '.$row1['TENHOCPHAN'].' - GV. '.$row1['HOTENGIANGVIEN'].'",
+              "start": "'.$row1['NGAYHOC'].'T'.$timeStart.'",
+              "end": "'.$row1['NGAYHOC'].'T'.$timeEnd.'",
+              "period": "'.$row1['BUOIHOC'].'"
+              },';
+  }
+  $event = rtrim($event, ',');
 ?>
 
 <!DOCTYPE html>
@@ -141,13 +161,13 @@
                       <a href="index.php?pg=class_show" class="sidebar-link">Xem các lớp học phần</a>
                     </li>
                     <li class="sidebar-item">
-                      <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin các phòng máy</a>
+                      <a href="index.php?pg=lab_view" class="sidebar-link">Xem thông tin phòng máy</a>
+                    </li>
+                    <li class="sidebar-item">
+                      <a href="index.php?pg=approveRequirements" class="sidebar-link">Kiểm tra các yêu cầu</a>
                     </li>
                     <li class="sidebar-item">
                       <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
-                    </li>
-                    <li class="sidebar-item">
-                      <a href="#" class="sidebar-link">Thống kê số tiết dạy</a>
                     </li>
                   </ul>
                 </li>
@@ -322,25 +342,7 @@
           },
           locale: 'vi', // Sử dụng ngôn ngữ tiếng Việt
           events: [
-            {
-              title: 'P101 - CT29903 - Phát triển hệ thống Web - GV. Nguyễn Thanh Hiền',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"
-            },
-            {
-              title: 'P102 - CT17904 - Quản trị hệ thống - GV. Lê Huỳnh Quốc Bảo',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"          
-            },
-            {
-              title: 'P103 - CT11203 - Mạng máy tính - GV. Ngô Bá Hùng',
-              start: '2024-03-28T13:30:00',
-              end: '2024-03-28T17:00:00',
-              period: "Sáng"          
-            },
-            // Thêm các sự kiện khác nếu cần
+            <?=$event;?>
           ],
           eventBackgroundColor: '#3788d8', // Màu nền của các sự kiện
           eventOverlap: true, // Không cho phép các sự kiện chồng lên nhau
@@ -386,25 +388,7 @@
         // Hàm lọc sự kiện theo tiêu đề
         function filteredEvents(searchString) {
           var events = [
-            {
-              title: 'P101 - CT29903 - Phát triển hệ thống Web - GV. Nguyễn Thanh Hiền',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"
-            },
-            {
-              title: 'P102 - CT17904 - Quản trị hệ thống - GV. Lê Huỳnh Quốc Bảo',
-              start: '2024-03-28T07:00:00',
-              end: '2024-03-28T11:50:00',
-              period: "Sáng"
-            },
-            {
-              title: 'P103 - CT11203 - Mạng máy tính - GV. Ngô Bá Hùng',
-              start: '2024-03-28T13:30:00',
-              end: '2024-03-28T17:00:00',
-              period: "Chiều"
-            }
-            // Thêm các sự kiện khác nếu cần
+            <?=$event;?>
           ];
 
           return events.filter(function(event) {
@@ -412,25 +396,6 @@
           });
         }
       });
-    </script>
-    <script>
-      // function kiemTraTonTai(selector) {
-      //   var element = document.querySelector(selector);
-      //   if (element) {
-      //       return true;
-      //   } else {
-      //       return false;
-      //   }
-      // }
-      // var overlaySelect = document.querySelector('#searchIdOption');
-      // if (kiemTraTonTai('.collapsed') != 1) {
-      //   overlaySelect.style.top = '210px';
-      //   overlaySelect.style.left = '190px';
-      // }
-      // else {
-      //   overlaySelect.style.top = '205px';
-      //   overlaySelect.style.left = '380px';
-      // }
     </script>
     <script src="view/layout/assets/js/sidebar.js"></script>
     <script src="view/layout/assets/js/darklightmode.js"></script>
