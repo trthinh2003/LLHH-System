@@ -35,6 +35,15 @@
         return $row;
     }
 
+    function demSoLuongYC() {
+        $conn = connect();
+        $sql = "SELECT COUNT(*) FROM YEUCAU";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return intval($row[0]);
+    }
+
     function demSoLuongPH() {
         $conn = connect();
         $sql = "SELECT COUNT(*) FROM PHONGHOC";

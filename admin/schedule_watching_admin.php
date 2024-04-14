@@ -32,6 +32,11 @@
               },';
   }
   $event = rtrim($event, ',');
+  if (isset($_SESSION['soluongYC']) && $_SESSION['soluongYC'] != 0) $divYC = '<div class="shadow-lg text-center fw-bold me-5 mt-1" style="width: 1.15rem; font-size: 0.5rem;">
+                                                                                <div class="p-1 bg-danger text-white rounded-circle">'.$_SESSION['soluongYC'].'</div></div>';
+  else {
+    $divYC = '<span style="display: none"></span>';
+  }
 ?>
 
 <!DOCTYPE html>
@@ -166,8 +171,9 @@
                             <li class="sidebar-item">
                                 <a href="index.php?pg=software_manage" class="sidebar-link">Quản lý phần mềm</a>
                             </li>
-                            <li class="sidebar-item">
+                            <li class="sidebar-item d-flex align-items-center justify-content-between">
                                 <a href="index.php?pg=requirements_manage" class="sidebar-link">Quản lý yêu cầu</a>
+                                <?=$divYC;?>
                             </li>
                         </ul>
                     </li>
@@ -188,32 +194,19 @@
                 </button>
                 <div class="navbar-collapse navbar">
                     <ul class="navbar-nav">
-                    <!-- <li class="nav-item dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                        <img src="assets/images/avatar.jpg" class="avatar img-fluid rounded" alt="">
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                        <a href="#" class="dropdown-item">Cài đặt</a>
-                                        <a href="./login-form.html" class="dropdown-item">Đăng xuất</a>
-                                    </div>
-                                </li> -->
-                                <li class="nav-item dropdown">
-                                    <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                        <p class="login-sign text-black mt-2">
-                                            <img class="rounded-circle mx-1" src="view/layout/assets/images/admin_avatar.jpg" alt="Logo" width="40px"/>
-                                            Xin chào, <?=$admin;?> 
-                                            <i class="fa-solid fa-chevron-down pe-2"></i></p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                        <a href="#" class="dropdown-item">Cài đặt</a>
-                                        <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
-                                    </div>
-                                </li>
-                        <!-- <li class="login-sign">
-                            <a href="view/login-form.php" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
-                        </li> -->
+                      <li class="nav-item dropdown">
+                        <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                          <p class="login-sign text-black mt-2">
+                          <img class="rounded-circle mx-1" src="view/layout/assets/images/admin_avatar.jpg" alt="Logo" width="40px"/>
+                            Xin chào, <?=$admin;?> 
+                            <i class="fa-solid fa-chevron-down pe-2"></i></p>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
+                          <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
+                          <a href="#" class="dropdown-item">Cài đặt</a>
+                          <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
+                        </div>
+                      </li>
                     </ul>
                 </div>
             </nav>
