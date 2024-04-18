@@ -7,6 +7,7 @@
     else {
         header('Location: index.php');
     }
+    $_SESSION['soluongYC'] = demSoLuongYC();
     if (isset($_SESSION['soluongYC']) && $_SESSION['soluongYC'] != 0) $divYC = '<div class="shadow-lg text-center fw-bold me-5 mt-1" style="width: 1.15rem; font-size: 0.5rem;">
                                                                                     <div class="p-1 bg-danger text-white rounded-circle">'.$_SESSION['soluongYC'].'</div></div>';
     else {
@@ -28,6 +29,7 @@
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
     <link rel="stylesheet" href="view/layout/assets/css/style.css" />
+    <link rel="stylesheet" href="view/layout/assets/css/normalscheduleshow.css">
   </head>
 
   <body>
@@ -86,8 +88,7 @@
                                 <i class="fa-solid fa-chevron-down pe-2"></i></p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                                <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                <a href="#" class="dropdown-item">Cài đặt</a>
+                                <a href="index.php?pg=admin_profile" class="dropdown-item">Hồ sơ cá nhân</a>
                                 <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
                             </div>
                         </li>
@@ -137,6 +138,49 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Lịch -->
+                    <h4><i class="fa-regular fa-calendar-days pe-2"></i>Lịch hôm nay</h4>
+                    <div class="container-calendar flex">
+                        <div class="calendar shadow">
+                            <div class="month flex">
+                                <div class="prev">
+                                    <i class="fas fa-chevron-left"></i>
+                                </div>
+                                <div class="content">
+                                    <h1 class="fw-bold"></h1>
+                                    <p></p>
+                                </div>
+                                <div class="next">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="weekdays flex">
+                                <div>Chủ nhật</div>
+                                <div>Hai</div>
+                                <div>Ba</div>
+                                <div>Tư</div>
+                                <div>Năm</div>
+                                <div>Sáu</div>
+                                <div>Bảy</div>
+                            </div>
+                            <div class="days flex">
+                                <div class="previous-day">26</div>
+                                <div class="previous-day">27</div>
+                                <div class="previous-day">28</div>
+                                <div class="previous-day">29</div>
+                                <div class="previous-day">30</div>
+                                <div class="previous-day">31</div>
+                                <div class="">1</div>
+                                <div class="today">11</div>
+                                <div class="">31</div>
+                                <div class="next-days">1</div>
+                                <div class="next-days">2</div>
+                                <div class="next-days">3</div>
+                                <div class="next-days">4</div>
+                                <div class="next-days">5</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
             <a href="#" class="theme-toggle">
@@ -172,5 +216,6 @@
 
     <script src="view/layout/assets/js/sidebar.js"></script>
     <script src="view/layout/assets/js/darklightmode.js"></script>
+    <script src="view/layout/assets/js/normalscheduleshow.js"></script>
     </body>
 </html>

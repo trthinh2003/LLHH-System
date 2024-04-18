@@ -91,7 +91,7 @@
       .modal {
         display: none;
         position: fixed;
-        z-index: 50;
+        z-index: 100;
         left: 0;
         top: 0;
         width: 100%;
@@ -102,11 +102,12 @@
       
       .modal-content {
         background-color: #fefefe;
-        margin: 15% auto;
+        margin: 5% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 50%;
+        width: 40%;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        animation: modalFadeIn ease 0.5s;
       }
       
       .close {
@@ -138,6 +139,40 @@
           border-radius: 5px;
         }
       }
+
+      @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+      }
+
+      /* CSS cho bảng modal */
+      .modal-content table {
+        width: 100%;
+        max-width: 1200px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .modal-content table tr {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0;
+      }
+      .modal-content table tr td {
+        padding: 0.5rem 0.5rem;
+        background-color: var(--bs-table-bg);
+        border-bottom-width: var(--bs-border-width);
+        box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+        text-align: left;
+        border: 1px solid #e1e1e1;
+        font-size: 1.2em;
+      }
     </style>
   </head>
 
@@ -167,7 +202,7 @@
                       <a href="index.php?pg=approveRequirements" class="sidebar-link">Kiểm tra các yêu cầu</a>
                     </li>
                     <li class="sidebar-item">
-                      <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
+                      <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký yêu cầu thực hành</a>
                     </li>
                   </ul>
                 </li>
@@ -188,16 +223,6 @@
                 </button>
                 <div class="navbar-collapse navbar">
                   <ul class="navbar-nav">
-                    <!-- <li class="nav-item dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                        <img src="assets/images/avatar.jpg" class="avatar img-fluid rounded" alt="">
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                        <a href="#" class="dropdown-item">Cài đặt</a>
-                                        <a href="./login-form.html" class="dropdown-item">Đăng xuất</a>
-                                    </div>
-                                </li> -->
                     <li class="nav-item dropdown">
                       <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
                         <p class="login-sign text-black mt-2">
@@ -207,14 +232,10 @@
                       </a>
                       <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
                         <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
-                        <a href="#" class="dropdown-item">Cài đặt</a>
                         <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
                       </div>
                     </li>
-                        <!-- <li class="login-sign">
-                            <a href="view/login-form.php" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
-                        </li> -->
-                    </ul>
+                  </ul>
                 </div>
             </nav>
 
@@ -242,12 +263,47 @@
                 <!-- Modal HTML -->
                 <div id="eventModal" class="modal">
                   <div class="modal-content">
-                     <span class="close">&times;</span>
-                    <h2 class="text-center">Sửa sự kiện</h2>
-                    <p class="fw-bold">Tên sự kiện cũ</p><input type="text" id="eventTitle" placeholder="Nhập title mới">
-                    <button id="saveEvent" class="btn btn-primary my-3">Lưu</button>
+                    <span class="close text-end">&times;</span>
+                    <h2 class="text-center">Thông tin lịch thực hành</h2>
+                    <table class="mt-2">
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold">Phòng học</td>
+                          <td class="tenPH"></td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Lớp học phần</td>
+                          <td class="lopHP"></td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Tên học phần</td>
+                          <td class="tenHP"></td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Phụ trách giảng dạy</td>
+                          <td class="hoTenGV"></td>
+                        </tr> 
+                        <tr>
+                          <td class="fw-bold">Ngày học</td>
+                          <td class="ngayHoc"></td>
+                        </tr> 
+                        <tr>
+                          <td class="fw-bold">Buổi học</td>
+                          <td class="buoiHoc"></td>
+                        </tr> 
+                        <tr>
+                          <td class="fw-bold">Thời gian bắt đầu tiết học</td>
+                          <td class="thoiGianBatDau"></td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold">Thời gian kết thúc tiết học</td>
+                          <td class="thoiGianKetThuc"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <button id="closeBtn" class="btn btn-danger my-3" style="width: 6rem; margin-left: auto;">Đóng</button>
                   </div>
-                </div>          
+                </div>
               </div>
             </div>
         </main>
@@ -347,25 +403,43 @@
           eventBackgroundColor: '#3788d8', // Màu nền của các sự kiện
           eventOverlap: true, // Không cho phép các sự kiện chồng lên nhau
           eventClick: function(info) {
-          // Hiển thị modal khi click vào sự kiện
+            // Hiển thị modal khi click vào sự kiện
             var modal = document.getElementById("eventModal");
             modal.style.display = "block";
-            
-            // Đưa title của sự kiện vào trường input trong modal
-            document.getElementById("eventTitle").value = info.event.title;
-            
+            var eventDetail = document.getElementById("event-detail");
+            var cutEvent = info.event.title.split(" - ");
+            var tenPH = document.querySelector('.tenPH');
+            tenPH.innerHTML = cutEvent[0];
+            var lopHP = document.querySelector('.lopHP');
+            lopHP.innerHTML = cutEvent[1];
+            var tenHP = document.querySelector('.tenHP');
+            tenHP.innerHTML = cutEvent[2];
+            var hoTenGV = document.querySelector('.hoTenGV');
+            hoTenGV.innerHTML = cutEvent[3];
+            var buoiHoc = info.event.extendedProps.period;
+            var buoiHocElement = document.querySelector('.buoiHoc');
+            buoiHocElement.innerHTML = buoiHoc;
+            var thoiGianBatDau = info.event.start.toLocaleString().split(' ');
+            var gioBatDau = thoiGianBatDau[0];
+            var thoiGianKetThuc = info.event.end.toLocaleString().split(' ');
+            var gioKetThuc = thoiGianKetThuc[0];
+            var thoiGianBatDauElement = document.querySelector('.thoiGianBatDau');
+            thoiGianBatDauElement.innerHTML = gioBatDau;
+            var thoiGianKetThucElement = document.querySelector('.thoiGianKetThuc');
+            thoiGianKetThucElement.innerHTML = gioKetThuc;
+            var ngayHoc = document.querySelector('.ngayHoc');
+            ngayHoc.innerHTML = thoiGianBatDau[1];
+            // console.log(info.event.start.toLocaleString());
+            // console.log(info.event.end.toLocaleString());
+
             // Xử lý khi click vào nút đóng modal
             var closeBtn = document.getElementsByClassName("close")[0];
             closeBtn.onclick = function() {
               modal.style.display = "none";
             };
-            
-            // Xử lý khi click vào nút lưu
-            var saveBtn = document.getElementById("saveEvent");
-            saveBtn.onclick = function() {
-              var newTitle = document.getElementById("eventTitle").value;
-              info.event.setProp('title', newTitle); // Cập nhật title của sự kiện
-              modal.style.display = "none"; // Đóng modal
+            var closeBtn = document.getElementById("closeBtn");
+            closeBtn.onclick = function() {
+              modal.style.display = "none";
             };
           }
         });

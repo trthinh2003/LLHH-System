@@ -14,15 +14,60 @@
         return $row;
     }
 
+    //Hàm trả về tất cả các khoa
+    function selectOptKhoa() {
+        $conn = connect();
+        $sql = "SELECT TENKHOA FROM KHOA";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else {
+            $row = 0;
+        }
+        $conn->close();
+        return $row;
+    }
+
+    //Hàm trả về tất cả các phần mềm
+    function selectOptPM() {
+        $conn = connect();
+        $sql = "SELECT TENPHANMEM FROM PHANMEM";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else {
+            $row = 0;
+        }
+        $conn->close();
+        return $row;
+    }
+
+    //Hàm lấy mã khoa từ tên khoa
+    function layMaKhoaTuTenKhoa($tenkhoa) {
+        $conn = connect();
+        $sql = "SELECT MAKHOA FROM KHOA WHERE TENKHOA LIKE '".$tenkhoa."'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_row();
+            $kq = $row[0];
+        }
+        else {
+            $kq = 0;
+        }
+        $conn->close();
+        return $kq;
+    }
+
     //Hàm trả về tất cả thông tin của giảng viên theo tên giảng viên
     function layTTProfileGV($teacherName) {
         $conn = connect();
-        $sql = "SELECT DISTINCT GIANGVIEN.HOTENGIANGVIEN, KHOA.TENKHOA, GIANGVIEN.EMAIL,
-                                LYLICHKHOAHOC.TRINHDOCHUYENMON, LYLICHKHOAHOC.HOCHAM, 
-                                LYLICHKHOAHOC.NGACHVIENCHUC, GIANGVIEN.SODIENTHOAI
-                FROM GIANGVIEN, LYLICHKHOAHOC, KHOA
-                WHERE GIANGVIEN.LYLICH_ID = LYLICHKHOAHOC.LYLICH_ID
-                AND GIANGVIEN.MAKHOA = KHOA.MAKHOA
+        $sql = "SELECT DISTINCT GIANGVIEN.GIANGVIEN_ID, GIANGVIEN.HOTENGIANGVIEN, KHOA.TENKHOA, GIANGVIEN.EMAIL,
+                                GIANGVIEN.SODIENTHOAI, TAIKHOAN.TENDANGNHAP, TAIKHOAN.TAIKHOAN_ID
+                FROM GIANGVIEN, KHOA, TAIKHOAN
+                WHERE GIANGVIEN.MAKHOA = KHOA.MAKHOA
+                AND TAIKHOAN.GIANGVIEN_ID = GIANGVIEN.GIANGVIEN_ID
                 AND GIANGVIEN.HOTENGIANGVIEN LIKE '".$teacherName."'";
         $result =  $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -35,6 +80,158 @@
         return $row;
     }
 
+    //Hàm trả về lý lịch khoa học của giảng viên thông qua ID Giảng viên
+    function layLyLichKhoaHoc($teacher_id) {
+        $conn = connect();
+        $sql = "SELECT DISTINCT LYLICHKHOAHOC.TRINHDOCHUYENMON, LYLICHKHOAHOC.HOCHAM, LYLICHKHOAHOC.NGACHVIENCHUC
+                FROM GIANGVIEN, LYLICHKHOAHOC
+                WHERE GIANGVIEN.LYLICH_ID = LYLICHKHOAHOC.LYLICH_ID
+                AND GIANGVIEN.GIANGVIEN_ID LIKE '".$teacher_id."'";
+        $result =  $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else {
+            $row = 0;
+        }
+        $conn->close();
+        return $row;
+    }
+
+    //Hàm trả về thông tin tài khoản
+    function layTTTaiKhoan() {
+        $conn = connect();
+        $sql = "SELECT DISTINCT TAIKHOAN.TAIKHOAN_ID, TAIKHOAN.TENDANGNHAP, TAIKHOAN.ROLE
+                FROM TAIKHOAN";
+        $result =  $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else {
+            $row = 0;
+        }
+        $conn->close();
+        return $row;
+    }
+
+    //Hàm trả về thông tin các phần mềm
+    function layTTPhanMem() {
+        $conn = connect();
+        $sql = "SELECT DISTINCT PHANMEM_ID, TENPHANMEM, PHIENBAN
+                FROM PHANMEM";
+        $result =  $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else {
+            $row = 0;
+        }
+        $conn->close();
+        return $row;
+    }
+
+    function layIDPMTuTenPM($tenphanmem) {
+        $conn = connect();
+        $sql = "SELECT PHANMEM_ID
+                FROM PHANMEM
+                WHERE TENPHANMEM LIKE '".$tenphanmem."'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+
+    //Lấy ID Lý lịch
+    function layIDLyLich($trinhdochuyenmon, $hocham, $ngachvienchuc) {
+        $conn = connect();
+        $sql = "SELECT DISTINCT LYLICH_ID
+                FROM LYLICHKHOAHOC
+                WHERE TRINHDOCHUYENMON LIKE '".$trinhdochuyenmon."'
+                AND HOCHAM LIKE '".$hocham."'
+                AND NGACHVIENCHUC LIKE '".$ngachvienchuc."'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_row();
+            $kq = $row[0];
+        }
+        else {
+            $kq = 0;
+        }
+        $conn->close();
+        return $kq;
+    }
+
+    //Hàm lấy Email GV từ ID_TAIKHOAN
+    function layEmailGV($taikhoan_id) {
+        $conn = connect();
+        $sql = "SELECT GIANGVIEN.EMAIL
+                FROM TAIKHOAN, GIANGVIEN
+                WHERE TAIKHOAN.GIANGVIEN_ID = GIANGVIEN.GIANGVIEN_ID
+                AND TAIKHOAN.TAIKHOAN_ID = '".$taikhoan_id."'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+
+    //Hàm lấy tên giảng viên từ Username và Password
+    function layTenGVTuUserNameAndPasswd($username, $password) {
+        $conn = connect();
+        $sql = "SELECT GIANGVIEN.HOTENGIANGVIEN 
+                FROM TAIKHOAN, GIANGVIEN
+                WHERE TAIKHOAN.GIANGVIEN_ID = GIANGVIEN.GIANGVIEN_ID
+                AND TAIKHOAN.TENDANGNHAP LIKE '".$username."'
+                AND TAIKHOAN.MATKHAU LIKE '".md5($password)."'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+
+    //Hàm lấy ID giảng viên từ Username và Password
+    function layIDGVTuUserNameAndPasswd($username, $password) {
+        $conn = connect();
+        $sql = "SELECT GIANGVIEN.GIANGVIEN_ID
+                FROM TAIKHOAN, GIANGVIEN
+                WHERE TAIKHOAN.GIANGVIEN_ID = GIANGVIEN.GIANGVIEN_ID
+                AND TAIKHOAN.TENDANGNHAP LIKE '".$username."'
+                AND TAIKHOAN.MATKHAU LIKE '".md5($password)."'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+
+    //Hàm lấy ID giảng viên từ Tài khoản ID
+    function layIDGVTuTaiKhoanID($taikhoan_id) {
+        $conn = connect();
+        $sql = "SELECT GIANGVIEN.GIANGVIEN_ID
+                FROM TAIKHOAN, GIANGVIEN
+                WHERE TAIKHOAN.GIANGVIEN_ID = GIANGVIEN.GIANGVIEN_ID
+                AND TAIKHOAN.TAIKHOAN_ID LIKE '".$taikhoan_id."'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+
+    //Hàm lấy ID Giảng viên từ thông tin profile
+    function layIDGVTuTTProfile($hotengiangvien, $email, $sodienthoai, $gioitinh, $makhoa) {
+        $conn = connect();
+        $sql = "SELECT GIANGVIEN_ID
+                FROM GIANGVIEN
+                WHERE HOTENGIANGVIEN LIKE '".$hotengiangvien."'
+                AND EMAIL LIKE '".$email."'
+                AND SODIENTHOAI LIKE '".$sodienthoai."'
+                AND GIOITINH LIKE '".$gioitinh."'
+                AND MAKHOA LIKE '".$makhoa."'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+
+    //Đếm số lượng yêu cầu
     function demSoLuongYC() {
         $conn = connect();
         $sql = "SELECT COUNT(*) FROM YEUCAU";
@@ -44,6 +241,7 @@
         return intval($row[0]);
     }
 
+    //Đếm số lượng phòng học
     function demSoLuongPH() {
         $conn = connect();
         $sql = "SELECT COUNT(*) FROM PHONGHOC";
@@ -160,7 +358,7 @@
         $conn = connect();
         $sql = "SELECT DISTINCT YEUCAU.YEUCAU_ID, LOPHOCPHAN.MAHOCPHAN, LOPHOCPHAN.TENNHOM,
                        LOPHOCPHAN.HOCKI, LOPHOCPHAN.NAMHOC, YEUCAU.TUANHOC, 
-                       GIANGVIEN.HOTENGIANGVIEN, PHANMEM.TENPHANMEM, YEUCAU.NGAYYEUCAU
+                       GIANGVIEN.HOTENGIANGVIEN, PHANMEM.TENPHANMEM, YEUCAU.NGAYYEUCAU, YEUCAU.TRANGTHAI
                 FROM YEUCAU, LOPHOCPHAN, GIANGVIEN, PHANMEM, HOCKI
                 WHERE YEUCAU.GIANGVIEN_ID = GIANGVIEN.GIANGVIEN_ID
                 AND YEUCAU.TENNHOM = LOPHOCPHAN.TENNHOM
@@ -169,6 +367,8 @@
                 AND YEUCAU.NAMHOC = LOPHOCPHAN.NAMHOC
                 AND YEUCAU.PHANMEM_ID = PHANMEM.PHANMEM_ID
                 AND LOPHOCPHAN.HOCKI = HOCKI.HOCKI
+                AND (YEUCAU.TRANGTHAI LIKE 'Chờ duyệt'
+                OR YEUCAU.TRANGTHAI LIKE 'Chưa duyệt')
                 ORDER BY NGAYYEUCAU";
         $result =  $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -253,7 +453,7 @@
         return $row;
     }
 
-    //5 hàm xử lý bảng Temp
+    //9 hàm xử lý bảng Temp
     function layLHPVaBuoiTuongUngTrongTemp() {
         $conn = connect();
         $sql = "SELECT GROUP_CONCAT(DISTINCT CONCAT(MAHOCPHAN,'-',TENNHOM)) AS LOPHOCPHAN, CONCAT(BUOIHOC, ',' ,NGAYHOC) AS BUOI 
@@ -296,6 +496,17 @@
                 FROM LOPHOCPHAN
                 WHERE MAHOCPHAN LIKE '".$mahocphan."'
                 AND TENNHOM LIKE '".$tennhom."'";
+        $result =  $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+    function layNgayBatDauCuaHK_NH($hocki, $namhoc) {
+        $conn = connect();
+        $sql = "SELECT NGAYBATDAU
+                FROM HOCKI
+                WHERE HOCKI LIKE '".$hocki."'
+                AND NAMHOC LIKE '".$namhoc."'";
         $result =  $conn->query($sql);
         $row = $result->fetch_row();
         $conn->close();
@@ -369,5 +580,19 @@
         }
         $conn->close();
         return $row;
+    }
+    function layIDYeuCauTuLHPKemTuanVaHK_NHTuongUng($mahocphan, $tennhom, $hocki, $namhoc, $tuanhoc) {
+        $conn = connect();
+        $sql = "SELECT YEUCAU_ID
+                FROM YEUCAU
+                WHERE MAHOCPHAN LIKE '".$mahocphan."'
+                AND TENNHOM LIKE '".$tennhom."'
+                AND HOCKI LIKE '".$hocki."'
+                AND NAMHOC LIKE '".$namhoc."'
+                AND TUANHOC LIKE '".$tuanhoc."'";
+        $result =  $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
     }
 ?>

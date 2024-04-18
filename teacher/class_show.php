@@ -180,7 +180,7 @@
                                 <a href="index.php?pg=approveRequirements" class="sidebar-link">Kiểm tra các yêu cầu</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký lịch thực hành</a>
+                                <a href="index.php?pg=schedule_registration" class="sidebar-link">Đăng ký yêu cầu thực hành</a>
                             </li>
                         </ul>
                     </li>
@@ -211,7 +211,6 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
                                 <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
-                                <a href="#" class="dropdown-item">Cài đặt</a>
                                 <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
                             </div>
                         </li>

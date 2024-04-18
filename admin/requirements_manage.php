@@ -8,10 +8,14 @@
         header('Location: index.php');
     }
     if (isset($_SESSION['successApprove']) && $_SESSION['successApprove'] != "") {
-        $successApprove = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 15rem; display:none;">
-                            <i class="fa-solid fa-check p-2 bg-success text-white rounded-circle pe-2 mx-2"></i>Duyệt thành công
-                           </div>';
-        unset($_SESSION['successApprove']);
+        if ($_SESSION['successApprove'] == "Duyệt thành công!") {
+            $successApprove = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 20rem; display:none;">
+                                <i class="fa-solid fa-check p-2 bg-success text-white rounded-circle pe-2 mx-2"></i>
+                                '.$_SESSION['successApprove'].', '.$_SESSION['analysisApprove'].'
+                            </div>';
+            unset($_SESSION['successApprove']);
+            unset($_SESSION['analysisApprove']);
+        }
     }
     $tr = "";
     $i = 1;
@@ -29,6 +33,7 @@
                     <td>'.$row['HOCKI'].'</td>
                     <td>'.$row['NAMHOC'].'</td>
                     <td>'.$row['NGAYYEUCAU'].'</td>
+                    <td>'.$row['TRANGTHAI'].'</td>
                     <td class="detailClassShow text-center">
                         <input class="btn btn-secondary detail-modal-js" type="button" name="detailClass" value="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
                     </td>
@@ -347,8 +352,7 @@
                                 <i class="fa-solid fa-chevron-down pe-2"></i></p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                                <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                <a href="#" class="dropdown-item">Cài đặt</a>
+                                <a href="index.php?pg=admin_profile" class="dropdown-item">Hồ sơ cá nhân</a>
                                 <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
                             </div>
                         </li>
@@ -380,6 +384,7 @@
                                         <th>Học kì</th>
                                         <th>Năm học</th>
                                         <th>Ngày yêu cầu</th>
+                                        <th>Trạng thái</th>
                                         <th colspan="2" class="text-center">Chọn</th>
                                     </tr>
                                     </thead>

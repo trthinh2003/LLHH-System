@@ -34,6 +34,9 @@
         case 'schedule_watching_admin':
           include_once "admin/schedule_watching_admin.php";
           break;
+        case 'admin_profile':
+          include_once "admin/admin_profile.php";
+          break;  
 
         //CONTROLLER SANG TRANG GIANG VIEN
         case 'teacher':

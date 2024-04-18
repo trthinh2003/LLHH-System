@@ -7,22 +7,37 @@
     else {
         header('Location: index.php');
     }
+    if (isset($_SESSION['statusAddSW']) && $_SESSION['statusAddSW'] != "") {
+        if ($_SESSION['statusAddSW'] == "Thêm phần mềm thành công!") {
+            $successAddSW = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 17rem; display:none;">
+                                <i class="fa-solid fa-check p-2 bg-success text-white rounded-circle pe-2 mx-2"></i>
+                                Thêm phần mềm '.$_SESSION['softwareAdd'].' vào phòng '.$_SESSION['labNameAdd'].' thành công
+                               </div>';
+            unset($_SESSION['statusAddSW']);
+            unset($_SESSION['softwareAdd']);
+            unset($_SESSION['labNameAdd']);
+        }
+        else if ($_SESSION['statusAddSW'] == "Phần mềm đã có ở phòng học này") {
+            $failedAddSW = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 19rem; display:none;">
+                                <i class="fa-solid fa-x p-2 bg-danger text-white rounded-circle pe-2 mx-2"></i>'.$_SESSION['statusAddSW'].'
+                            </div>';
+            unset($_SESSION['statusAddSW']);
+        }
+    }
     $tr = "";
     $i = 1;
     $result_all = layTTPhongHocKemCauHinhMayVaPhanMem();
+    if ($result_all == 0) $result_all = [];
     foreach ($result_all as $row) {
         $tr .= '<tr>
                     <td>'.$i.'</td>
-                    <td>'.$row['MAPHONGHOC'].'</td>
+                    <td class="maPH">'.$row['MAPHONGHOC'].'</td>
                     <td>'.$row['SUCCHUA'].'</td>
                     <td>CPU: '.$row['CPU'].' - RAM: '.$row['RAM'].' - SSD: '.$row['SSD'].'</td>
                     <td>'.$row['CACPHANMEM'].'</td>
-                    <td class="edit text-center p-0">
-                        <form method="post" action="sua.php">
-                        <input class="btn btn-success" type="submit" name="editBtn" value="Sửa"/>
-                        <input type="hidden" name="maphonghoc" value="'.$row['MAPHONGHOC'].'"/>
-                        </form>
-                    </td>      
+                    <td class="editLab text-center">
+                        <input class="btn btn-success edit-modal-js" type="button" name="editLabClass" value="Sửa"/>
+                    </td>   
                     <td class="del text-center p-0">
                         <form method="post" action="route/delete_lab.php">
                         <input class="btn btn-primary" type="submit" name="delBtn" value="Xóa"/>
@@ -31,6 +46,11 @@
                     </td>                    
                 </tr>';
         $i++;        
+    }
+    $cacPM = selectOptPM();
+    $optPM = "";
+    foreach ($cacPM as $row) {
+        $optPM .= '<option name="softwareName" value="'.$row['TENPHANMEM'].'">'.$row['TENPHANMEM'].'</option>';
     }
     if (isset($_SESSION['soluongYC']) && $_SESSION['soluongYC'] != 0) $divYC = '<div class="shadow-lg text-center fw-bold me-5 mt-1" style="width: 1.15rem; font-size: 0.5rem;">
                                                                                     <div class="p-1 bg-danger text-white rounded-circle">'.$_SESSION['soluongYC'].'</div></div>';
@@ -157,6 +177,105 @@
         .edit, .del {
             cursor: pointer;
         }
+
+        /* Toast message khi thêm phần mềm thành công hay thất bại*/
+        .move-from-top {
+            position: fixed;
+            top: 0;
+            right: calc(50% - 150px);
+            z-index: 99999;
+            animation: moveFromTop 0.5s forwards;
+        }
+
+        @keyframes moveFromTop {
+            from {
+                transform: translateY(0%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0%);
+                opacity: 1;
+            }
+        }
+
+        /* Modal Sửa phòng học */
+        .modalSuaPH {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+            display: none;
+            z-index: 100;
+        }
+
+        .modalSuaPH.open {
+            display: flex;
+        }
+
+        .modal-container {
+            background-color: #fff;
+            width: 450px;
+            border-radius: 10px;
+            max-width: calc(100% - 32px);
+            min-height: 200px;
+            position: relative;
+            animation: modalFadeIn ease 0.5s;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 14px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-header i {
+            margin-right: 16px;
+        }
+
+        .modal-body {
+            padding: 16px;
+        }
+
+        .modal-label {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .modal-input {
+            border: 1px solid #ccc;
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-140px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
   </head>
 
@@ -216,8 +335,7 @@
                                 <i class="fa-solid fa-chevron-down pe-2"></i></p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                                <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                <a href="#" class="dropdown-item">Cài đặt</a>
+                                <a href="index.php?pg=admin_profile" class="dropdown-item">Hồ sơ cá nhân</a>
                                 <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
                             </div>
                         </li>
@@ -259,6 +377,91 @@
                     </div>
                 </div>      
             </main>
+            <!--Modal Sửa phòng học-->
+            <form class="modalSuaPH js-modal" action="route/editLab.php" method="post">
+                <div class="modal-container js-modal-container p-3">
+                    <div class="modal-close js-modal-close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="modal-header d-flex align-item-center justify-content-center fw-bold" style="font-size: 1.5rem">
+                        Sửa thông tin phòng học
+                    </div>
+                    <div class="modal-body modalThem-body">
+                        <div class="modal-body__labName modal-label"></div>
+                        <!-- Bổ sung phần mềm -->
+                        <label class="modal-label" for="software-chosen">
+                            Bổ sung phần mềm
+                        </label>
+                        <select id="software-chosen" name="softwareName" class="modal-input">
+                            <option value="Chọn phần mềm">Chọn phần mềm</option>
+                            <?=$optPM;?>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success me-3 my-2" name="editLabBtn" value="Thêm"/>
+                    </div>
+                </div>
+            </form>
+            <?php if(isset($successAddSW)) echo $successAddSW;?>
+            <?php if(isset($failedAddSW)) echo $failedAddSW;?>
+            <script>
+                const buyBtns = document.querySelectorAll('.edit-modal-js')
+                const modal = document.querySelector('.js-modal')
+                const modalContainer = document.querySelector('.js-modal-container')
+                const modalClose = document.querySelector('.js-modal-close')
+
+                function showBuyProduct() {
+                    modal.classList.add('open')
+                }
+
+                function hideBuyProduct() {
+                    modal.classList.remove('open')
+                }
+
+                for (const buyBtn of buyBtns) {
+                    buyBtn.addEventListener('click', showBuyProduct);
+                }
+
+                modalClose.addEventListener('click', hideBuyProduct);
+                // modal.addEventListener('click', hideBuyProduct);
+                // modalContainer.addEventListener('click', (event) => {
+                // event.stopPropagation()
+                // })
+            </script>
+            <script>
+                var editButtons = document.querySelectorAll('.edit-modal-js');
+                var modalBodyLabname = document.querySelector('.modalSuaPH .modal-body .modal-body__labName');
+                var modalBody = document.querySelector('.modalSuaPH .modal-body');
+
+                for (editButton of editButtons) {
+                    editButton.addEventListener('click', function() {
+                        // var yeucau_id = this.parentNode.parentNode.querySelector('input[type="hidden').value;
+                        // var inputHidden = document.createElement('input');
+                        // inputHidden.setAttribute("type", "hidden");
+                        // inputHidden.setAttribute("name", "yeucau_id");
+                        // inputHidden.setAttribute("value", yeucau_id);
+                        // var modalApprove = this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.modalDuyet .modal-container .modalDuyet-body');
+                        // // console.log(modalApprove);
+                        // modalApprove.appendChild(inputHidden);
+                        var spanPH = this.parentNode.parentNode.querySelector('.maPH').innerText;
+                        modalBodyLabname.innerHTML = "Tên phòng học: " + spanPH;
+                        var inputHidden = document.createElement('input');
+                        inputHidden.setAttribute("type", "hidden");
+                        inputHidden.setAttribute("name", "labName");
+                        inputHidden.setAttribute("value", spanPH);
+                        modalBody.appendChild(inputHidden);
+                        // console.log(this.parentNode.parentNode.querySelector('.maPH'));
+                    });
+                }
+            </script>
+            <script>
+                var toastMes = document.querySelector('.js-div-dissappear');
+                toastMes.style.display = "block";
+                setTimeout(function(){
+                    toastMes.style.display = "none";
+                }, 3000);
+                console.log(toastMes);
+            </script>
             <a href="#" class="theme-toggle">
                 <i class="fa-regular fa-moon" title="Chế độ tối"></i>
                 <i class="fa-solid fa-sun" title="Chế độ sáng"></i>

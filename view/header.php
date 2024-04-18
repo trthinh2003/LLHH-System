@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="view/layout/assets/css/style.css" />
     <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
+    <link rel="stylesheet" href="view/layout/assets/css/normalscheduleshow.css">
   </head>
 
   <body>
@@ -41,26 +42,6 @@
           </button>
           <div class="navbar-collapse navbar">
             <ul class="navbar-nav">
-              <!-- <li class="nav-item dropdown">
-                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                <img src="assets/images/avatar.jpg" class="avatar img-fluid rounded" alt="">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                <a href="#" class="dropdown-item">Cài đặt</a>
-                                <a href="./login-form.html" class="dropdown-item">Đăng xuất</a>
-                            </div>
-                        </li> -->
-              <!-- <li class="nav-item dropdown">
-                            <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                <p class="login-sign text-black mt-2">Xin chào, Admin <i class="fa-solid fa-chevron-down pe-2"></i></p>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Hồ sơ cá nhân</a>
-                                <a href="#" class="dropdown-item">Cài đặt</a>
-                                <a href="./login-form.html" class="dropdown-item">Đăng xuất</a>
-                            </div>
-                        </li> -->
               <li class="login-sign">
                 <a href="index.php?pg=login-form" class="text-primary"><i class="fa-solid fa-right-to-bracket pe-2"></i>Đăng nhập</a>
               </li>
