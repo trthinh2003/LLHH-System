@@ -44,6 +44,21 @@
         return $row;
     }
 
+    //Hàm trả về tất cả các cấu hình
+    function selectOptCauHinh() {
+        $conn = connect();
+        $sql = "SELECT * FROM CAUHINHMAY";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else {
+            $row = 0;
+        }
+        $conn->close();
+        return $row;
+    }
+
     //Hàm lấy mã khoa từ tên khoa
     function layMaKhoaTuTenKhoa($tenkhoa) {
         $conn = connect();
@@ -130,11 +145,26 @@
         return $row;
     }
 
+    //Hàm lấy ID phần mềm từ tên phần mềm
     function layIDPMTuTenPM($tenphanmem) {
         $conn = connect();
         $sql = "SELECT PHANMEM_ID
                 FROM PHANMEM
                 WHERE TENPHANMEM LIKE '".$tenphanmem."'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_row();
+        $conn->close();
+        return $row[0];
+    }
+
+    //Hàm lấy mã cấu hình từ thông tin cấu hình
+    function layMaCauHinh($cpu, $ram, $ssd) {
+        $conn = connect();
+        $sql = "SELECT MACAUHINH
+                FROM CAUHINHMAY
+                WHERE CPU LIKE '".$cpu."'
+                AND RAM LIKE '".$ram."'
+                AND SSD LIKE '".$ssd."'";
         $result = $conn->query($sql);
         $row = $result->fetch_row();
         $conn->close();

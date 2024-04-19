@@ -23,6 +23,13 @@
                             </div>';
             unset($_SESSION['statusAddSW']);
         }
+        else if ($_SESSION['statusAddSW'] == "Thêm phòng học thành công!") {
+            $successAddSW = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 17rem; display:none;">
+                                <i class="fa-solid fa-check p-2 bg-success text-white rounded-circle pe-2 mx-2"></i>
+                                '.$_SESSION['statusAddSW'].'
+                               </div>';
+            unset($_SESSION['statusAddSW']);
+        }
     }
     $tr = "";
     $i = 1;
@@ -47,6 +54,14 @@
                 </tr>';
         $i++;        
     }
+    $cacCH = selectOptCauHinh();
+    $optCH = "";
+    foreach ($cacCH as $row) {
+        $optCH .= '<option name="configName" value="CPU: '.$row['CPU'].' - RAM: '.$row['RAM'].' - SSD: '.$row['SSD'].'">
+                        CPU: '.$row['CPU'].' - RAM: '.$row['RAM'].' - SSD: '.$row['SSD'].'
+                    </option>';
+    }
+
     $cacPM = selectOptPM();
     $optPM = "";
     foreach ($cacPM as $row) {
@@ -198,8 +213,9 @@
             }
         }
 
-        /* Modal Sửa phòng học */
-        .modalSuaPH {
+        /* Modal Sửa phòng học và Thêm phòng học */
+        .modalSuaPH,
+        .modalThemPH {
             position: fixed;
             top: 0;
             left: 0;
@@ -212,7 +228,8 @@
             z-index: 100;
         }
 
-        .modalSuaPH.open {
+        .modalSuaPH.open,
+        .modalThemPH.open {
             display: flex;
         }
 
@@ -350,12 +367,10 @@
                         <!-- Thêm phòng học -->
                         <div class="my-2 d-flex justify-content-between">
                             <div></div>
-                            <form action="addLab.php" method="post">
-                                <button  class="add btn btn-primary mx-3 text-end" >
-                                    <i class="fa-solid fa-plus p-0"></i>
-                                    <input class="btn btn-primary p-0" name="addLabBtn" type="submit" value="Thêm Phòng Học"/>
-                                </button> 
-                            </form>
+                            <button  class="add btn btn-primary mx-3 text-end" >
+                                <i class="fa-solid fa-plus p-0"></i>
+                                <input class="btn btn-primary p-0 add-lab-btn" name="addLabBtn" type="button" value="Thêm Phòng Học"/>
+                            </button> 
                         </div>
                         <div class="card-body">
                             <table>
@@ -402,31 +417,87 @@
                     </div>
                 </div>
             </form>
+            <!--Modal Sửa phòng học-->
+            <form class="modalThemPH js-modal-addLab" action="route/addlab.php" method="post">
+                <div class="modal-container js-modal-container-addLab p-3">
+                    <div class="modal-close js-modal-close-addLab">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="modal-header d-flex align-item-center justify-content-center fw-bold" style="font-size: 1.5rem">
+                        Thêm phòng học
+                    </div>
+                    <div class="modal-body modalThem-body">
+                        <!-- Tên phòng học muốn thêm -->
+                        <label class="modal-label mb-0" for="name_lab">
+                            Tên phòng học <span class="text-danger">(*)</span>
+                        </label>
+                        <input id="name_lab" type="text" name="nameLab" class="w-100 m-0 text-dark" required>
+                        <!-- Sức chứa -->
+                        <label class="modal-label mb-0 mt-2" for="capacity">
+                            Sức chứa
+                        </label>
+                        <input id="capacity" type="text" name="capacityOfLab" class="w-100 m-0 text-dark" required>
+                        <!-- Chọn cấu hình -->
+                        <label class="modal-label mb-0 mt-2" for="config-chosen">
+                            Thêm cấu hình <span class="text-danger">(*)</span>
+                        </label>
+                        <select id="config-chosen" name="configName" class="modal-input">
+                            <option value="Chọn cấu hình">Chọn cấu hình</option>
+                            <?=$optCH;?>
+                        </select>
+                        <!-- Thêm phần mềm -->
+                        <label class="modal-label mb-0 mt-2" for="software-chosen">
+                            Thêm phần mềm <span class="text-danger">(*)</span>
+                        </label>
+                        <select id="software-chosen" name="softwareName" class="modal-input">
+                            <option value="Chọn phần mềm">Chọn phần mềm</option>
+                            <?=$optPM;?>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success me-3 my-2" name="addLabSubmit" value="Thêm"/>
+                    </div>
+                </div>
+            </form>
             <?php if(isset($successAddSW)) echo $successAddSW;?>
             <?php if(isset($failedAddSW)) echo $failedAddSW;?>
             <script>
-                const buyBtns = document.querySelectorAll('.edit-modal-js')
+                const editBtns = document.querySelectorAll('.edit-modal-js')
                 const modal = document.querySelector('.js-modal')
                 const modalContainer = document.querySelector('.js-modal-container')
                 const modalClose = document.querySelector('.js-modal-close')
 
-                function showBuyProduct() {
+                function showEditLab() {
                     modal.classList.add('open')
                 }
 
-                function hideBuyProduct() {
+                function hideEditLab() {
                     modal.classList.remove('open')
                 }
 
-                for (const buyBtn of buyBtns) {
-                    buyBtn.addEventListener('click', showBuyProduct);
+                for (const editBtn of editBtns) {
+                    editBtn.addEventListener('click', showEditLab);
+                }
+                modalClose.addEventListener('click', hideEditLab);
+            </script>
+            <script>
+                const addLabBtns = document.querySelectorAll('.add-lab-btn')
+                const modalThemPH = document.querySelector('.js-modal-addLab')
+                const modalContainerThemPH = document.querySelector('.js-modal-container-addLab')
+                const modalCloseThemPH = document.querySelector('.js-modal-close-addLab')
+
+                function showAddLab() {
+                    modalThemPH.classList.add('open')
                 }
 
-                modalClose.addEventListener('click', hideBuyProduct);
-                // modal.addEventListener('click', hideBuyProduct);
-                // modalContainer.addEventListener('click', (event) => {
-                // event.stopPropagation()
-                // })
+                function hideAddLab() {
+                    modalThemPH.classList.remove('open')
+                }
+
+                for (const addLabBtn of addLabBtns) {
+                    addLabBtn.addEventListener('click', showAddLab);
+                }
+                modalCloseThemPH.addEventListener('click', hideAddLab);
             </script>
             <script>
                 var editButtons = document.querySelectorAll('.edit-modal-js');

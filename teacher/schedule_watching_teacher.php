@@ -25,10 +25,12 @@
       $timeEnd = "17:00:00";
     }
     $event .= '{
-              "title": "'.$row1['MAPHONGHOC'].' - '.$row1['MAHOCPHAN'].'0'.$row1['TENNHOM'].' - '.$row1['TENHOCPHAN'].' - GV. '.$row1['HOTENGIANGVIEN'].'",
-              "start": "'.$row1['NGAYHOC'].'T'.$timeStart.'",
-              "end": "'.$row1['NGAYHOC'].'T'.$timeEnd.'",
-              "period": "'.$row1['BUOIHOC'].'"
+                "title": "'.$row1['MAPHONGHOC'].' - '.$row1['MAHOCPHAN'].'0'.$row1['TENNHOM'].' - '.$row1['TENHOCPHAN'].' - GV. '.$row1['HOTENGIANGVIEN'].'",
+                "start": "'.$row1['NGAYHOC'].'T'.$timeStart.'",
+                "end": "'.$row1['NGAYHOC'].'T'.$timeEnd.'",
+                "period": "'.$row1['BUOIHOC'].'",
+                "lab": "'.$row1['MAPHONGHOC'].'",
+                "teacherName": "'.$row1['HOTENGIANGVIEN'].'"
               },';
   }
   $event = rtrim($event, ',');
@@ -242,18 +244,20 @@
         <!-- Phan noi dung -->
         <main class="content px-3 py-2">
             <div class="card-body">
-              <div class="container p-5">
-                <div class="mb-4">
+              <div class="container p-4">
+                <h1 class="text-center fw-bold" style="font-size: 2.25rem">Xem lịch thực hành</h1>
+                <div class="fst-italic text-end">(Lịch thực hành bắt đầu từ ngày 26-02-2024, Học kì 2, Năm học 2023 - 2024)</div>
+                <div class="mb-4 mt-2">
                   <label class="text-dark" for="search" style="font-size: 1.05rem;">Tìm kiếm theo: </label>
-                  <input class="p-2 mx-1" type="text" id="search" name="search" placeholder="Tên giảng viên">
-                  <select class="p-2 mx-1 px-2" name="labName" id="">
+                  <input class="p-2 mx-1" type="text" id="searchTeacher" name="searchTeacher" placeholder="Họ tên giảng viên">
+                  <select class="p-2 mx-1 px-2" name="labName" id="searchRoom">
                     <option>Chọn phòng</option>
                     <?=$optLab;?>
                   </select>
                   <button id="searchButton" class="btn btn-primary mx-1">Tìm kiếm</button>
                 </div>
                 <div class="row">
-                  <select id="searchIdOption" class="col-1 overlay-select bg-white text-center text-dark p-0">
+                  <select id="searchPeriod" class="col-1 overlay-select bg-white text-center text-dark p-0">
                     <option>Chọn buổi</option>
                     <option value="Sáng">Sáng</option>
                     <option value="Chiều">Chiều</option>
@@ -264,7 +268,7 @@
                 <div id="eventModal" class="modal">
                   <div class="modal-content">
                     <span class="close text-end">&times;</span>
-                    <h2 class="text-center">Thông tin lịch thực hành</h2>
+                    <h2 class="text-center fw-bold">Thông tin lịch thực hành</h2>
                     <table class="mt-2">
                       <tbody>
                         <tr>
@@ -346,6 +350,7 @@
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'timeGridWeek',
+          initialDate: '2024-02-26', // Set ngày bắt đầu của học kì là ngày 26-02-2024
           slotDuration: '00:30:00', // Mỗi ô trên lịch tuần đại diện cho 30 phút
           headerToolbar: {
             left: 'prev,next today',
@@ -446,8 +451,8 @@
         calendar.render();
 
         // Xử lý sự kiện tìm kiếm
-        document.getElementById('searchIdOption').addEventListener('change', function() {
-          var searchString = document.getElementById('searchIdOption').value;
+        document.getElementById('searchPeriod').addEventListener('change', function() {
+          var searchString = document.getElementById('searchPeriod').value;
           var eventSources = calendar.getEventSources();
           
           eventSources.forEach(function(eventSource) {
@@ -455,18 +460,54 @@
           });
 
           calendar.addEventSource({
-            events: filteredEvents(searchString)
+            events: filteredEventsByPeriod(searchString)
           });
         });
 
-        // Hàm lọc sự kiện theo tiêu đề
-        function filteredEvents(searchString) {
+        // Hàm lọc sự kiện theo buổi học
+        function filteredEventsByPeriod(searchString) {
           var events = [
             <?=$event;?>
           ];
 
           return events.filter(function(event) {
             return event.period === searchString;
+          });
+        }
+        
+        document.getElementById('searchButton').addEventListener('click', function() {
+          var teacherName = document.getElementById('searchTeacher').value.trim();
+          var roomName = document.getElementById('searchRoom').value.trim();
+          
+          var searchString = '';
+          if (teacherName !== '') {
+            searchString = teacherName;
+          } else if (roomName !== '') {
+            searchString = roomName;
+          }
+          
+          var eventSources = calendar.getEventSources();
+          eventSources.forEach(function(eventSource) {
+            eventSource.remove();
+          });
+          
+          calendar.addEventSource({
+            events: filteredEventsByNameOrRoom(searchString)
+          });
+        });
+
+        // Hàm lọc sự kiện theo họ tên giảng viên hoặc phòng học
+        function filteredEventsByNameOrRoom(searchString) {
+          var events = [
+            <?=$event;?>
+          ];
+
+          return events.filter(function(event) {
+            // Lọc sự kiện theo họ tên giảng viên hoặc phòng học
+            return (
+              event.teacherName.toLowerCase().includes(searchString.toLowerCase()) ||
+              event.lab.toLowerCase().includes(searchString.toLowerCase())
+            );
           });
         }
       });
