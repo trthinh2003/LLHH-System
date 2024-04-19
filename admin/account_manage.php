@@ -315,6 +315,9 @@
                                 <a href="index.php?pg=requirements_manage" class="sidebar-link">Quản lý yêu cầu</a>
                                 <?=$divYC;?>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="index.php?pg=lab_analysis" class="sidebar-link">Quản lý tình trạng sử dụng phòng máy</a>
+                            </li>
                         </ul>
                     </li>
                     <!-- Chuc nang xem lich TH, chuc nang nay ca QTHT, Giang vien va Sinh vien deu co the xem duoc -->

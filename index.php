@@ -31,6 +31,9 @@
         case 'requirements_manage':
           include_once "admin/requirements_manage.php";
           break;
+        case 'lab_analysis':
+          include_once "admin/lab_analysis.php";
+          break;
         case 'schedule_watching_admin':
           include_once "admin/schedule_watching_admin.php";
           break;

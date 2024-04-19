@@ -28,110 +28,6 @@
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="view/layout/assets/css/normalize.css" />
     <link rel="stylesheet" href="view/layout/assets/css/style.css" />
-    <style>
-        .main {
-            overflow: scroll;
-        }
-
-        main.content {
-            display: flex;
-            justify-content: flex-start; /* phía trên */
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        .table {
-            width: 100%;
-            max-width: 1200px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .table_header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: rgb(240, 240, 240);
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .table_header p {
-            color: #0298cf;
-            font-weight: bold;
-            font-size: 1.5em; 
-        }
-
-        .add_new {
-            padding: 10px 20px;
-            color: white;
-            background-color: #0298cf;
-            font-size: 1.2em; 
-            transition: background-color 0.3s ease;
-        }
-
-        .add_new:hover {
-            background-color: #007bff;
-        }
-
-        input {
-            padding: 10px 10px;
-            margin: 0 10px;
-            outline: none;
-            border: 1px solid #0298cf;
-            border-radius: 6px;
-            color: #0298cf;
-            font-size: 1.2em; /* Kích thước font lớn hơn */
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            border-color: #007bff;
-        }
-
-        td img {
-            width: 36px;
-            height: 36px;
-            margin-right: .5rem;
-            border-radius: 50%;
-            vertical-align: middle;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table th, table td {
-            padding: 15px; /* Kích thước padding lớn hơn */
-            text-align: left;
-            border: 1px solid #e1e1e1;
-            font-size: 1.2em; /* Kích thước font lớn hơn */
-        }
-
-        table th {
-            background-color: #f5f5f5;
-        }
-
-        table tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        .table_body {
-            width: 100%;
-            max-height: calc(89vh - 160px);
-            /* margin-top: 20px; */
-            border-radius: .6rem;
-            overflow: auto;
-        }
-
-        .detailClassShow {
-            cursor: pointer;
-        }
-    </style>
   </head>
 
   <body>
@@ -199,33 +95,179 @@
             </nav>
             <!-- Phan noi dung -->
             <main class="content px-3 py-2">
-                <div class="container-fluid col">
-                    <h2 class="manage text-center fw-bold">KIỂM TRA CÁC YÊU CẦU</h2>
-                    <div class="card border-0 mt-5">
-                        <div class="card-body">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Mã học phần</th>
-                                    <th>Tên học phần</th>
-                                    <th>Ký hiệu nhóm</th>
-                                    <th>Thứ</th>
-                                    <th>Sỉ số</th>
-                                    <th>Buổi học</th>
-                                    <th>Phụ trách giảng dạy</th>
-                                    <th>Học kì</th>
-                                    <th>Năm học</th>
-                                    <th class="text-center">Chọn</th>
-                                </tr>
-                                </thead>
-                                <tbody>
 
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="container-fluid" id="divchinh">
+                <div class="row justify-content-center align-items-center">Kiểm Tra Yêu Cầu Thực Hành</div>
+                <br>
+                <div class="row justify-content-center align-items-center" id="l"></div>
+                <br>
+                <div class="row justify-content-center align-items-left" style="color: darkturquoise;">Yêu cầu chờ duyệt</div>
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <table class="table table-hover align-items-center justify-content-center" id="bang">
+                            <thead>
+                                <tr>
+                                    <th>Lớp học phần</th>
+                                    <th>Tuần yêu cầu</th>
+                                    <th>Trạng thái</th>
+
+                                </tr>
+                            </thead>
+
+
+                        </table>
                     </div>
-                </div>      
+                    <div class="col-10">
+                        <br>
+                        <div class="row justify-content-center align-items-left" style="color: darkturquoise;">Yêu cầu duyệt không thành công</div>
+                        <table class="table table-hover align-items-center justify-content-center" id="bang1">
+                            <thead>
+                                <tr>
+                                    <th>Lớp học phần</th>
+                                    <th>Tuần yêu cầu</th>
+                                    <th>Trạng thái</th>
+                                    <th class="text-center">Hủy yêu cầu</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                    </div>
+                    <div class="row justify-content-center">
+                        
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                console.log(chuaduyet)
+                var jsVar;
+                var chuaduyet;
+                var p = document.getElementById('bang1');
+                p.addEventListener("click", xoa);
+
+                function xoa(event) {
+                if (event.target.tagName == 'I') {
+                    var k=confirm('Bạn có chắc xóa yêu cầu không không');
+                if(k==true){
+                    var c = event.target.parentNode.parentNode.parentNode;
+                    
+                        var ngay = chuaduyet[c.rowIndex - 1].TUANHOC_LIST.split(',').map(function(item) {
+                            return item.trim();
+                        });
+                        for(u=0;u<ngay.length;u++){
+                            var dt={
+                                mhp: chuaduyet[c.rowIndex-1].MAHOCPHAN,
+                                nhom: chuaduyet[c.rowIndex-1].TENNHOM,
+                                hocki: chuaduyet[c.rowIndex-1].HOCKI,
+                                namhoc: chuaduyet[c.rowIndex-1].NAMHOC,
+                                tuan: ngay[u]
+                            }
+                            fetch('route/insert1.php?a=7', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dt)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        null;
+                    })
+                    .catch(error => {
+                        null;
+                    });
+                        
+                        }
+                        c.parentNode.removeChild(c);
+                    chuaduyet.splice(c.rowIndex - 1, 1);
+                }                           
+                }
+                }
+
+                function nek() {
+                    console.log("test");
+                    fetch('route/insert1.php?a=5')
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            localStorage.setItem('ten', JSON.stringify(data));
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+                nek();
+                jsVar = JSON.parse(localStorage.getItem('ten'));
+                localStorage.removeItem('ten');
+                console.log("test");
+                fetch('route/insert1.php?a=4&tt=Chờ duyệt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(jsVar)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        var bien = data;
+                        document.getElementById('l').innerHTML = 'Hoc kỳ: ' + data[0].HOCKI + ' - Năm học: ' + data[0].NAMHOC;
+                        for (u = 0; u < bien.length; u++) {
+
+                            var hang1 = document.createElement('TD');
+                            hang1.innerHTML = bien[u].MAHOCPHAN + '-' + bien[u].TENNHOM;
+                            var hang2 = document.createElement('TD');
+                            hang2.innerHTML = bien[u].TUANHOC_LIST;
+                            var hang3 = document.createElement('TD');
+                            hang3.innerHTML = bien[u].TRANGTHAI;
+                            var b = document.createElement('TR');
+                            b.appendChild(hang1);
+                            b.appendChild(hang2)
+                            b.appendChild(hang3)
+                            document.getElementById('bang').appendChild(b);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                fetch('route/insert1.php?a=4&tt=Chưa duyệt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(jsVar)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        localStorage.setItem('ten2', JSON.stringify(data));
+                        chuaduyet = JSON.parse(localStorage.getItem('ten2'));
+                        localStorage.removeItem('ten2');
+                        var bien = data;
+                        console.log(data);
+                        document.getElementById('l').innerHTML = 'Hoc kỳ: ' + data[0].HOCKI + ' - Năm học: ' + data[0].NAMHOC;
+                        for (u = 0; u < bien.length; u++) {
+
+                            var hang1 = document.createElement('TD');
+                            hang1.innerHTML = bien[u].MAHOCPHAN + '-' + bien[u].TENNHOM;
+                            var hang2 = document.createElement('TD');
+                            hang2.innerHTML = bien[u].TUANHOC_LIST;
+                            hang2.style.color = 'red';
+                            var hang3 = document.createElement('TD');
+                            hang3.innerHTML = bien[u].TRANGTHAI;
+                            var hang4 = document.createElement('TD');
+                            hang4.innerHTML = `<span><i class="fa fa-trash" aria-hidden="true"></i></span>`;
+                            hang4.classList.add('text-center');
+                            var b = document.createElement('TR');
+                            b.appendChild(hang1);
+                            b.appendChild(hang2)
+                            b.appendChild(hang3)
+
+                            b.appendChild(hang4)
+                            document.getElementById('bang1').appendChild(b);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            </script>
             </main>
             <a href="#" class="theme-toggle">
                 <i class="fa-regular fa-moon" title="Chế độ tối"></i>
