@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 05:47 PM
+-- Generation Time: Apr 20, 2024 at 09:34 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -67,7 +67,8 @@ INSERT INTO `giangvien` (`GIANGVIEN_ID`, `HOTENGIANGVIEN`, `EMAIL`, `SODIENTHOAI
 (1, 'Vũ Đức Minh', 'vducminh@ctu.edu.vn', '0912567891', 'Nam', 'CNTT', 1),
 (2, 'Trần Ngọc Khả Hân', 'khahan@ctu.edu.vn', '0973573577', 'Nữ', 'ATTT', 2),
 (3, 'Lâm Trần Anh Khôi', 'anhkhoi96@ctu.edu.vn', '0917537565', 'Nam', 'HTTT', 4),
-(4, 'Nguyễn Ngọc Ngạn', 'ngocngan@ctu.edu.vn', '02933567789', 'Nam', 'KTPM', 3);
+(4, 'Nguyễn Ngọc Ngạn', 'ngocngan@ctu.edu.vn', '02933567789', 'Nam', 'KTPM', 3),
+(5, 'Ha ha', 'haha@ctu.edu.vn', '0291939114', 'Nam', 'ATTT', NULL);
 
 -- --------------------------------------------------------
 
@@ -210,6 +211,7 @@ CREATE TABLE `lylichkhoahoc` (
 --
 
 INSERT INTO `lylichkhoahoc` (`LYLICH_ID`, `TRINHDOCHUYENMON`, `HOCHAM`, `NGACHVIENCHUC`) VALUES
+(5, 'Siêu Tiến Sĩ', 'Siêu Giáo Sư', 'Không có'),
 (2, 'Tiến sĩ', NULL, 'Giảng viên'),
 (3, 'Tiến sĩ', NULL, 'Giảng viên chính'),
 (4, 'Tiến sĩ', 'Giáo sư', 'Giảng viên cao cấp'),
@@ -555,7 +557,8 @@ INSERT INTO `taikhoan` (`TAIKHOAN_ID`, `TENDANGNHAP`, `matkhau`, `ROLE`, `GIANGV
 (2, 'ducminh', 'd9331c0b37a823f1da56e10c9ef21771', 2, 1),
 (3, 'anhkhoi', 'cb45a43710784451cee2992b63fe745e', 2, 3),
 (4, 'khahan', 'cc12c12ad0189ae831f7e289592ebbda', 2, 2),
-(5, 'ngocngan', '685d77ba6b0877c55008a16e3d1a8802', 2, 4);
+(5, 'ngocngan', '685d77ba6b0877c55008a16e3d1a8802', 2, 4),
+(6, 'haha', '4e4d6c332b6fe62a63afe56171fd3725', 2, 5);
 
 -- --------------------------------------------------------
 
@@ -591,6 +594,7 @@ ALTER TABLE `cauhinhmay`
 --
 ALTER TABLE `giangvien`
   ADD PRIMARY KEY (`GIANGVIEN_ID`),
+  ADD UNIQUE KEY `HOTENGIANGVIEN` (`HOTENGIANGVIEN`,`EMAIL`,`SODIENTHOAI`,`GIOITINH`,`MAKHOA`),
   ADD KEY `MAKHOA` (`MAKHOA`,`LYLICH_ID`),
   ADD KEY `LYLICH_ID` (`LYLICH_ID`);
 
@@ -661,6 +665,7 @@ ALTER TABLE `phonghoc`
 --
 ALTER TABLE `taikhoan`
   ADD PRIMARY KEY (`TAIKHOAN_ID`),
+  ADD UNIQUE KEY `TENDANGNHAP` (`TENDANGNHAP`),
   ADD KEY `GIANGVIEN_ID` (`GIANGVIEN_ID`);
 
 --
@@ -681,25 +686,25 @@ ALTER TABLE `yeucau`
 -- AUTO_INCREMENT for table `giangvien`
 --
 ALTER TABLE `giangvien`
-  MODIFY `GIANGVIEN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `GIANGVIEN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `lylichkhoahoc`
 --
 ALTER TABLE `lylichkhoahoc`
-  MODIFY `LYLICH_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `LYLICH_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `phanmem`
 --
 ALTER TABLE `phanmem`
-  MODIFY `PHANMEM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `PHANMEM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `TAIKHOAN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `TAIKHOAN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `yeucau`

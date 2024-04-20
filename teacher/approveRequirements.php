@@ -97,20 +97,17 @@
             <main class="content px-3 py-2">
 
             <div class="container-fluid" id="divchinh">
-                <div class="row justify-content-center align-items-center">Kiểm Tra Yêu Cầu Thực Hành</div>
-                <br>
-                <div class="row justify-content-center align-items-center" id="l"></div>
-                <br>
+                <h1 class="row justify-content-center align-items-center fw-bold my-2">Kiểm Tra Yêu Cầu Thực Hành</h1>
+                <h5 class="row justify-content-center align-items-center my-4" id="l"></h5>
                 <div class="row justify-content-center align-items-left" style="color: darkturquoise;">Yêu cầu chờ duyệt</div>
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <table class="table table-hover align-items-center justify-content-center" id="bang">
                             <thead>
                                 <tr>
-                                    <th>Lớp học phần</th>
-                                    <th>Tuần yêu cầu</th>
-                                    <th>Trạng thái</th>
-
+                                    <th class="text-center">Lớp học phần</th>
+                                    <th class="text-center">Tuần yêu cầu</th>
+                                    <th class="text-center">Trạng thái</th>
                                 </tr>
                             </thead>
 
@@ -123,9 +120,9 @@
                         <table class="table table-hover align-items-center justify-content-center" id="bang1">
                             <thead>
                                 <tr>
-                                    <th>Lớp học phần</th>
-                                    <th>Tuần yêu cầu</th>
-                                    <th>Trạng thái</th>
+                                    <th class="text-center">Lớp học phần</th>
+                                    <th class="text-center">Tuần yêu cầu</th>
+                                    <th class="text-center">Trạng thái</th>
                                     <th class="text-center">Hủy yêu cầu</th>
                                 </tr>
                             </thead>
@@ -214,10 +211,13 @@
 
                             var hang1 = document.createElement('TD');
                             hang1.innerHTML = bien[u].MAHOCPHAN + '-' + bien[u].TENNHOM;
+                            hang1.classList.add("text-center");
                             var hang2 = document.createElement('TD');
                             hang2.innerHTML = bien[u].TUANHOC_LIST;
+                            hang2.classList.add("text-center");
                             var hang3 = document.createElement('TD');
                             hang3.innerHTML = bien[u].TRANGTHAI;
+                            hang3.classList.add("text-center");
                             var b = document.createElement('TR');
                             b.appendChild(hang1);
                             b.appendChild(hang2)
@@ -247,11 +247,14 @@
 
                             var hang1 = document.createElement('TD');
                             hang1.innerHTML = bien[u].MAHOCPHAN + '-' + bien[u].TENNHOM;
+                            hang1.classList.add("text-center");
                             var hang2 = document.createElement('TD');
                             hang2.innerHTML = bien[u].TUANHOC_LIST;
                             hang2.style.color = 'red';
+                            hang2.classList.add("text-center");
                             var hang3 = document.createElement('TD');
                             hang3.innerHTML = bien[u].TRANGTHAI;
+                            hang3.classList.add("text-center");
                             var hang4 = document.createElement('TD');
                             hang4.innerHTML = `<span><i class="fa fa-trash" aria-hidden="true"></i></span>`;
                             hang4.classList.add('text-center');

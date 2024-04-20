@@ -15,12 +15,22 @@
     }
     $makhoa = layMaKhoaTuTenKhoa($departmentName);
     // echo $usernameAccount . " - " . $passwordAccount . " - " . $teacherName . " - " . $sex_opt . " - " . $makhoa . " - " . $emailTeacher . " - " . $phoneNumber_teacher;
-    $conn->query("INSERT INTO GIANGVIEN(HOTENGIANGVIEN, EMAIL, SODIENTHOAI, GIOITINH, MAKHOA) 
+    $conn->query("INSERT IGNORE INTO GIANGVIEN(HOTENGIANGVIEN, EMAIL, SODIENTHOAI, GIOITINH, MAKHOA) 
                   VALUES('".$teacherName."', '".$emailTeacher."', '".$phoneNumber_teacher."', '".$sex_opt."', '".$makhoa."')");
+    if ($conn->affected_rows <= 0) {
+        $_SESSION['failedAddAccount'] = "Tài khoản đã tồn tại trên hệ thống!";
+        header('Location: ../index.php?pg=account_manage');
+    }
     $id_gv = layIDGVTuTTProfile($teacherName, $emailTeacher, $phoneNumber_teacher, $sex_opt, $makhoa);
-    $conn->query("INSERT INTO TAIKHOAN(TENDANGNHAP, MATKHAU, ROLE, GIANGVIEN_ID) 
+    $conn->query("INSERT IGNORE INTO TAIKHOAN(TENDANGNHAP, MATKHAU, ROLE, GIANGVIEN_ID) 
                   VALUES('".$usernameAccount."', '".md5($passwordAccount)."', 2, '".$id_gv."')");
-    $_SESSION['successAddAccount'] = "Thêm tài khoản thành công!";
-    header('Location: ../index.php?pg=account_manage');
+    if ($conn->affected_rows > 0) {
+        $_SESSION['successAddAccount'] = "Thêm tài khoản thành công!";
+        header('Location: ../index.php?pg=account_manage');
+    }
+    else {
+        $_SESSION['failedAddAccount'] = "Tài khoản đã tồn tại trên hệ thống!";
+        header('Location: ../index.php?pg=account_manage');
+    }
     $conn->close();
 ?>

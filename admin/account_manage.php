@@ -15,6 +15,14 @@
             unset($_SESSION['successAddAccount']);
         }
     }
+    if (isset($_SESSION['failedAddAccount']) && $_SESSION['failedAddAccount'] != "") {
+        if ($_SESSION['failedAddAccount'] == "Tài khoản đã tồn tại trên hệ thống!") {
+            $failedAddAccount = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 19rem; display:none;">
+                                <i class="fa-solid fa-x p-2 bg-danger text-white rounded-circle pe-2 mx-2"></i>'.$_SESSION['failedAddAccount'].'
+                            </div>';
+            unset($_SESSION['failedAddAccount']);
+        }
+    }
     if (isset($_SESSION['deleteAccountSuccess']) && $_SESSION['deleteAccountSuccess'] != "") {
         if ($_SESSION['deleteAccountSuccess'] == "Xóa tài khoản thành công!") {
             $deleteAccountSuccess = '<div class="shadow-lg p-2 move-from-top js-div-dissappear" style="width: 17rem; display:none;">
@@ -462,6 +470,7 @@
             </form>
             <?php if(isset($successAddAccount)) echo $successAddAccount;?>
             <?php if(isset($deleteAccountSuccess)) echo $deleteAccountSuccess;?>
+            <?php if(isset($failedAddAccount)) echo $failedAddAccount;?>
             <script>
                 const buyBtns = document.querySelectorAll('.addAccount-modal-js')
                 const modal = document.querySelector('.js-modal')

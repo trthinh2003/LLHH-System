@@ -76,13 +76,13 @@ function layhp(){
     }
     function liu(){
         session_start();
-    if(isset($_SESSION['TeacherName']) && isset($_SESSION['TeacherID'])) {
-        $sessionData = array(
-            'giangvien_id' => $_SESSION['TeacherID'], // Giả sử id là 123
-            'hotengiangvien' => $_SESSION['TeacherName'] // Tên là John
-        );
-        echo json_encode($sessionData) ;
-    }
+        if(isset($_SESSION['TeacherName']) && isset($_SESSION['TeacherID'])) {
+            $sessionData = array(
+                'giangvien_id' => $_SESSION['TeacherID'], // Giả sử id là 123
+                'hotengiangvien' => $_SESSION['TeacherName'] // Tên là John
+            );
+            echo json_encode($sessionData) ;
+        }
     }
     if($_GET['a']==3){
         layhp();
