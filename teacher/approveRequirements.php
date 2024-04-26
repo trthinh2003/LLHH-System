@@ -36,7 +36,7 @@
         <aside id="sidebar" class="js-sidebar">
             <div class="h-100">
                 <div class="sidebar-logo">
-                    <a href="index.php?pg=approveRequirements" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
+                    <a href="index.php?pg=teacher" id=""><img class="rounded-circle mx-1" src="view/layout/assets/images/logo.png" alt="Logo" width="40px"/>LLTT System</a>
                 </div>
                 <ul class="sidebar-nav mx-0">
                     <li class="sidebar-header">Menu Chính</li>

@@ -12,5 +12,8 @@
     if (isset($_SESSION['TeacherID']) && $_SESSION['TeacherID'] != "") {
         unset($_SESSION['TeacherID']);
     }
+    if (isset($_SESSION['luottruycap']) && $_SESSION['luottruycap'] != "") {
+        $_SESSION['luottruycap'] = 0;
+    }
     header('Location: ../index.php');
 ?>

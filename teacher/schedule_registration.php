@@ -165,7 +165,7 @@
                 <div class="container-fluid" id="divchinh">
                     <h3 class="row justify-content-center align-items-center my-3 fw-bold">Đăng Ký Yêu Cầu Thực Hành</h3>
                     <div class="row justify-content-center">
-                        <div class="col-md-10 col-lg-10  ">
+                        <div class="col-md-10 col-lg-10">
                             <label for="name" class="form-label">Tên giảng viên:</label>
                             <input type="text" class="form-control" id="tengiangvie" name="tengiangvien" required disabled>
                         </div>
@@ -294,11 +294,35 @@
                         this.NH = ngayhoc;
                         this.PM = phanmem;
                     }
+                    function validateInput() {
+                        var lophocpha = document.getElementById("lophocpha");
+                        var ngaythuchan = document.getElementById("ngaythuchan");
+                        if (lophocpha.selectedIndex === 0 && ngaythuchan.value.trim() === '') {
+                            return false;
+                        }
+                    
+                        
+                        var regex = /^(\d+\s*,\s*)*\d+$/;
+                        if (!regex.test(ngaythuchan.value)) {
+                            return false;
+                        }
+                        var ngayArr = ngaythuchan.value.split(",");
+                        var seen = {};
+                        for (var i = 0; i < ngayArr.length; i++) {
+                            var num = ngayArr[i].trim();
+                            if (seen[num]) {
+                                return false;
+                            }
+                            seen[num] = true;
+                        }
+                        return true;
+                    }
 
 
                     function them(event) {
                         if (event.target.id == 'them') {
-                            var lhp = document.getElementById('lophocpha').value;
+                            if(validateInput()==true){
+                                var lhp = document.getElementById('lophocpha').value;
                             document.getElementById('lophocpha').value = null;
                             var nth = document.getElementById('ngaythuchan').value;
                             document.getElementById('ngaythuchan').value = null;
@@ -320,6 +344,10 @@
                                 if (layop[i].value === lhp) {
                                     layop[i].remove();
                                 }
+                            }
+                            }
+                            else{
+                                alert('Dữ Liệu Không Hợp Lê !!!!!')
                             }
                         }
                         if (event.target.tagName == 'LI') {
@@ -593,6 +621,7 @@
                             });
 
                     }
+                    
                 </script>
             </main>
 
@@ -647,8 +676,5 @@
     </script>
     <script src="view/layout/assets/js/sidebar.js"></script>
     <script src="view/layout/assets/js/darklightmode.js"></script>
-
-
   </body>
-
 </html>

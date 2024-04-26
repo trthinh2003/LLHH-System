@@ -41,21 +41,18 @@
                 $conn->query("UPDATE YEUCAU SET TRANGTHAI = 'Chưa duyệt' WHERE YEUCAU_ID LIKE '".$id_yeucau."'");
             }
             else {
-                if ($cacPhongHocTuongUng == 0) {
-                    if ($siso > 50) {
-                        $cacPhongHocTuongUng = layRaCacPhongHocThoaManPhanMemVaSiSo($mahocphan, $tennhom, $hocki, $namhoc, 40);
-                        $maphonghoc = $cacPhongHocTuongUng[$j]['MAPHONGHOC'];
-                        $conn->query("INSERT IGNORE INTO LICHTHUCHANH(MAPHONGHOC, MAHOCPHAN, HOCKI, NAMHOC, TENNHOM, NGAYHOC)
-                                      VALUES('".$maphonghoc."', '".$mahocphan."', '".$hocki."', '".$namhoc."', '".$tennhom."', '".$ngayhoc."')");
-                        $j++;
-                        $demYCDuocDuyet++;
-                        $maphonghoc = $cacPhongHocTuongUng[$j]['MAPHONGHOC'];
-                        $conn->query("INSERT IGNORE INTO LICHTHUCHANH(MAPHONGHOC, MAHOCPHAN, HOCKI, NAMHOC, TENNHOM, NGAYHOC)
-                                      VALUES('".$maphonghoc."', '".$mahocphan."', '".$hocki."', '".$namhoc."', '".$tennhom."', '".$ngayhoc."')");
-                        $j++;
-                        $demYCDuocDuyet++;
-                        $conn->query("UPDATE YEUCAU SET TRANGTHAI = 'Đã duyệt' WHERE YEUCAU_ID LIKE '".$id_yeucau."'");
-                    }    
+                if ($siso > 50) {
+                    $cacPhongHocTuongUng = layRaCacPhongHocThoaManPhanMemVaSiSo($mahocphan, $tennhom, $hocki, $namhoc, 40);
+                    $maphonghoc = $cacPhongHocTuongUng[$j]['MAPHONGHOC'];
+                    $conn->query("INSERT IGNORE INTO LICHTHUCHANH(MAPHONGHOC, MAHOCPHAN, HOCKI, NAMHOC, TENNHOM, NGAYHOC)
+                                  VALUES('".$maphonghoc."', '".$mahocphan."', '".$hocki."', '".$namhoc."', '".$tennhom."', '".$ngayhoc."')");
+                    $j++;
+                    $maphonghoc = $cacPhongHocTuongUng[$j]['MAPHONGHOC'];
+                    $conn->query("INSERT IGNORE INTO LICHTHUCHANH(MAPHONGHOC, MAHOCPHAN, HOCKI, NAMHOC, TENNHOM, NGAYHOC)
+                                  VALUES('".$maphonghoc."', '".$mahocphan."', '".$hocki."', '".$namhoc."', '".$tennhom."', '".$ngayhoc."')");
+                    $j++;
+                    $demYCDuocDuyet++;
+                    $conn->query("UPDATE YEUCAU SET TRANGTHAI = 'Đã duyệt' WHERE YEUCAU_ID LIKE '".$id_yeucau."'");
                 } else {
                     $maphonghoc = $cacPhongHocTuongUng[$j]['MAPHONGHOC'];
                     $conn->query("INSERT IGNORE INTO LICHTHUCHANH(MAPHONGHOC, MAHOCPHAN, HOCKI, NAMHOC, TENNHOM, NGAYHOC)
@@ -68,7 +65,7 @@
         }
     }
     $conn->query("DROP TABLE TEMP");
-    $conn->query("DELETE FROM YEUCAU WHERE TRANGTHAI LIKE 'Đã duyệt'");
+    $conn->query("DELETE FROM YEUCAU WHERE TRANGTHAI LIKE 'Đã duyệt' OR TRANGTHAI LIKE 'Chờ duyệt'");
     $_SESSION['successApprove'] = "Duyệt thành công!";
     $_SESSION['analysisApprove'] = $demYCDuocDuyet . ' yêu cầu đã duyệt, ' . $demYCChuaDuyet . ' yêu cầu chưa duyệt';
     header("Location: ../index.php?pg=requirements_manage");

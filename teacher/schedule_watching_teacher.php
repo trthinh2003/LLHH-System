@@ -216,30 +216,30 @@
                   </a>
                 </li>
               </ul>
-            </div>
+          </div>
       </aside>
       <div class="main">
-            <nav class="navbar navbar-expand px-3 border-bottom border-black">
-                <button class="btn" id="sidebar-toggle" type="button">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse navbar">
-                  <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                      <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                        <p class="login-sign text-black mt-2">
-                        <img class="rounded-circle mx-1" src="view/layout/assets/images/teacher_avatar.jpg" alt="Logo" width="40px"/>
-                        Xin chào, GV. <?=$teacher;?> 
-                        <i class="fa-solid fa-chevron-down pe-2"></i></p>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
-                        <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
-                        <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-            </nav>
+        <nav class="navbar navbar-expand px-3 border-bottom border-black">
+            <button class="btn" id="sidebar-toggle" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse navbar">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <a href="" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                    <p class="login-sign text-black mt-2">
+                    <img class="rounded-circle mx-1" src="view/layout/assets/images/teacher_avatar.jpg" alt="Logo" width="40px"/>
+                    Xin chào, GV. <?=$teacher;?> 
+                    <i class="fa-solid fa-chevron-down pe-2"></i></p>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end" style="top: 55px;">
+                    <a href="index.php?pg=teacher_profile" class="dropdown-item">Hồ sơ cá nhân</a>
+                    <a href="route/logout.php" class="dropdown-item">Đăng xuất</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+        </nav>
 
         <!-- Phan noi dung -->
         <main class="content px-3 py-2">

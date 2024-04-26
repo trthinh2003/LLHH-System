@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2024 at 09:34 AM
+-- Generation Time: Apr 22, 2024 at 04:41 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -67,8 +67,7 @@ INSERT INTO `giangvien` (`GIANGVIEN_ID`, `HOTENGIANGVIEN`, `EMAIL`, `SODIENTHOAI
 (1, 'Vũ Đức Minh', 'vducminh@ctu.edu.vn', '0912567891', 'Nam', 'CNTT', 1),
 (2, 'Trần Ngọc Khả Hân', 'khahan@ctu.edu.vn', '0973573577', 'Nữ', 'ATTT', 2),
 (3, 'Lâm Trần Anh Khôi', 'anhkhoi96@ctu.edu.vn', '0917537565', 'Nam', 'HTTT', 4),
-(4, 'Nguyễn Ngọc Ngạn', 'ngocngan@ctu.edu.vn', '02933567789', 'Nam', 'KTPM', 3),
-(5, 'Ha ha', 'haha@ctu.edu.vn', '0291939114', 'Nam', 'ATTT', NULL);
+(4, 'Nguyễn Ngọc Ngạn', 'ngocngan@ctu.edu.vn', '02933567789', 'Nam', 'KTPM', 3);
 
 -- --------------------------------------------------------
 
@@ -182,6 +181,7 @@ INSERT INTO `lophocphan` (`MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `THU`, `SIS
 ('CT112', '2', '2023 - 2024', 4, 3, 40, 'Sáng', 1),
 ('CT175', '2', '2023 - 2024', 1, 3, 40, 'Chiều', 2),
 ('CT179', '2', '2023 - 2024', 1, 3, 40, 'Sáng', 3),
+('CT179', '2', '2023 - 2024', 2, 4, 80, 'Chiều', 2),
 ('CT180', '2', '2023 - 2024', 1, 2, 40, 'Sáng', 3),
 ('CT180', '2', '2023 - 2024', 2, 5, 40, 'Sáng', 3),
 ('CT180', '2', '2023 - 2024', 3, 2, 40, 'Chiều', 1),
@@ -211,7 +211,6 @@ CREATE TABLE `lylichkhoahoc` (
 --
 
 INSERT INTO `lylichkhoahoc` (`LYLICH_ID`, `TRINHDOCHUYENMON`, `HOCHAM`, `NGACHVIENCHUC`) VALUES
-(5, 'Siêu Tiến Sĩ', 'Siêu Giáo Sư', 'Không có'),
 (2, 'Tiến sĩ', NULL, 'Giảng viên'),
 (3, 'Tiến sĩ', NULL, 'Giảng viên chính'),
 (4, 'Tiến sĩ', 'Giáo sư', 'Giảng viên cao cấp'),
@@ -557,8 +556,7 @@ INSERT INTO `taikhoan` (`TAIKHOAN_ID`, `TENDANGNHAP`, `matkhau`, `ROLE`, `GIANGV
 (2, 'ducminh', 'd9331c0b37a823f1da56e10c9ef21771', 2, 1),
 (3, 'anhkhoi', 'cb45a43710784451cee2992b63fe745e', 2, 3),
 (4, 'khahan', 'cc12c12ad0189ae831f7e289592ebbda', 2, 2),
-(5, 'ngocngan', '685d77ba6b0877c55008a16e3d1a8802', 2, 4),
-(6, 'haha', '4e4d6c332b6fe62a63afe56171fd3725', 2, 5);
+(5, 'ngocngan', '685d77ba6b0877c55008a16e3d1a8802', 2, 4);
 
 -- --------------------------------------------------------
 
@@ -578,6 +576,59 @@ CREATE TABLE `yeucau` (
   `NGAYYEUCAU` datetime DEFAULT current_timestamp(),
   `TRANGTHAI` varchar(40) DEFAULT 'Chờ duyệt'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `yeucau`
+--
+
+INSERT INTO `yeucau` (`YEUCAU_ID`, `MAHOCPHAN`, `HOCKI`, `NAMHOC`, `TENNHOM`, `PHANMEM_ID`, `GIANGVIEN_ID`, `TUANHOC`, `NGAYYEUCAU`, `TRANGTHAI`) VALUES
+(1, 'CT179', '2', '2023 - 2024', 2, 7, 2, 1, '2024-04-22 08:54:37', 'Chờ duyệt'),
+(2, 'CT179', '2', '2023 - 2024', 2, 7, 2, 2, '2024-04-22 08:54:37', 'Chờ duyệt'),
+(3, 'CT179', '2', '2023 - 2024', 2, 7, 2, 5, '2024-04-22 08:54:37', 'Chờ duyệt'),
+(4, 'CT179', '2', '2023 - 2024', 2, 7, 2, 4, '2024-04-22 08:54:37', 'Chờ duyệt'),
+(5, 'CT179', '2', '2023 - 2024', 2, 7, 2, 3, '2024-04-22 08:54:37', 'Chờ duyệt'),
+(6, 'CT202', '2', '2023 - 2024', 1, 9, 4, 1, '2024-04-22 09:31:37', 'Chờ duyệt'),
+(7, 'CT202', '2', '2023 - 2024', 2, 9, 1, 1, '2024-04-22 09:32:04', 'Chờ duyệt'),
+(8, 'CT179', '2', '2023 - 2024', 1, 7, 3, 1, '2024-04-11 19:54:24', 'Chờ duyệt'),
+(9, 'CT179', '2', '2023 - 2024', 1, 7, 3, 2, '2024-04-11 19:54:24', 'Chờ duyệt'),
+(10, 'CT179', '2', '2023 - 2024', 1, 7, 3, 5, '2024-04-11 19:54:24', 'Chờ duyệt'),
+(11, 'CT179', '2', '2023 - 2024', 1, 7, 3, 3, '2024-04-11 19:54:24', 'Chờ duyệt'),
+(12, 'CT179', '2', '2023 - 2024', 1, 7, 3, 4, '2024-04-11 19:54:24', 'Chờ duyệt'),
+(13, 'CT180', '2', '2023 - 2024', 1, 6, 3, 3, '2024-04-11 19:54:48', 'Chờ duyệt'),
+(14, 'CT180', '2', '2023 - 2024', 1, 6, 3, 1, '2024-04-11 19:54:48', 'Chờ duyệt'),
+(15, 'CT180', '2', '2023 - 2024', 1, 6, 3, 5, '2024-04-11 19:54:48', 'Chờ duyệt'),
+(16, 'CT180', '2', '2023 - 2024', 1, 6, 3, 4, '2024-04-11 19:54:48', 'Chờ duyệt'),
+(17, 'CT180', '2', '2023 - 2024', 1, 6, 3, 2, '2024-04-11 19:54:48', 'Chờ duyệt'),
+(18, 'CT112', '2', '2023 - 2024', 4, 7, 1, 1, '2024-04-11 19:55:27', 'Chờ duyệt'),
+(19, 'CT112', '2', '2023 - 2024', 4, 7, 1, 3, '2024-04-11 19:55:27', 'Chờ duyệt'),
+(20, 'CT112', '2', '2023 - 2024', 4, 7, 1, 5, '2024-04-11 19:55:27', 'Chờ duyệt'),
+(21, 'CT112', '2', '2023 - 2024', 4, 7, 1, 2, '2024-04-11 19:55:27', 'Chờ duyệt'),
+(22, 'CT112', '2', '2023 - 2024', 4, 7, 1, 4, '2024-04-11 19:55:27', 'Chờ duyệt'),
+(23, 'CT101', '2', '2023 - 2024', 1, 4, 2, 1, '2024-04-11 19:56:10', 'Chờ duyệt'),
+(24, 'CT101', '2', '2023 - 2024', 1, 4, 2, 2, '2024-04-11 19:56:10', 'Chờ duyệt'),
+(25, 'CT101', '2', '2023 - 2024', 1, 4, 2, 4, '2024-04-11 19:56:10', 'Chờ duyệt'),
+(26, 'CT101', '2', '2023 - 2024', 1, 4, 2, 3, '2024-04-11 19:56:10', 'Chờ duyệt'),
+(27, 'CT101', '2', '2023 - 2024', 1, 4, 2, 5, '2024-04-11 19:56:10', 'Chờ duyệt'),
+(28, 'CT175', '2', '2023 - 2024', 1, 4, 2, 2, '2024-04-11 19:56:22', 'Chờ duyệt'),
+(29, 'CT175', '2', '2023 - 2024', 1, 4, 2, 1, '2024-04-11 19:56:22', 'Chờ duyệt'),
+(30, 'CT175', '2', '2023 - 2024', 1, 4, 2, 5, '2024-04-11 19:56:22', 'Chờ duyệt'),
+(31, 'CT175', '2', '2023 - 2024', 1, 4, 2, 3, '2024-04-11 19:56:22', 'Chờ duyệt'),
+(32, 'CT175', '2', '2023 - 2024', 1, 4, 2, 4, '2024-04-11 19:56:22', 'Chờ duyệt'),
+(33, 'CT296', '2', '2023 - 2024', 1, 3, 4, 5, '2024-04-11 20:33:32', 'Chờ duyệt'),
+(34, 'CT296', '2', '2023 - 2024', 1, 3, 4, 4, '2024-04-11 20:33:32', 'Chờ duyệt'),
+(35, 'CT296', '2', '2023 - 2024', 1, 3, 4, 1, '2024-04-11 20:33:32', 'Chờ duyệt'),
+(36, 'CT296', '2', '2023 - 2024', 1, 3, 4, 3, '2024-04-11 20:33:32', 'Chờ duyệt'),
+(37, 'CT296', '2', '2023 - 2024', 1, 3, 4, 2, '2024-04-11 20:33:32', 'Chờ duyệt'),
+(38, 'CT296', '2', '2023 - 2024', 2, 3, 4, 1, '2024-04-11 20:33:45', 'Chờ duyệt'),
+(39, 'CT296', '2', '2023 - 2024', 2, 3, 4, 3, '2024-04-11 20:33:45', 'Chờ duyệt'),
+(40, 'CT296', '2', '2023 - 2024', 2, 3, 4, 2, '2024-04-11 20:33:45', 'Chờ duyệt'),
+(41, 'CT296', '2', '2023 - 2024', 2, 3, 4, 5, '2024-04-11 20:33:45', 'Chờ duyệt'),
+(42, 'CT296', '2', '2023 - 2024', 2, 3, 4, 4, '2024-04-11 20:33:45', 'Chờ duyệt'),
+(43, 'CT430', '2', '2023 - 2024', 1, 1, 4, 2, '2024-04-11 20:33:59', 'Chờ duyệt'),
+(44, 'CT430', '2', '2023 - 2024', 1, 1, 4, 1, '2024-04-11 20:33:59', 'Chờ duyệt'),
+(45, 'CT430', '2', '2023 - 2024', 1, 1, 4, 4, '2024-04-11 20:33:59', 'Chờ duyệt'),
+(46, 'CT430', '2', '2023 - 2024', 1, 1, 4, 3, '2024-04-11 20:33:59', 'Chờ duyệt'),
+(47, 'CT430', '2', '2023 - 2024', 1, 1, 4, 5, '2024-04-11 20:33:59', 'Chờ duyệt');
 
 --
 -- Indexes for dumped tables
@@ -686,13 +737,13 @@ ALTER TABLE `yeucau`
 -- AUTO_INCREMENT for table `giangvien`
 --
 ALTER TABLE `giangvien`
-  MODIFY `GIANGVIEN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `GIANGVIEN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `lylichkhoahoc`
 --
 ALTER TABLE `lylichkhoahoc`
-  MODIFY `LYLICH_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `LYLICH_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `phanmem`
@@ -704,13 +755,13 @@ ALTER TABLE `phanmem`
 -- AUTO_INCREMENT for table `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `TAIKHOAN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `TAIKHOAN_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `yeucau`
 --
 ALTER TABLE `yeucau`
-  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `YEUCAU_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- Constraints for dumped tables
